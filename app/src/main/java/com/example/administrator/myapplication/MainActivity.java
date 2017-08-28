@@ -9,6 +9,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
+import com.example.administrator.myapplication.main_fragment.MainFragment1;
+import com.example.administrator.myapplication.main_fragment.MainFragment2;
+import com.example.administrator.myapplication.main_fragment.MainFragment3;
+import com.example.administrator.myapplication.main_fragment.MainFragment4;
+
 public class MainActivity extends AppCompatActivity {
 
 

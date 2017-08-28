@@ -7,4 +7,22 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="one_title">
+        <item>狼人杀</item>
+        <item>三国杀</item>
+        <item>游戏王</item>
+        <item>其它</item>
+    </string-array>
+    <string-array name="two_title">
+        <item>围棋</item>
+        <item>五子棋</item>
+        <item>飞行棋</item>
+        <item>其它</item>
+    </string-array>
+    <string-array name="three_title">
+        <item>lol</item>
+        <item>王者荣耀</item>
+        <item>守望先峰</item>
+        <item>其它</item>
+    </string-array>
 </resources>

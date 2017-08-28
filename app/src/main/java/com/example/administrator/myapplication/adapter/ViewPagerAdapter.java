@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication;
+package com.example.administrator.myapplication.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +12,15 @@ import java.util.List;
  */
 public   class ViewPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragment=new ArrayList<Fragment>();
-
+    private ArrayList<String> titles=new ArrayList<String>();;
     public void addFragment(Fragment  fragment){
         mFragment.add(fragment);
+    }
+    public void addFragment(Fragment fragment,String str){
+
+        mFragment.add(fragment);
+        titles.add(str);
+
     }
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -31,4 +37,8 @@ public   class ViewPagerAdapter extends FragmentPagerAdapter {
 
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles.get(position);
+    }
 }
