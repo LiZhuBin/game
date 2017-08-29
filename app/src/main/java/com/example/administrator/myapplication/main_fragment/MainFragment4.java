@@ -1,18 +1,35 @@
 package com.example.administrator.myapplication.main_fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
-import com.example.administrator.myapplication.base.BasePagerFragment;
-import com.example.administrator.myapplication.child_fragment.OneChildFragment1;
-import com.example.administrator.myapplication.child_fragment.OneChildFragment2;
+
+import butterknife.ButterKnife;
 
 
-public class MainFragment4 extends BasePagerFragment {
+public class MainFragment4 extends Fragment{
     @Override
-    protected void addPageToAdapter(ViewPagerAdapter adapter) {
-        String[] title = getResources().getStringArray(R.array.one_title);
-        adapter.addFragment(new OneChildFragment1(), title[0]);
-        adapter.addFragment(new OneChildFragment2(), title[1]);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.user_info, container, false);
+        return view;
+    }
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+
+        ButterKnife.unbind(this);
     }
 
 }

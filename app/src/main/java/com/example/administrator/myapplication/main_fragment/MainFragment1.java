@@ -1,18 +1,28 @@
 package com.example.administrator.myapplication.main_fragment;
 
-import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
-import com.example.administrator.myapplication.base.BasePagerFragment;
-import com.example.administrator.myapplication.child_fragment.OneChildFragment1;
-import com.example.administrator.myapplication.child_fragment.OneChildFragment2;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class MainFragment1 extends BasePagerFragment {
+import com.example.administrator.myapplication.R;
+
+public class MainFragment1 extends Fragment {
 
     @Override
-    protected void addPageToAdapter(ViewPagerAdapter adapter) {
-        String[] title = getResources().getStringArray(R.array.one_title);
-        adapter.addFragment(new OneChildFragment1(), title[0]);
-        adapter.addFragment(new OneChildFragment2(), title[1]);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment, container, false);
+
+        return view;
     }
 
 }

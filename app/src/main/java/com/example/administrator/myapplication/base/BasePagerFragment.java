@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +27,7 @@ public abstract class BasePagerFragment extends Fragment {
     @Bind(R.id.pager)
     ViewPager viewPager;
     protected ViewPagerAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +39,27 @@ public abstract class BasePagerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment, container, false);
         ButterKnife.bind(this, view);
-        adapter=new ViewPagerAdapter(getChildFragmentManager());
+        adapter = new ViewPagerAdapter(getChildFragmentManager());
         addPageToAdapter(adapter);
         viewPager.setAdapter(adapter);
         slidingTab.setViewPager(viewPager);
-        return view;
+
+        RefreshLayout refreshLayout = (RefreshLayout)view.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000);
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore(2000);
+            }
+        });
+
+
+    return view;
     }
 
     @Override
@@ -49,4 +69,5 @@ public abstract class BasePagerFragment extends Fragment {
     }
 
     protected abstract void addPageToAdapter(ViewPagerAdapter adapter);
+
 }
