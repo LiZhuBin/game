@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/icon_image"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/image_scrolling_head"/>
+    <TextView android:id="@+id/username"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/icon_image"
+        android:layout_toRightOf="@+id/icon_image"
+        android:textSize="16sp"
+        android:text="Carmen冯"/>
+    <TextView android:id="@+id/time"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@+id/icon_image"
+        android:layout_toRightOf="@+id/icon_image"
+        android:text="41分钟前"
+        android:layout_below="@+id/username"/>
+    <TextView android:id="@+id/head_content"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="狼人杀我们一起玩吧"
+        android:layout_below="@+id/icon_image"
+        android:textColor="@android:color/black"/>
+    <TextView android:id="@+id/new_content_time"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/new_property"
+        android:layout_marginTop="10dp"
+        android:text="时间："
+        android:layout_below="@+id/head_content"
+        android:textColor="@android:color/black"/>
+    <TextView android:id="@+id/head_address"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/new_property"
+        android:layout_marginTop="10dp"
+        android:text="地点："
+        android:layout_below="@+id/new_content_time"
+        android:textColor="@android:color/black"/>
+    </RelativeLayout>

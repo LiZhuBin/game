@@ -12,7 +12,7 @@ import com.example.administrator.myapplication.R;
 import butterknife.ButterKnife;
 
 
-public class MainFragment4 extends Fragment{
+public class ForumFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +22,16 @@ public class MainFragment4 extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_info, container, false);
+        View view = inflater.inflate(R.layout.forum_info, container, false);
+        //initFlowLayout(view);
+
+        ButterKnife.bind(this, view);
         return view;
     }
-    @Override
-    public void onDestroyView(){
-        super.onDestroyView();
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         ButterKnife.unbind(this);
     }
 

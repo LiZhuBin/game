@@ -1,9 +1,22 @@
 <resources>
+    <string name="text_inside_circle_button_text_normal">Text Inside Circle Button(Normal)</string>
+    <string name="text_inside_circle_button_text_highlighted">Text Inside Circle Button(Highlighted)</string>
+    <string name="text_inside_circle_button_text_unable">Text Inside Circle Button(Unable)</string>
+    <string name="text_outside_circle_button_text_normal">Text Outside Circle Button(Normal)</string>
+    <string name="text_outside_circle_button_text_highlighted">Text Outside Circle Button(Highlighted)</string>
+    <string name="text_outside_circle_button_text_unable">Text Outside Circle Button(Unable)</string>
+    <string name="text_ham_button_text_normal">Ham Button Text(Normal)</string>
+    <string name="text_ham_button_text_highlighted">Ham Button Text(Highlighted)</string>
+    <string name="text_ham_button_text_unable">Ham Button Text(Unable)</string>
+    <string name="text_ham_button_sub_text_normal">Ham Button Sub Text(Normal)</string>
+    <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
+    <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
     <string name="app_name">My Application</string>
     <string name="bottom1">推荐</string>
-    <string name="bottom2">卡牌</string>
-    <string name="bottom3">棋类</string>
-    <string name="bottom4">刀塔</string>
+    <string name="bottom2">加入</string>
+    <string name="bottom3">论坛</string>
+    <string name="bottom4">我</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -25,4 +38,6 @@
         <item>守望先峰</item>
         <item>其它</item>
     </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_begin">BeginActivity</string>
 </resources>
