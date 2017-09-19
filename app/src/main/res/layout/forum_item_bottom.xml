@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:layout_alignParentBottom="true"
+    android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/ic_input_add" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="10"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true" />
+
+    <com.sackcentury.shinebuttonlib.ShineButton
+        android:id="@+id/forum_shineButton_like"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:src="@android:color/darker_gray"
+        app:allow_random_color="true"
+        app:big_shine_color="#FF6666"
+        app:btn_color="@android:color/darker_gray"
+        app:btn_fill_color="#FF6666"
+        app:click_animation_duration="200"
+        app:enable_flashing="true"
+        app:shine_animation_duration="1500"
+        app:shine_count="15"
+        app:shine_turn_angle="20"
+        app:siShape="@raw/like"
+        app:small_shine_color="#CC9999"
+        app:small_shine_offset_angle="20"
+        />
+
+    <com.sackcentury.shinebuttonlib.ShineButton
+        android:id="@+id/forum_shineButton_heart"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+      android:layout_alignParentRight="true"
+        android:src="@android:color/darker_gray"
+        app:allow_random_color="true"
+        app:big_shine_color="#FF6666"
+        app:btn_color="@android:color/darker_gray"
+        app:btn_fill_color="#FF6666"
+        app:click_animation_duration="200"
+        app:enable_flashing="true"
+        app:shine_animation_duration="1500"
+        app:shine_count="15"
+        app:shine_turn_angle="20"
+        app:siShape="@raw/heart"
+        app:small_shine_color="#CC9999"
+        app:small_shine_offset_angle="20"
+        />
+
+    <TextView
+        android:id="@+id/forum_like_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/forum_shineButton_like"
+        android:layout_toRightOf="@+id/forum_shineButton_like"
+        android:text="0" />
+
+</RelativeLayout>

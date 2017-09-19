@@ -1,25 +1,22 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:id="@+id/add">
 
-
-<LinearLayout
-    android:layout_width="match_parent"
+<fragment
+    android:layout_width="80dp"
     android:layout_height="match_parent"
+    android:id="@+id/add_left_fragment"
+    android:name="com.example.administrator.myapplication.child_fragment.LeftFragment"
+    />
 
-    android:orientation="vertical">
-
-
-        <com.example.administrator.myapplication.my_ui.ViewPagerAutoAround
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
-        <include layout="@layout/add_info_content"/>
-
-
-
+<fragment
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:id="@+id/add_right_fragment"
+    android:layout_weight="1"
+    android:name="com.example.administrator.myapplication.child_fragment.RightFragment"/>
 </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>

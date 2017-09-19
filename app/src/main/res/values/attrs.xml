@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewPagerAutoAround">
+
+        <attr name="IsNeedTitleBackground" format="color"/>
+        <attr name="Titlewordk" format="string"/>
+        <attr name="TitleColor" format="color"/>
+        <attr name="TitleTextSize" format="float"/>
+
+
+    </declare-styleable>
+
+
+</resources>

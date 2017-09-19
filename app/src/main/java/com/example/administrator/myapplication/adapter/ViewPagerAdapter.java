@@ -12,7 +12,7 @@ import java.util.List;
  */
 public   class ViewPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragment=new ArrayList<Fragment>();
-    private ArrayList<String> titles=new ArrayList<String>();;
+    private ArrayList<String> titles=new ArrayList<String>();
     public void addFragment(Fragment  fragment){
         mFragment.add(fragment);
     }

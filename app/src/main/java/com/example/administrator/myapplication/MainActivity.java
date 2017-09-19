@@ -6,18 +6,16 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
 import com.example.administrator.myapplication.main_fragment.AddFragment;
 import com.example.administrator.myapplication.main_fragment.ForumFragment;
 import com.example.administrator.myapplication.main_fragment.RecommentFragment;
 import com.example.administrator.myapplication.main_fragment.UserFragment;
-import com.example.administrator.myapplication.my_ui.NoScrollViewPager;
+import com.example.administrator.myapplication.util.SPUtil;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextInsideCircleButton;
@@ -26,16 +24,17 @@ import com.nightonke.boommenu.Util;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.ButterKnife;
 
 import static com.example.administrator.myapplication.BuilderManager.getImageResource;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
-
+    private static final String TAG = "MainActivity";
   private  BottomNavigationViewEx navigation;
-    private NoScrollViewPager viewPager;
+    private ViewPager viewPager;
     private BoomMenuButton bmb;
     private BottomNavigationViewEx.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
                 case R.id.navigation_dashboard:
+
                     viewPager.setCurrentItem(1);
 
                     break;
@@ -67,21 +67,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //全屏没有状态栏。
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        TastyToast.makeText(getApplicationContext(), "你好，悦游!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
         ButterKnife.bind(this);
 
         initBottomNavigationViewEx();
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // getSupportActionBar().hide();
-        setSupportActionBar(toolbar);
-        viewPager = (NoScrollViewPager) findViewById(R.id.viewpager);
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
         setupViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(this);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        initData();
         floatButton();
         initRefresh();
+        final FloatingSearchView mSearchView=(FloatingSearchView)findViewById(R.id.floating_search_view);
+        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+
+            }
+        });
     }
 
     @Override
@@ -133,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 public void initBottomNavigationViewEx(){
     navigation= (BottomNavigationViewEx) findViewById(R.id.navigation);
     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    navigation.enableAnimation(false);
+   // navigation.enableAnimation(false);
     navigation.enableShiftingMode(false);
     navigation.enableItemShiftingMode(false);
 }
@@ -152,5 +164,43 @@ public void initRefresh(){
         }
     });
 }
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                navigation.setSelectedItemId(R.id.navigation_home);
+                break;
+            case 1:
+                navigation.setSelectedItemId(R.id.navigation_dashboard);
+                break;
+            case 2:
+                navigation.setSelectedItemId(R.id.navigation_notifications);
+                break;
+            case 3:
+                navigation.setSelectedItemId(R.id.navigation_email2);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    public void initData(){
+        if(SPUtil.get(MainActivity.this,"UserId",1)==null) {
+            SPUtil.put(MainActivity.this, "UserId", "1");
+        }
+
+    }
 }
 

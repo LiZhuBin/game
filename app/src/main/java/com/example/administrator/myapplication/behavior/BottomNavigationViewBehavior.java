@@ -43,6 +43,7 @@ public class BottomNavigationViewBehavior extends CoordinatorLayout.Behavior<Vie
         int top = ((AppBarLayout.Behavior)((CoordinatorLayout.LayoutParams)dependency.getLayoutParams()).getBehavior()).getTopAndBottomOffset();
         //因为BottomNavigation的滑动与ToolBar是反向的，所以取-top值
         ViewCompat.setTranslationY(child, -top);
+
         return false;
     }
 }

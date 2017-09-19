@@ -6,4 +6,5 @@
     <dimen name="new_content">18sp</dimen>
     <dimen name="new_property">16sp</dimen>
     <dimen name="circle_radios">60dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
 </resources>

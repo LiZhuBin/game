@@ -8,7 +8,7 @@ import android.view.animation.TranslateAnimation;
  */
 
 public class ConstantAnimation {
-    public Animation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+    public static  Animation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                                                 Animation.RELATIVE_TO_SELF, 0.0f,Animation.RELATIVE_TO_SELF,
                    -1.0f,Animation.RELATIVE_TO_SELF, 0.0f);
 

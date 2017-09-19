@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.myapplication.activity.AddActivity">
+    <include layout="@layout/toolbar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<include layout="@layout/add_right_main_info"/>
+    <LinearLayout
+        android:id="@+id/layout_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/right_main_layout">
+
+        <com.example.administrator.myapplication.my_ui.CircleImageButton
+            android:id="@+id/forum_add_images"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/image_scrolling_head" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_below="@+id/layout_images"
+        android:id="@+id/add_right_bottom"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/add_right_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加入" />
+    </LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

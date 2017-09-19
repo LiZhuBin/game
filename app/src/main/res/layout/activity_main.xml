@@ -10,14 +10,20 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:theme="@style/AppTheme.AppBarOverlay">
-
-           <android.support.v7.widget.Toolbar
-               android:id="@+id/toolbar"
+           <com.arlib.floatingsearchview.FloatingSearchView
+               android:id="@+id/floating_search_view"
                android:layout_width="match_parent"
-               android:layout_height="?attr/actionBarSize"
-               android:background="#00000000"
-               app:popupTheme="@style/AppTheme.PopupOverlay"
-               app:layout_scrollFlags="scroll|enterAlways|snap"/>
+               android:layout_height="50dp"
+               app:floatingSearch_close_search_on_keyboard_dismiss="false"
+               app:floatingSearch_dimBackground="false"
+               app:floatingSearch_dismissOnOutsideTouch="true"
+               app:floatingSearch_leftActionMode="showHamburger"
+               app:floatingSearch_menu="@menu/menu_search_view"
+               app:layout_scrollFlags="scroll|enterAlways|snap"
+               app:floatingSearch_searchHint="Search..."
+               app:floatingSearch_showSearchKey="true"
+               app:floatingSearch_suggestionsListAnimDuration="250"/>
+
 
        </android.support.design.widget.AppBarLayout>
 
@@ -26,16 +32,18 @@
         android:id="@+id/main_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         app:srlPrimaryColor="#444444"
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:srlAccentColor="@android:color/white"
         app:srlEnablePreviewInEditMode="true">
 
     <com.scwang.smartrefresh.header.FunGameHitBlockHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-       <com.example.administrator.myapplication.my_ui.NoScrollViewPager
+
+
+
+       <android.support.v4.view.ViewPager
            android:id="@+id/viewpager"
            android:layout_height="wrap_content"
            android:layout_width="match_parent"
@@ -55,7 +63,9 @@
         android:layout_marginBottom="60dp"
         android:layout_marginRight="20dp"
         app:bmb_draggable="true"
+
         />
+
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/navigation"
         android:layout_height="wrap_content"
@@ -63,6 +73,7 @@
         app:menu="@menu/navigation"
         android:background="?android:attr/windowBackground"
         android:layout_gravity="bottom"
+
         app:layout_behavior="com.example.administrator.myapplication.behavior.BottomNavigationViewBehavior"
         />
 

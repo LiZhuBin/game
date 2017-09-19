@@ -1,5 +1,6 @@
 package com.example.administrator.myapplication.util;
 
+import com.example.administrator.myapplication.been.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,12 +39,13 @@ public class HttpUtil {
 
         client.newCall(request).enqueue(callback);
     }
-    public static List<?> parseJSONWithGSON(Response response){
-        List<?> appList = null;
+    public static List<User> parseUserJSONWithGSON(Response response){
+        List<User> appList;
+        appList = null;
         try {
             String responseData=response.body().string();
             Gson gson=new Gson();
-            appList=gson.fromJson(responseData,new TypeToken<List<?>>(){}.getType());
+            appList=gson.fromJson(responseData,new TypeToken<List<User>>(){}.getType());
 
         } catch (IOException e) {
             e.printStackTrace();
