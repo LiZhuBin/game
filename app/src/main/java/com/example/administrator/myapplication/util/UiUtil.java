@@ -28,4 +28,5 @@ public class UiUtil {
         textView.setTextSize(20);
         return textView;
     }
+
 }

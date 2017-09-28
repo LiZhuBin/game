@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.administrator.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +20,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon, android:theme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -29,20 +31,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PersonActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme" />
+            android:name=".activity.PersonActivity"
+            android:label="用户信息" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".activity.FriendsActivity"
-            android:label="我的好友"
-            android:theme="@style/AppTheme" />
+            android:label="我的好友" />
         <activity
             android:name=".activity.ForumActivity"
-            android:label="帖子详情"
-            android:theme="@style/AppTheme" />
+            android:label="帖子详情" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.AddActivity"></activity>
+        <activity android:name=".activity.AddActivity" />
+        <activity
+            android:name=".activity.NewsActivity"
+            android:label="热点" />
+        <activity
+            android:name=".activity.ChatActivity"
+            android:label="聊天" />
+        <activity
+            android:name=".activity.PostActivity"
+            android:label="帖子详情" />
+        <activity
+            android:name=".activity.AddForumActivity"
+            android:label="约战发布" />
+        <activity
+            android:name=".activity.AddAddActivity"
+            android:label="帖子填写" />
+        <activity android:name=".activity.SearchActivity"></activity>
     </application>
 
 </manifest>

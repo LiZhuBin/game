@@ -3,21 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
+    android:layout_height="35dp"
     android:layout_alignParentBottom="true"
     android:background="@android:color/transparent">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/icon_add1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:textColor="@color/white"
             android:layout_toRightOf="@+id/imageView2"
             android:text="10"
+            android:id="@+id/forum_add_num"
             android:gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true" />
@@ -27,10 +29,10 @@
         android:layout_width="25dp"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:src="@android:color/darker_gray"
+
         app:allow_random_color="true"
         app:big_shine_color="#FF6666"
-        app:btn_color="@android:color/darker_gray"
+        app:btn_color="@android:color/white"
         app:btn_fill_color="#FF6666"
         app:click_animation_duration="200"
         app:enable_flashing="true"
@@ -38,7 +40,7 @@
         app:shine_count="15"
         app:shine_turn_angle="20"
         app:siShape="@raw/like"
-        app:small_shine_color="#CC9999"
+        app:small_shine_color="#FF6666"
         app:small_shine_offset_angle="20"
         />
 
@@ -50,7 +52,7 @@
         android:src="@android:color/darker_gray"
         app:allow_random_color="true"
         app:big_shine_color="#FF6666"
-        app:btn_color="@android:color/darker_gray"
+        app:btn_color="@android:color/white"
         app:btn_fill_color="#FF6666"
         app:click_animation_duration="200"
         app:enable_flashing="true"
@@ -58,8 +60,9 @@
         app:shine_count="15"
         app:shine_turn_angle="20"
         app:siShape="@raw/heart"
-        app:small_shine_color="#CC9999"
+        app:small_shine_color="#FF6666"
         app:small_shine_offset_angle="20"
+        android:layout_marginRight="10dp"
         />
 
     <TextView
@@ -70,6 +73,7 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/forum_shineButton_like"
         android:layout_toRightOf="@+id/forum_shineButton_like"
-        android:text="0" />
+        android:text="0"
+       />
 
 </RelativeLayout>

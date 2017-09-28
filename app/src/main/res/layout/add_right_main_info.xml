@@ -2,111 +2,128 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="150dp"
+    android:orientation="vertical"
     android:id="@+id/right_main_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:id="@+id/layout1"
+    android:orientation="horizontal"
+    >
+        <ImageView
             android:id="@+id/forum_user_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/image_scrolling_head" />
 
-        <TextView
-            android:id="@+id/forum_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/forum_user_image"
-            android:layout_toRightOf="@+id/forum_user_image"
-            android:text="Carmen冯"
-            android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/forum_user_name"
-            android:layout_toEndOf="@+id/forum_user_image"
-            android:layout_toRightOf="@+id/forum_user_image"
-            android:text="41分钟前" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/forum_num"
-            android:layout_alignEnd="@+id/forum_content"
-            android:layout_alignRight="@+id/forum_content"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_add" />
-
-        <TextView
-            android:id="@+id/forum_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/forum_user_name"
-            android:layout_toRightOf="@+id/imageButton"
-            android:text="5" />
-
-        <TextView
-            android:id="@+id/forum_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/forum_user_image"
-            android:text="对于笔记本电脑的求助"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
+       >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:alpha="0.8"
+        android:gravity="center">
+    <TextView
+        android:id="@+id/forum_title1"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="对于笔记本电脑的求助"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    </LinearLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+  />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="@color/colorAccent"
+        android:alpha="0.8"
+        android:gravity="center">
         <TextView
             android:id="@+id/forum_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/forum_title"
-            android:layout_margin="10dp"
-            android:text="师兄师姐或专业认识 本新生纺织工程，请问买什么牌的电脑好呀？具体到型号，要求不多，能上网刷剧"
-            android:textSize="16sp" />
-
-        <LinearLayout
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="对于笔记本电脑的求助"
+            android:textSize="18sp" />
+    </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/layout1"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/view"
+        android:background="@color/colorAccent"
+        android:alpha="0.8"
+        >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:gravity="center"
+   >
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/forum_time_layout"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:textColor="@color/white"
+            android:text="时间:" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="时间:" />
-
-            <TextView
-                android:id="@+id/forum_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="ddddd" />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/forum_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="ddddd" />
+</LinearLayout>
+        <TextView
+            android:id="@+id/forum_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="5" />
         <LinearLayout
             android:id="@+id/forum_time_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="地点:" />
 
             <TextView
                 android:id="@+id/forum_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
                 android:text="ddddd" />
         </LinearLayout>
+    </LinearLayout>
+
 
     </RelativeLayout>

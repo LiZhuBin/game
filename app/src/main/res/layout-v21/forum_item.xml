@@ -4,7 +4,7 @@
     xmlns:stv="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:orientation="horizontal"
     android:foreground = "?attr/selectableItemBackground"
     app:cardBackgroundColor="?android:attr/colorControlHighlight"
@@ -29,19 +29,32 @@
             android:text="aaaaaaaaaaaaaaaaaaasssssssssssssssssssssaaaa"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/forum_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1.25"
-            android:paddingBottom="30dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_scrolling_head" />
-        <include
-            android:id="@+id/include"
-            layout="@layout/forum_item_bottom"
+            android:src="@drawable/image_scrolling_head"
             />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:alpha="0.6"
+        android:background="#000"
+        >
+        <include
+        android:id="@+id/include"
+        layout="@layout/forum_item_bottom"
+        />
+    </LinearLayout>
+
+
+</FrameLayout>
     </LinearLayout>
 
 

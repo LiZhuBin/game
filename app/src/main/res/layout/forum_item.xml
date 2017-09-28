@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:stv="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="150dp"
     android:layout_margin="10dp"
     android:orientation="horizontal"
-
+    android:clickable="true"
+    android:focusable="true"
     app:cardBackgroundColor="?android:attr/colorControlHighlight"
     app:cardCornerRadius="10dp">
 

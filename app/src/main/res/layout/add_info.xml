@@ -3,20 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:id="@+id/add">
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/add"
 
-<fragment
-    android:layout_width="80dp"
-    android:layout_height="match_parent"
-    android:id="@+id/add_left_fragment"
-    android:name="com.example.administrator.myapplication.child_fragment.LeftFragment"
-    />
+    >
 
-<fragment
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:id="@+id/add_right_fragment"
-    android:layout_weight="1"
-    android:name="com.example.administrator.myapplication.child_fragment.RightFragment"/>
+    <FrameLayout
+        android:layout_width="200dp" android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/daohangtiao"
+        >
+
+
+        <TextView
+            android:text="约战列表"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="16dp"
+            style="@style/Title_textstyle"
+            />
+
+    </FrameLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/forum_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlPrimaryColor="@color/colorAccent"
+
+        app:srlAccentColor="@android:color/white"
+        app:srlEnablePreviewInEditMode="true"
+        >
+        <com.scwang.smartrefresh.header.FunGameBattleCityHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+          >
+<include layout="@layout/add_right_fragment"/>
+</FrameLayout>
+
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

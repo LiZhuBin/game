@@ -3,8 +3,9 @@
     xmlns:stv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    stv:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,46 +19,51 @@
 
             <com.allen.library.SuperTextView
                 android:id="@+id/my_activities"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:clickable="true"
+             style="@style/Super_style"
                 stv:sLeftTextString="我的活动"
+                stv:sUseShape="true"
+                stv:sShapeSelectorNormalColor="@android:color/transparent"
                />
-
+            <com.allen.library.SuperTextView
+                android:id="@+id/my_post"
+                style="@style/Super_style"
+                stv:sLeftTextString="我的贴子"
+                stv:sUseShape="true"
+                stv:sShapeSelectorNormalColor="@android:color/transparent"
+                />
             <com.allen.library.SuperTextView
                 android:id="@+id/my_collection"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/Super_style"
                 stv:sLeftTextString="我的收藏"
-   />
+                stv:sUseShape="true"
+                stv:sShapeSelectorNormalColor="@android:color/transparent"
+                />
 
             <com.allen.library.SuperTextView
                 android:id="@+id/my_friends"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/Super_style"
                 stv:sLeftTextString="我的好友"
+                stv:sUseShape="true"
+                stv:sShapeSelectorNormalColor="@android:color/transparent"
               />
 
-            <com.allen.library.SuperTextView
-                android:id="@+id/my_reading"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                stv:sLeftTextString="最近浏览"
-            />
+
 
             <com.allen.library.SuperTextView
                 android:id="@+id/settings"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/Super_style"
                 android:layout_marginTop="20dp"
                 stv:sLeftTextString="关于"
+                stv:sUseShape="true"
+                stv:sShapeSelectorNormalColor="@android:color/transparent"
             />
 
             <com.allen.library.SuperTextView
                 android:id="@+id/imports"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/Super_style"
                 stv:sLeftTextString="退出账号"
+                stv:sUseShape="true"
+                stv:sShapeSelectorNormalColor="@android:color/transparent"
                />
         </LinearLayout>
     </ScrollView>

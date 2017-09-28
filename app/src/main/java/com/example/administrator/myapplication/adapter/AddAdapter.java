@@ -5,10 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.my_ui.AddItem;
+import com.example.administrator.myapplication.thing_class.AddItem;
+import com.example.administrator.myapplication.util.ApplicationUtil;
+import com.example.administrator.myapplication.util.GlobalData;
 
 import java.util.List;
 
@@ -37,13 +41,12 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         AddItem addItem=maddItem.get(position);
-        holder.forum_user_image.setImageResource(addItem.getImageId());
-        holder.forum_user_name.setText(addItem.getForumUserName());
-        holder.forum_address.setText(addItem.getForumAddress());
-        holder.time.setText(addItem.getTime());
-        holder.forum_content.setText(addItem.getForumContent());
-        holder.forum_title.setText(addItem.getForumTitle());
-        holder.forum_time.setText(addItem.getForumTime());
+        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+addItem.getImageId()).into(holder.forum_user_image);
+        holder.forum_address.setText(addItem.getActivityAddress());
+        holder.forum_content.setText(addItem.getActivityContent());
+        holder.forum_title.setText(addItem.getActivityTitle());
+        holder.forum_time.setText(addItem.getActivityTime());
+        holder.forum_num.setText(addItem.getActivityNum());
     }
 
     @Override
@@ -57,9 +60,8 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
     // End Of Content View Elements
     static class ViewHolder extends RecyclerView.ViewHolder {
         View addView;
-        public de.hdodenhof.circleimageview.CircleImageView forum_user_image;
-        public TextView forum_user_name;
-        public TextView time;
+        public ImageView forum_user_image;
+
         public TextView forum_num;
         public TextView forum_title;
         public TextView forum_content;
@@ -71,11 +73,9 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         private ViewHolder(View view) {
             super(view);
             addView=view;
-            forum_user_image = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.forum_user_image);
-            forum_user_name = (TextView) view.findViewById(R.id.forum_user_name);
-            time = (TextView) view.findViewById(R.id.time);
-            forum_num = (TextView) view.findViewById(R.id.forum_num);
-            forum_title = (TextView) view.findViewById(R.id.forum_title);
+            forum_num=(TextView)view.findViewById(R.id.forum_num);
+            forum_user_image = (ImageView) view.findViewById(R.id.forum_user_image);
+            forum_title = (TextView) view.findViewById(R.id.forum_title1);
             forum_content = (TextView) view.findViewById(R.id.forum_content);
             forum_time = (TextView) view.findViewById(R.id.forum_time);
             forum_address = (TextView) view.findViewById(R.id.forum_address);

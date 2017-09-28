@@ -10,7 +10,8 @@
   <ExpandableListView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:divider="@android:color/transparent"
+      android:childDivider="@color/dialogplus_black_overlay"
+      android:groupIndicator="@android:color/transparent"
       android:scrollbars="none"
       android:id="@+id/left_expandable_list"
       />

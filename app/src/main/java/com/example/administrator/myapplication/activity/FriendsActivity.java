@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.FriendsAdapter;
 import com.example.administrator.myapplication.thing_class.Friends;
+import com.example.administrator.myapplication.util.ActivityUtils;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 
 import java.util.ArrayList;
@@ -38,8 +39,10 @@ public class FriendsActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Friends friends = friendsList.get(position);
-
+                Friends friend = friendsList.get(position);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("frends",friend);
+                ActivityUtils.startActivity(bundle,FriendsActivity.this,PersonActivity.class);
             }
         });
 

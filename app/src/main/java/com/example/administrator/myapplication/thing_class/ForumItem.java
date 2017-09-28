@@ -1,33 +1,21 @@
 package com.example.administrator.myapplication.thing_class;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/9/7 0007.
  */
 
-public class ForumItem {
-        private String userName,forumTime,forumTitle;
-    private int imageId;
+public class ForumItem implements Serializable {
+   String forumTitle,forumAddNum,forumLikeNum;
+    int id,forumImage;
 
-    public ForumItem( String forumTitle, int imageId) {
-
-        this.forumTitle = forumTitle;
-        this.imageId = imageId;
+    public int getId() {
+        return id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getForumTime() {
-        return forumTime;
-    }
-
-    public void setForumTime(String forumTime) {
-        this.forumTime = forumTime;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getForumTitle() {
@@ -38,11 +26,35 @@ public class ForumItem {
         this.forumTitle = forumTitle;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getForumAddNum() {
+        return forumAddNum;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setForumAddNum(String forumAddNum) {
+        this.forumAddNum = forumAddNum;
+    }
+
+    public String getForumLikeNum() {
+        return forumLikeNum;
+    }
+
+    public void setForumLikeNum(String forumLikeNum) {
+        this.forumLikeNum = forumLikeNum;
+    }
+
+    public int getForumImage() {
+        return forumImage;
+    }
+
+    public void setForumImage(int forumImage) {
+        this.forumImage = forumImage;
+    }
+
+    public ForumItem(String forumTitle, String forumAddNum, String forumLikeNum, int id, int forumImage) {
+        this.forumTitle = forumTitle;
+        this.forumAddNum = forumAddNum;
+        this.forumLikeNum = forumLikeNum;
+        this.id = id;
+        this.forumImage = forumImage;
     }
 }

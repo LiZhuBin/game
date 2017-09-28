@@ -10,15 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.administrator.myapplication.activity.ForumActivity;
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.activity.AddForumActivity;
+import com.example.administrator.myapplication.activity.ForumActivity;
 import com.example.administrator.myapplication.adapter.ForumAdapter;
 import com.example.administrator.myapplication.thing_class.ForumItem;
+import com.example.administrator.myapplication.util.ActivityUtils;
 import com.example.administrator.myapplication.util.ApplicationUtil;
+import com.melnykov.fab.FloatingActionButton;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,11 +36,11 @@ import butterknife.ButterKnife;
 
 public class ForumFragment extends Fragment {
 
-private ForumItem[] forumItems={new ForumItem("一起来玩吧",R.drawable.image_scrolling_head),
-        new ForumItem("一起来玩吧",R.drawable.image_scrolling_head),
-        new ForumItem("一起来玩吧",R.drawable.image_scrolling_head),
-        new ForumItem("一起来玩吧",R.drawable.image_scrolling_head),
-        new ForumItem("一起来玩吧",R.drawable.image_scrolling_head)};
+private ForumItem[] forumItems={
+        new ForumItem("一起来玩吧","5","2",1,R.drawable.image_scrolling_head),
+
+       };
+    protected WeakReference<View> mRootView;//缓存fragment数据
     private List<ForumItem> forumItemList=new ArrayList<>();
     private ForumAdapter adapter;
     private GridLayoutManager manager;
@@ -47,14 +54,21 @@ private ForumItem[] forumItems={new ForumItem("一起来玩吧",R.drawable.image
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (mRootView == null || mRootView.get() == null) {
         View view = inflater.inflate(R.layout.forum_info, container, false);
+            mRootView = new WeakReference<View>(view);
         //initFlowLayout(view);
         initForum();
-        initSwipeRecyclerView(view);
-
+        initSwipeRecyclerView(view,inflater,container);
+        initRefresh(view);
         ButterKnife.bind(this, view);
-
-        return view;
+        } else {
+            ViewGroup parent = (ViewGroup) mRootView.get().getParent();
+            if (parent != null) {
+                parent.removeView(mRootView.get());
+            }
+        }
+        return mRootView.get();
     }
 
     @Override
@@ -70,7 +84,22 @@ private ForumItem[] forumItems={new ForumItem("一起来玩吧",R.drawable.image
             forumItemList.add(forumItems[index]);
         }
     }
-private  void initSwipeRecyclerView(View view){
+    public void initRefresh(View view){
+        RefreshLayout refreshLayout = (RefreshLayout)view.findViewById(R.id.forum_refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000);
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore(2000);
+            }
+        });
+    }
+private  void initSwipeRecyclerView(View view,LayoutInflater inflater, ViewGroup container){
     final SwipeMenuRecyclerView recyclerView=(SwipeMenuRecyclerView)view.findViewById(R.id.forum_recyclerView);
     adapter=new ForumAdapter(forumItemList);
     recyclerView.setAdapter(adapter);
@@ -102,6 +131,7 @@ private  void initSwipeRecyclerView(View view){
             adapter.notifyItemRemoved(position);
         }
     };
+
     recyclerView.setOnItemMoveListener(mItemMoveListener);// 监听拖拽，更新UI。
     // recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1, GridLayoutManager.VERTICAL, false));
     manager = new GridLayoutManager(ApplicationUtil.getContext(), 2);
@@ -113,10 +143,20 @@ private  void initSwipeRecyclerView(View view){
                 return 2;
             } else {
                 return 1;
+
             }
         }
     });
 
     recyclerView.setLayoutManager(manager);
+    recyclerView.setOnItemMoveListener(mItemMoveListener);// 监听拖拽，更新UI。
+    FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_forum);
+    fab.attachToRecyclerView(recyclerView);
+    fab.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ActivityUtils.startActivity(getActivity(), AddForumActivity.class, R.anim.enter_anim, R.anim.slide_out_right);
+        }
+    });
 }
 }

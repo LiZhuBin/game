@@ -12,9 +12,9 @@ android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/user_info_head"/>
-
     <include layout="@layout/user_info_content" />
 
 </LinearLayout>
+
 </android.support.v4.widget.NestedScrollView>
 

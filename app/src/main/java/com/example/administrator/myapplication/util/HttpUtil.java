@@ -1,5 +1,7 @@
 package com.example.administrator.myapplication.util;
 
+import com.example.administrator.myapplication.been.Activity;
+import com.example.administrator.myapplication.been.Forum;
 import com.example.administrator.myapplication.been.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +20,7 @@ import okhttp3.Response;
 
 public class HttpUtil {
     private static final String TAG = "HttpUtil";
-
+    private  static User me=null;
     public static void sendOkHttpResquest(String address,RequestBody body,okhttp3.Callback callback){
 
         OkHttpClient client=new OkHttpClient();
@@ -39,13 +41,43 @@ public class HttpUtil {
 
         client.newCall(request).enqueue(callback);
     }
-    public static List<User> parseUserJSONWithGSON(Response response){
+
+    public static List<User> getListUser(Response response){
         List<User> appList;
         appList = null;
         try {
             String responseData=response.body().string();
             Gson gson=new Gson();
             appList=gson.fromJson(responseData,new TypeToken<List<User>>(){}.getType());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return appList;
+    }
+    public static List<Activity> getListActivity(Response response){
+        List<Activity> appList;
+        appList = null;
+        try {
+            String responseData=response.body().string();
+            Gson gson=new Gson();
+            appList=gson.fromJson(responseData,new TypeToken<List<Activity>>(){}.getType());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return appList;
+    }
+    public static User getSingleUser(Response response){
+        return HttpUtil.getListUser(response).get(0);
+    }
+    public static List<Forum> parseForumJSONWithGSON(Response response){
+        List<Forum> appList;
+        appList = null;
+        try {
+            String responseData=response.body().string();
+            Gson gson=new Gson();
+            appList=gson.fromJson(responseData,new TypeToken<List<Forum>>(){}.getType());
 
         } catch (IOException e) {
             e.printStackTrace();

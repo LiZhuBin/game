@@ -27,13 +27,27 @@ public class User extends DataSupport implements Serializable{
     private String praise_num;
     private String name;
     private String friends;
-    private String readingActivities;
+    private String postActivities;
     private String collectActivities;
     private String doingActivities;
     private String completeActivities;
     private String image;
     private String password;
     private String posts;
+
+    public User(String id, String praise_num, String name, String friends, String postActivities, String collectActivities, String doingActivities, String completeActivities, String image, String password, String posts) {
+        this.id = id;
+        this.praise_num = praise_num;
+        this.name = name;
+        this.friends = friends;
+        this.postActivities = postActivities;
+        this.collectActivities = collectActivities;
+        this.doingActivities = doingActivities;
+        this.completeActivities = completeActivities;
+        this.image = image;
+        this.password = password;
+        this.posts = posts;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -51,9 +65,6 @@ public class User extends DataSupport implements Serializable{
         this.friends = friends;
     }
 
-    public void setReadingActivities(String readingActivities) {
-        this.readingActivities = readingActivities;
-    }
 
     public void setCollectActivities(String collectActivities) {
         this.collectActivities = collectActivities;
@@ -95,8 +106,12 @@ public class User extends DataSupport implements Serializable{
         return friends;
     }
 
-    public String getReadingActivities() {
-        return readingActivities;
+    public String getPostActivities() {
+        return postActivities;
+    }
+
+    public void setPostActivities(String postActivities) {
+        this.postActivities = postActivities;
     }
 
     public String getCollectActivities() {

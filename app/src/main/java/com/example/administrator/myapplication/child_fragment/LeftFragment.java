@@ -89,7 +89,7 @@ public class LeftFragment extends Fragment {
             @Override
             public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
                 LinearLayout l1=new LinearLayout(ApplicationUtil.getContext());
-                l1.setBackgroundColor(Color.GRAY);
+                l1.setBackgroundColor(Color.parseColor("#d1d1d1"));
                 l1.setOrientation(LinearLayout.VERTICAL);
                 ImageView logo=new ImageView(ApplicationUtil.getContext());
                 Glide.with(ApplicationUtil.getContext()).load(logos[i]).override(120,120).into(logo);
@@ -102,8 +102,9 @@ public class LeftFragment extends Fragment {
 
             @Override
             public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-                TextView textView=getTextView(20);
 
+                TextView textView=getTextView(20);
+                viewGroup.setBackgroundColor(Color.parseColor("#b3b3b3"));
                 textView.setText(getChild(i,i1).toString());
                 return textView;
 

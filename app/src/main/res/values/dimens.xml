@@ -7,4 +7,11 @@
     <dimen name="new_property">16sp</dimen>
     <dimen name="circle_radios">60dp</dimen>
     <dimen name="dp_70">70dp</dimen>
+    <dimen name="Fenxi">5dp</dimen>
+    <dimen name="HeadVIEW_bian">10dp</dimen>
+    <dimen name="HeadView_others">30dp</dimen>
+    <dimen name="Info_margin">5dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
 </resources>

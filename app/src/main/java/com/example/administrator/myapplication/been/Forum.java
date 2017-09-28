@@ -5,9 +5,8 @@ package com.example.administrator.myapplication.been;
  */
 
 public class Forum {
-    int id,userId,like;
-    String type,title,content,commentId,commentInfo,image;
-
+    int id,userId,like,imageId;
+    String type,title,content,commentId,commentInfo;
     public int getId() {
         return id;
     }
@@ -72,24 +71,25 @@ public class Forum {
         this.commentInfo = commentInfo;
     }
 
-    public String getImage() {
-        return image;
-    }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Forum(int id, int userId, int like, String type, String title, String content, String commentId, String commentInfo, String image) {
-
+    public Forum(int id, int userId, int like, int imageId, String type, String title, String content, String commentId, String commentInfo) {
         this.id = id;
         this.userId = userId;
         this.like = like;
+        this.imageId = imageId;
         this.type = type;
         this.title = title;
         this.content = content;
         this.commentId = commentId;
         this.commentInfo = commentInfo;
-        this.image = image;
+    }
+
+    public int getImageId() {
+
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 }

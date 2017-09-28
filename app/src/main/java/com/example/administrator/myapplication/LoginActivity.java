@@ -2,20 +2,19 @@ package com.example.administrator.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.administrator.myapplication.util.StringUtil;
+import com.example.administrator.myapplication.activity.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.icon_image)
     CircleImageView iconImage;
@@ -34,9 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        String getData=savedInstanceState.getString("friends");
-        Toast.makeText(this, getData+"", Toast.LENGTH_SHORT).show();
-        friendsId= StringUtil.httpArray(getData);
+//        String getData=savedInstanceState.getString("friends");
+//        Toast.makeText(this, getData+"", Toast.LENGTH_SHORT).show();
+//        friendsId= StringUtil.httpArray(getData);
 
         ButterKnife.bind(this);
 

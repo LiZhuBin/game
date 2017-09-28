@@ -6,7 +6,10 @@ package com.example.administrator.myapplication.util;
  */
 
 public class GlobalData {
-    public static String httpLocalhostAddress="http://10.0.2.2/";
-    public static String httpAddress="http://39.108.97.239:88/";
+
+    public static String httpAddressUser="http://39.108.97.239:88/game/user/";
+    public static String httpAddressActivity="http://39.108.97.239:88/game/activity/";
+    public static String httpAddressForum="http://39.108.97.239:88/game/forum/";
+    public static String httpAddressPicture="http://39.108.97.239:88/game/picture/";
 
 }

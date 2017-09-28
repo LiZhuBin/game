@@ -1,13 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-  <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+  <FrameLayout
+      android:layout_width="200dp" android:layout_height="40dp"
+      android:background="@drawable/rightdaohangtiao"
+      android:layout_gravity="end"
+      android:layout_marginTop="10dp"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/Refresh2"
+        android:layout_gravity="center_horizontal|right"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+        android:text="贴子列表"
+        android:layout_gravity="left|center"
+        android:layout_marginLeft="16dp"
+        style="@style/Title_textstyle"
+        />
+
+  </FrameLayout>
+  <com.scwang.smartrefresh.layout.SmartRefreshLayout
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/forum_refreshLayout"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:id="@+id/forum_recyclerView"
-      app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-</android.support.v4.widget.NestedScrollView>
+      app:srlPrimaryColor="@color/colorAccent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      app:srlAccentColor="@android:color/white"
+      app:srlEnablePreviewInEditMode="true"
+      >
+<com.scwang.smartrefresh.header.FunGameBattleCityHeader
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/forum_recyclerView"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+
+
+
+  <com.melnykov.fab.FloatingActionButton
+      android:id="@+id/fab_forum"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_marginBottom="130dp"
+      android:layout_marginRight="30dp"
+      android:src="@drawable/icon_fab_forum"
+      fab:fab_colorNormal="@color/bottom_color"
+      android:background="@android:color/transparent"
+      fab:fab_shadow="false"
+      />
+</FrameLayout>
+  </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>
