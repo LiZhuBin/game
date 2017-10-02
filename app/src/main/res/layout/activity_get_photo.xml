@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000"
+>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:id="@+id/getphoto_toolbar1"
+        android:layout_alignParentTop="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片与视频"
+                android:textSize="17dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                />
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="#32CD32"
+                android:id="@+id/completeButton"
+                android:layout_alignParentRight="true"
+                android:text="完成"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/GetPhoto"
+        android:text="Get"
+        android:visibility="gone"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Open_photomap"
+        android:text="Open"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/Show_Photo"
+        android:visibility="gone"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/RecyclerView_photoshow"
+        android:layout_below="@id/getphoto_toolbar1"
+        ></android.support.v7.widget.RecyclerView>
+
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#000"
+        android:alpha="0.5"
+        android:id="@+id/View1"
+        android:visibility="visible"
+        android:layout_below="@id/getphoto_toolbar1"
+        />
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbarbottom1"
+        android:layout_alignParentBottom="true"
+        android:text="为了占位而存在"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/overflowRecyclerview"
+        android:layout_below="@id/View1"
+        android:layout_above="@id/toolbarbottom1"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="vertical"
+        >
+    </android.support.v7.widget.RecyclerView>
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15dp"
+                android:id="@+id/Button_complete"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/Angle_rightbottom"
+                android:layout_alignBottom="@id/Button_complete"
+                android:layout_toRightOf="@id/Button_complete"
+                android:src="@drawable/rightbottomangle"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+
+
+</RelativeLayout>

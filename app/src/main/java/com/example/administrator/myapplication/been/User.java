@@ -21,6 +21,8 @@ public class User extends DataSupport implements Serializable{
      * image : picture/view.jpg
      * password : ddd
      * posts : 2|3
+     * attentionId:
+     *beattentionId:
      */
 
     private String id;
@@ -34,8 +36,26 @@ public class User extends DataSupport implements Serializable{
     private String image;
     private String password;
     private String posts;
+private String attentionId;
+private String beattentionId;
 
-    public User(String id, String praise_num, String name, String friends, String postActivities, String collectActivities, String doingActivities, String completeActivities, String image, String password, String posts) {
+    public String getAttentionId() {
+        return attentionId;
+    }
+
+    public void setAttentionId(String attentionId) {
+        this.attentionId = attentionId;
+    }
+
+    public String getBeattentionId() {
+        return beattentionId;
+    }
+
+    public void setBeattentionId(String beattentionId) {
+        this.beattentionId = beattentionId;
+    }
+
+    public User(String id, String praise_num, String name, String friends, String postActivities, String collectActivities, String doingActivities, String completeActivities, String image, String password, String posts,String attentionId,String beattentionId) {
         this.id = id;
         this.praise_num = praise_num;
         this.name = name;
@@ -47,6 +67,8 @@ public class User extends DataSupport implements Serializable{
         this.image = image;
         this.password = password;
         this.posts = posts;
+        this.attentionId=attentionId;
+        this.beattentionId=attentionId;
     }
 
     public void setId(String id) {

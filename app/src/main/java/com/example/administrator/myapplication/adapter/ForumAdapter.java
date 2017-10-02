@@ -10,14 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.activity.ForumActivity;
 import com.example.administrator.myapplication.thing_class.ForumItem;
 import com.example.administrator.myapplication.util.ApplicationUtil;
+import com.example.administrator.myapplication.util.GlobalData;
+import com.example.administrator.myapplication.util.StringUtil;
 import com.sackcentury.shinebuttonlib.ShineButton;
-import com.wx.goodview.GoodView;
 
 import java.util.List;
+
+import static com.example.administrator.myapplication.util.UiUtil.good;
 
 /**
  * Created by Administrator on 2017/9/8 0008.
@@ -27,7 +31,8 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
 
     private Context mContext;
     private List<ForumItem> mforumItem;
-    GoodView mGoodView;
+
+    private static final String TAG = "ForumAdapter";
     public ForumAdapter(List<ForumItem> mforumItem) {
         this.mforumItem = mforumItem;
     }
@@ -50,11 +55,11 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
             }
         });
 
-        mGoodView = new GoodView(ApplicationUtil.getContext());
+
         final ShineButton shineButton1 = (ShineButton) view.findViewById(R.id.forum_shineButton_like);
         final ShineButton shineButton2 = (ShineButton) view.findViewById(R.id.forum_shineButton_heart);
         good(view,shineButton1,"+1");
-        good(view,shineButton2,"+1");
+        good(view,shineButton2,"收藏成功");
         return holder;
     }
 
@@ -62,9 +67,10 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
             ForumItem forumItem=mforumItem.get(position);
             holder.forumTitle.setText(forumItem.getForumTitle());
-        holder.forumImage.setImageResource(forumItem.getForumImage());
+        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+forumItem.getForumImage()).into(holder.forumImage);
         holder.forumAddNum.setText(forumItem.getForumAddNum());
-
+        holder.forumLikeNum.setText(forumItem.getForumLikeNum());
+        holder.forumAddNum.setText(StringUtil.httpArrayStringLength(forumItem.getForumAddNum()));
     }
 
     @Override
@@ -85,17 +91,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
             forumLikeNum=(TextView)view.findViewById(R.id.forum_like_num);
         }
     }
-    public void good(View view, final ShineButton shineButton, final String str){
-        shineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(shineButton.isChecked()) {
-                    mGoodView.setText(str);
-                    mGoodView.show(view);
-                }
-            }
-        });
-    }
+
 
 
 

@@ -1,16 +1,14 @@
-package com.example.listview.z_ObjectClass;
-
+package com.example.administrator.myapplication.been;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.sql.Time;
 
 /**
- * Created by lenovo on 2017/9/6.
+ * Created by Administrator on 2017/10/1 0001.
  */
 
-public class News implements Serializable {
-
+public class Busine implements Serializable {
     public enum  NewType{
 
         LangRenSha(0),SanGuoSha(1),YouXiWang(2);
@@ -43,7 +41,7 @@ public class News implements Serializable {
     private NewType type ;
     private String  Creator;
     private long    ReadTime;
-    private Time    StartTime;
+    private Time StartTime;
 
     public String getCreator() {
         return Creator;
@@ -87,20 +85,20 @@ public class News implements Serializable {
         isUse = use;
     }
 
-    public News (NewType newType,int image_Res_id , String image_title , String bottom_title )
+    public Busine (NewType newType,int image_Res_id , String image_title , String bottom_title )
     {
         this(image_Res_id ,image_title ,bottom_title );
         type = newType ;
     }
 
-    public News(int image_Res_id , String image_title , String bottom_title ){
+    public Busine(int image_Res_id , String image_title , String bottom_title ){
 
         this.image_Res_id = image_Res_id;
         this.image_title  = image_title;
         this.bottom_title = bottom_title;
 
     }
-    public News(URL url , String image_title , String bottom_title ){
+    public Busine(URL url , String image_title , String bottom_title ){
 
         this.image_Uri_adress = url ;
         this.image_title  = image_title;
@@ -150,6 +148,4 @@ public class News implements Serializable {
         String[] typeString = { "狼人杀","三国杀","游戏王" };
         return typeString[newType];
     }
-
-
 }

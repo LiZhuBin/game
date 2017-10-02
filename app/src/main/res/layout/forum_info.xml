@@ -25,7 +25,7 @@
     <TextView
         android:text="贴子列表"
         android:layout_gravity="left|center"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="30dp"
         style="@style/Title_textstyle"
         />
 
@@ -47,15 +47,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+
+    <android.support.v7.widget.RecyclerView
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/forum_recyclerView"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
-
-
 
 
   <com.melnykov.fab.FloatingActionButton

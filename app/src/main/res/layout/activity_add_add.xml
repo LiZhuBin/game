@@ -178,11 +178,14 @@
 
                 </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/activity_add_forum_image_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/icon_image" />
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/add_chooseImage"
+                    android:src="@drawable/icon_image"
+                    android:background="#444444"
+                    android:layout_gravity="center"
+                    />
 
 
                 <Button

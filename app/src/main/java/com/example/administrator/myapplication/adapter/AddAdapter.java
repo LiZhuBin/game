@@ -1,6 +1,7 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.activity.AddActivity;
 import com.example.administrator.myapplication.thing_class.AddItem;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
@@ -34,7 +36,15 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         }
         View view= LayoutInflater.from(mContext).inflate(R.layout.add_right_item,parent,false);
         final ViewHolder holder=new ViewHolder(view);
-
+        holder.addView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position =holder.getAdapterPosition();
+                Intent intent = new Intent(ApplicationUtil.getContext(), AddActivity.class);
+                intent.putExtra("Object_userId",maddItem.get(position).getActivityId());
+                mContext.startActivity(intent);
+            }
+        });
         return holder;
     }
 

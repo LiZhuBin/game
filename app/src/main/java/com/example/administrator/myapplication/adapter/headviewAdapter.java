@@ -12,8 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.activity.PersonActivity;
+import com.example.administrator.myapplication.my_ui.Headview;
 import com.example.administrator.myapplication.util.ApplicationUtil;
-import com.example.administrator.myapplication.zairuclas.Headview;
+import com.example.administrator.myapplication.util.GlobalData;
 
 import java.util.List;
 
@@ -46,9 +47,9 @@ public class headviewAdapter extends RecyclerView.Adapter<headviewAdapter.HeadVi
             @Override
             public void onClick(View view) {
                 int position=holder.getAdapterPosition();
-                Intent intent=new Intent(ApplicationUtil.getContext(), PersonActivity.class);
-                intent.putExtra("Object_news",list.get(position));
-               context.startActivity(intent);
+                Intent intent = new Intent(ApplicationUtil.getContext(), PersonActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                context.startActivity(intent);
             }
         });
         return holder;
@@ -57,7 +58,7 @@ public class headviewAdapter extends RecyclerView.Adapter<headviewAdapter.HeadVi
     @Override
     public void onBindViewHolder(HeadViewHolder holder, int position) {
 
-        Glide.with(context).load(list.get(position).getImageview_url()).into(holder.imageview);
+        Glide.with(context).load(GlobalData.httpAddressPicture+list.get(position).getImageview_url()).into(holder.imageview);
         holder.userName.setText(list.get(position).getImageview_name());
         holder.pos=position;
     }

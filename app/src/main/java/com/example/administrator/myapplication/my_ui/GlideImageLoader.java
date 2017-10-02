@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.activity.NewsActivity;
+import com.example.administrator.myapplication.been.News;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -42,11 +43,11 @@ public class GlideImageLoader extends ImageLoader {
                 }
             });
         }
-        else if( path instanceof com.example.administrator.myapplication.been.News)  //如果传入的是新闻，那么直接提取里面的新闻让后去展示图片
+        else if( path instanceof News)  //如果传入的是新闻，那么直接提取里面的新闻让后去展示图片
         {
-            final com.example.administrator.myapplication.been.News one = (com.example.administrator.myapplication.been.News) path ;
-            int Id =  one.getImage_Res_id();
-            String title = one.getImage_title(); //这个title可能要通过其他地方去实现添加
+            final News one = (News) path ;
+            int Id =  one.getNew_drawable();
+            String title = one.getNew_title(); //这个title可能要通过其他地方去实现添加
 
             Glide.with(context).load(Id).into(imageView);
 
@@ -69,3 +70,4 @@ public class GlideImageLoader extends ImageLoader {
 
 
 }
+

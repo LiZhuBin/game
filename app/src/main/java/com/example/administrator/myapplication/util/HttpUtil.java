@@ -2,6 +2,7 @@ package com.example.administrator.myapplication.util;
 
 import com.example.administrator.myapplication.been.Activity;
 import com.example.administrator.myapplication.been.Forum;
+import com.example.administrator.myapplication.been.News;
 import com.example.administrator.myapplication.been.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -55,6 +56,19 @@ public class HttpUtil {
         }
         return appList;
     }
+    public static List<News> getListNews(Response response){
+        List<News> appList;
+        appList = null;
+        try {
+            String responseData=response.body().string();
+            Gson gson=new Gson();
+            appList=gson.fromJson(responseData,new TypeToken<List<News>>(){}.getType());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return appList;
+    }
     public static List<Activity> getListActivity(Response response){
         List<Activity> appList;
         appList = null;
@@ -68,9 +82,29 @@ public class HttpUtil {
         }
         return appList;
     }
+    public static List<Forum> getListForum(Response response){
+        List<Forum> appList;
+        appList = null;
+        try {
+            String responseData=response.body().string();
+            Gson gson=new Gson();
+            appList=gson.fromJson(responseData,new TypeToken<List<Forum>>(){}.getType());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return appList;
+    }
     public static User getSingleUser(Response response){
         return HttpUtil.getListUser(response).get(0);
     }
+    public static Activity getSingleActivity(Response response){
+        return HttpUtil.getListActivity(response).get(0);
+    }
+    public static Forum getSingleForum(Response response){
+        return HttpUtil.getListForum(response).get(0);
+    }
+
     public static List<Forum> parseForumJSONWithGSON(Response response){
         List<Forum> appList;
         appList = null;

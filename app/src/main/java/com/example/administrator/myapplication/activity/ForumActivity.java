@@ -37,15 +37,14 @@ public class ForumActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
-        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // getSupportActionBar().hide();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initForumContent();
         initForum();
         initRecycle();
+        ButterKnife.bind(this);
     }
 
     private void initRecycle() {

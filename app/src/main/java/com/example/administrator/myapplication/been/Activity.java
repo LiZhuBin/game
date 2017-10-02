@@ -1,10 +1,12 @@
 package com.example.administrator.myapplication.been;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/9/17 0017.
  */
 
-public class Activity {
+public class Activity implements Serializable {
     /**
      * id : 1
      * user_num : 0000000005

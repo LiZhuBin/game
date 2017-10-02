@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:autofit="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="8dp"
+
+            app:cardElevation="5dp"
+            >
+
+          <android.support.v4.widget.NestedScrollView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+            <com.allen.library.SuperTextView
+                style="@style/Super_style_unclick"
+                android:id="@+id/add_content_title"
+                app:sCenterTextString="标题"/>
+                  <TextView
+                      android:id="@+id/output_autofit"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="ffffffffffffffffffffffffffffffffffffffffff"
+                      android:textSize="50sp"
+                      android:gravity="center"
+                      autofit:minTextSize="8sp"
+                      />
+                  <com.allen.library.SuperTextView
+                      style="@style/Super_style_unclick"
+                      android:id="@+id/add_content_time"
+                      app:sLeftTextString="时间"/>
+                  <com.allen.library.SuperTextView
+                      style="@style/Super_style_unclick"
+                      android:id="@+id/add_content_address"
+                      app:sLeftTextString="地点"/>
+                  <com.allen.library.SuperTextView
+                      style="@style/Super_style_unclick"
+                      android:id="@+id/add_content_person"
+                      app:sLeftTextString="已加入"
+                      app:sRightTextString=" fff"
+                      app:sRightIconRes="@drawable/icon_user"/>
+              </LinearLayout>
+          </android.support.v4.widget.NestedScrollView>
+        </android.support.v7.widget.CardView>
+
+</LinearLayout>

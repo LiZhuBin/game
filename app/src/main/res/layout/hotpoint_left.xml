@@ -23,7 +23,7 @@
         <TextView
             android:text="热点"
             android:layout_gravity="right|center"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             style="@style/Title_textstyle"
             />
         </FrameLayout>

@@ -22,7 +22,6 @@ import java.util.Random;
 
 public class PostActivity extends BaseActivity {
     private ForumItem[] forumItems={
-            new ForumItem("一起来玩吧","5","2",1,R.drawable.image_scrolling_head),
 
     };
     private List<ForumItem> forumItemList=new ArrayList<>();

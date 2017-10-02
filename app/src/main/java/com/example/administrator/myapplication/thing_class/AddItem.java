@@ -7,13 +7,21 @@ import java.io.Serializable;
  */
 
 public class AddItem  implements Serializable {
-
+    public String activityId;
     public String imageId;
     String activityNum;
     String activityTitle;
     String activityContent;
     String activityTime;
     String activityAddress;
+
+    public String getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
+    }
 
     public String getImageId() {
         return imageId;
@@ -63,7 +71,8 @@ public class AddItem  implements Serializable {
         this.activityAddress = activityAddress;
     }
 
-    public AddItem(String  imageId, String activityNum, String activityTitle, String activityContent, String activityTime, String activityAddress) {
+    public AddItem(String activityId, String imageId, String activityNum, String activityTitle, String activityContent, String activityTime, String activityAddress) {
+        this.activityId = activityId;
         this.imageId = imageId;
         this.activityNum = activityNum;
         this.activityTitle = activityTitle;

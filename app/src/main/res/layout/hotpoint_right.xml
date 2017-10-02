@@ -31,7 +31,7 @@
     <TextView
         android:text="热帖"
         android:layout_gravity="left|center"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="30dp"
         style="@style/Title_textstyle"
         />
 

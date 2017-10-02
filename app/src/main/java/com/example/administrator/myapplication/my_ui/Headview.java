@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication.zairuclas;
+package com.example.administrator.myapplication.my_ui;
 
 import java.io.Serializable;
 
@@ -7,10 +7,18 @@ import java.io.Serializable;
  */
 
 public class Headview implements Serializable {
-
+private String id;
     private String Imageview_url;
     private String Imageview_name;
     private int Imageview_id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getImageview_id() {
         return Imageview_id;
@@ -28,7 +36,8 @@ public class Headview implements Serializable {
         Imageview_name = imageview_name;
     }
 
-    public Headview(String imageview_url, String imageview_name) {
+    public Headview(String id,String imageview_url, String imageview_name) {
+        this.id=id;
         Imageview_url = imageview_url;
         Imageview_name = imageview_name;
     }

@@ -21,22 +21,22 @@
         <TextView
             android:text="约战列表"
             android:layout_gravity="right|center"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             style="@style/Title_textstyle"
             />
 
     </FrameLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/forum_refreshLayout"
+        android:id="@+id/add_refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:srlPrimaryColor="@color/colorAccent"
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:srlAccentColor="@android:color/white"
         app:srlEnablePreviewInEditMode="true"
         >
-        <com.scwang.smartrefresh.header.FunGameBattleCityHeader
+        <com.scwang.smartrefresh.header.FunGameHitBlockHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <FrameLayout

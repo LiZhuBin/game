@@ -2,8 +2,6 @@ package com.example.administrator.myapplication.been;
 
 
 import java.io.Serializable;
-import java.net.URL;
-import java.sql.Time;
 
 /**
  * Created by lenovo on 2017/9/6.
@@ -11,6 +9,15 @@ import java.sql.Time;
 
 public class News implements Serializable {
 
+
+    /**
+     * new_id : 1
+     * new_title : 王者荣耀新英雄女娲，逆天技能成就最强法师！
+     * new_content : 女娲是很久之前就开始制作的一个英雄了。不过多次上下体验服，更有传闻女娲不会上线正式服了。不过，随着最近一次体验服的更新，女娲又一次出现在了体验服，而且还有技能展示哦.其实在背景故事中，女娲就已经存在很久了。所以，这个英雄的上线是迟早的问题。具体技能介绍王者解说就不在叙述了，小伙伴们可以自己看下图片哦。不过王者解说还是要说句，目前体验服的女娲绝对是几大英雄的结合体。女娲一共三个主动技能，并非之前传说的有四个技能。而这三个主动技能，分别是墨子的一技能，周瑜的一技能，黄忠的大招。
+     * new_image : new/post/post1.jpg
+     * new_comment_id : 2
+     * new_comment : 111
+     */
     public enum  NewType{
 
         LangRenSha(0),SanGuoSha(1),YouXiWang(2);
@@ -31,115 +38,89 @@ public class News implements Serializable {
             return super.toString();
         }
     }
+    private String new_id;
+    private String new_title;
+    private String new_content;
+    private String new_image;
+    private String new_comment_id;
+    private String new_comment;
+private int new_drawable;
 
-
-
-
-
-    private String  image_title;
-    private String  bottom_title ;
-    private int    image_Res_id ;
-    private URL     image_Uri_adress;
-    private NewType type ;
-    private String  Creator;
-    private long    ReadTime;
-    private Time    StartTime;
-
-    public String getCreator() {
-        return Creator;
+    public int getNew_drawable() {
+        return new_drawable;
     }
 
-    public void setCreator(String creator) {
-        Creator = creator;
+    public void setNew_drawable(int new_drawable) {
+        this.new_drawable = new_drawable;
     }
 
-    public long getReadTime() {
-        return ReadTime;
+    public News(int new_drawable, String new_title, String new_content) {
+        this.new_title = new_title;
+        this.new_content = new_content;
+        this.new_drawable = new_drawable;
     }
 
-    public void setReadTime(long readTime) {
-        ReadTime = readTime;
+    public void setNew_id(String new_id) {
+        this.new_id = new_id;
     }
 
-    public Time getStartTime() {
-        return StartTime;
+    public void setNew_title(String new_title) {
+        this.new_title = new_title;
     }
 
-    public void setStartTime(Time startTime) {
-        StartTime = startTime;
+    public void setNew_content(String new_content) {
+        this.new_content = new_content;
     }
 
-    public NewType getType() {
-        return type;
+    public void setNew_image(String new_image) {
+        this.new_image = new_image;
     }
 
-    public void setType(NewType type) {
-        this.type = type;
+    public void setNew_comment_id(String new_comment_id) {
+        this.new_comment_id = new_comment_id;
     }
 
-    private boolean isUse ;
-
-    public boolean isUse() {
-        return isUse;
+    public void setNew_comment(String new_comment) {
+        this.new_comment = new_comment;
     }
 
-    public void setUse(boolean use) {
-        isUse = use;
+    public String getNew_id() {
+        return new_id;
     }
 
-    public News (NewType newType,int image_Res_id , String image_title , String bottom_title )
-    {
-        this(image_Res_id ,image_title ,bottom_title );
-        type = newType ;
+    public String getNew_title() {
+        return new_title;
     }
 
-    public News(int image_Res_id , String image_title , String bottom_title ){
-
-        this.image_Res_id = image_Res_id;
-        this.image_title  = image_title;
-        this.bottom_title = bottom_title;
-
-
-    }
-    public News(URL url , String image_title , String bottom_title ){
-
-        this.image_Uri_adress = url ;
-        this.image_title  = image_title;
-        this.bottom_title = bottom_title;
-
-
+    public String getNew_content() {
+        return new_content;
     }
 
-
-    public String getImage_title() {
-        return image_title;
+    public String getNew_image() {
+        return new_image;
     }
 
-    public void setImage_title(String image_title) {
-        this.image_title = image_title;
+    public String getNew_comment_id() {
+        return new_comment_id;
     }
 
-    public String getBottom_title() {
-        return bottom_title;
+    public String getNew_comment() {
+        return new_comment;
     }
 
-    public void setBottom_title(String bottom_title) {
-        this.bottom_title = bottom_title;
+    public News(String new_id, String new_title, String new_content, String new_image) {
+        this.new_id = new_id;
+        this.new_title = new_title;
+        this.new_content = new_content;
+        this.new_image = new_image;
     }
 
-    public int getImage_Res_id() {
-        return image_Res_id;
-    }
-
-    public void setImage_Res_id(int image_Res_id) {
-        this.image_Res_id = image_Res_id;
-    }
-
-    public URL getImage_Uri_adress() {
-        return image_Uri_adress;
-    }
-
-    public void setImage_Uri_adress(URL image_Uri_adress) {
-        this.image_Uri_adress = image_Uri_adress;
+    public News(String new_id, String new_title, String new_content, String new_image, String new_comment_id, String new_comment) {
+        this.new_id = new_id;
+        this.new_title = new_title;
+        this.new_content = new_content;
+        this.new_image = new_image;
+        this.new_comment_id = new_comment_id;
+        this.new_comment = new_comment;
     }
 }

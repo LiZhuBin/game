@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.activity.NewsActivity;
 import com.example.administrator.myapplication.been.News;
+import com.example.administrator.myapplication.util.GlobalData;
+import com.example.administrator.myapplication.util.LogUtil;
 
 import java.util.List;
 
@@ -43,9 +45,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         News Currentview = news_list.get(position);
-        holder.ima_title.setText(Currentview.getImage_title());
-        holder.bottom_title.setText(Currentview.getBottom_title());
-        Glide.with(myContext).load(Currentview.getImage_Res_id()).into(holder.ima_big);
+        holder.ima_title.setText(Currentview.getNew_title());
+        holder.bottom_title.setText(Currentview.getNew_content());
+        LogUtil.d(Currentview.getNew_image()+"-----------------------");
+        Glide.with(myContext).load(GlobalData.httpAddressPicture+Currentview.getNew_image()).into(holder.ima_big);
         holder.pos=position;
     }
 
@@ -66,12 +69,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             ima_big = (ImageView)itemView.findViewById(R.id.Big_Image);
             ima_title = (TextView)itemView.findViewById(R.id.Photo_title);
             bottom_title = (TextView)itemView.findViewById(R.id.BottomText);
-            String title  = news_list.get(pos).getImage_title();
+
                     itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(myContext, NewsActivity.class);
-               //  intent.putExtra("bottom_text",news_list.get(pos).getBottom_title());
                    intent.putExtra("Object_news",news_list.get(pos));
                     myContext.startActivity(intent);
 

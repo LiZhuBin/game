@@ -14,15 +14,11 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/icon_add1"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:textColor="@color/white"
+
+            style="@style/text_center_white_style"
             android:layout_toRightOf="@+id/imageView2"
-            android:text="10"
             android:id="@+id/forum_add_num"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true" />
+        />
 
     <com.sackcentury.shinebuttonlib.ShineButton
         android:id="@+id/forum_shineButton_like"
@@ -67,13 +63,9 @@
 
     <TextView
         android:id="@+id/forum_like_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
+        style="@style/text_center_white_style"
         android:layout_toEndOf="@+id/forum_shineButton_like"
         android:layout_toRightOf="@+id/forum_shineButton_like"
-        android:text="0"
        />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.thing_class.Msg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,9 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // getSupportActionBar().hide();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initMsgs(); //初始化消息数据
-
         inputText=(EditText)findViewById(R.id.input_text);
         send=(Button)findViewById(R.id.send);
         msgRecyclerView=(RecyclerView)findViewById(R.id.msg_recycler_view);
@@ -56,11 +55,6 @@ public class ChatActivity extends BaseActivity {
     }
 
     private  void initMsgs(){
-        Msg msg1=new Msg("Hello guy.",Msg.TYPE_RECEIVED);
-        msgList.add(msg1);
-        Msg msg2=new Msg("Hello.Who is that?",Msg.TYPE_SEND);
-        msgList.add(msg2);
-        Msg msg3=new Msg("This is Tom.Nice talking to you.",Msg.TYPE_RECEIVED);
-        msgList.add(msg3);
+
     }
 }

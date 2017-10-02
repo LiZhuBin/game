@@ -2,11 +2,13 @@ package com.example.administrator.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -27,7 +29,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
     private static final String TAG = "MainActivity";
-
+    private boolean mIsExit;
     private  BottomNavigationViewEx navigation;
     private ViewPager viewPager;
 
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         adapter.addFragment(new ForumFragment());
         adapter.addFragment(new UserFragment());
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
 
@@ -174,6 +177,23 @@ public void initBottomNavigationViewEx(){
             SPUtil.put(MainActivity.this, "UserId", "1");
         }
 
+    }
+    @Override /** * 双击返回键退出 */
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mIsExit) {
+                this.finish();
+            } else {
+                TastyToast.makeText(getApplicationContext(), "再按一次退出", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                mIsExit = true;
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override public void run() {
+                        mIsExit = false;
+                    }
+                }, 2000);
+            } return true;
+        } return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -16,7 +16,7 @@
     <application
         android:name=".util.ApplicationUtil"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -24,7 +24,8 @@
         tools:replace="android:icon, android:theme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +43,8 @@
             android:name=".activity.ForumActivity"
             android:label="帖子详情" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.AddActivity" />
+        <activity android:name=".activity.AddActivity"
+            android:label="约战信息" />
         <activity
             android:name=".activity.NewsActivity"
             android:label="热点" />
@@ -58,7 +60,9 @@
         <activity
             android:name=".activity.AddAddActivity"
             android:label="帖子填写" />
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.PhotoViewActivity" />
+        <activity android:name=".activity.GetPhotoActivity"></activity>
     </application>
 
 </manifest>

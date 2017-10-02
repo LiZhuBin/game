@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/activity_forum_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
 >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_image"
         android:layout_width="40dp"
@@ -49,13 +55,5 @@
         android:text="师兄师姐或专业认识 本新生纺织工程，请问买什么牌的电脑好呀？具体到型号，要求不多，能上网刷剧"
         android:textSize="16sp"
         android:layout_below="@+id/title"/>
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/image_whilte_me"
-        android:scaleType="centerCrop"
-        android:layout_below="@+id/detile"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

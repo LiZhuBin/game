@@ -1,95 +1,103 @@
 package com.example.administrator.myapplication.been;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/9/17 0017.
  */
 
-public class Forum {
-    int id,userId,like,imageId;
-    String type,title,content,commentId,commentInfo;
-    public int getId() {
-        return id;
-    }
+public class Forum implements Serializable {
+    /**
+     * id : 1
+     * type : 狼人杀
+     * userId : 1
+     * title : 狼人杀心得
+     * content : 平安夜预言家最好别跳
+     * commentId : 1|2
+     * commentInfo : 说得对|我反对
+     * image : forum/狼人杀/picture1.jpg
+     * like : 0000000005
+     */
 
-    public void setId(int id) {
+    private String id;
+    private String type;
+    private String userId;
+    private String title;
+    private String content;
+    private String commentId;
+    private String commentInfo;
+    private String image;
+    private String like;
+
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getLike() {
-        return like;
-    }
-
-    public void setLike(int like) {
-        this.like = like;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
-    public String getTitle() {
-        return title;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
-
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getCommentId() {
-        return commentId;
     }
 
     public void setCommentId(String commentId) {
         this.commentId = commentId;
     }
 
-    public String getCommentInfo() {
-        return commentInfo;
-    }
-
     public void setCommentInfo(String commentInfo) {
         this.commentInfo = commentInfo;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-    public Forum(int id, int userId, int like, int imageId, String type, String title, String content, String commentId, String commentInfo) {
-        this.id = id;
-        this.userId = userId;
+    public void setLike(String like) {
         this.like = like;
-        this.imageId = imageId;
-        this.type = type;
-        this.title = title;
-        this.content = content;
-        this.commentId = commentId;
-        this.commentInfo = commentInfo;
     }
 
-    public int getImageId() {
-
-        return imageId;
+    public String getId() {
+        return id;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public String getType() {
+        return type;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public String getCommentInfo() {
+        return commentInfo;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getLike() {
+        return like;
     }
 }

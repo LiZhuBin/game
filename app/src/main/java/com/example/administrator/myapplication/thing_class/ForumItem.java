@@ -7,8 +7,16 @@ import java.io.Serializable;
  */
 
 public class ForumItem implements Serializable {
-   String forumTitle,forumAddNum,forumLikeNum;
-    int id,forumImage;
+   String forumTitle,forumAddNum,forumLikeNum,forumImage;
+    int id;
+
+    public String getForumImage() {
+        return forumImage;
+    }
+
+    public void setForumImage(String forumImage) {
+        this.forumImage = forumImage;
+    }
 
     public int getId() {
         return id;
@@ -42,19 +50,15 @@ public class ForumItem implements Serializable {
         this.forumLikeNum = forumLikeNum;
     }
 
-    public int getForumImage() {
-        return forumImage;
+    public ForumItem() {
     }
 
-    public void setForumImage(int forumImage) {
-        this.forumImage = forumImage;
-    }
+    public ForumItem(String forumTitle, String forumAddNum, String forumLikeNum, String forumImage, int id) {
 
-    public ForumItem(String forumTitle, String forumAddNum, String forumLikeNum, int id, int forumImage) {
         this.forumTitle = forumTitle;
         this.forumAddNum = forumAddNum;
         this.forumLikeNum = forumLikeNum;
-        this.id = id;
         this.forumImage = forumImage;
+        this.id = id;
     }
 }

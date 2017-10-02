@@ -20,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SwipeBackHelper.onCreate(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
     }
 
     @Override
@@ -52,5 +53,4 @@ public class BaseActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
 }

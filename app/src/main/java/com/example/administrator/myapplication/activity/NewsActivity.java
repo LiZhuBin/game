@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.been.News;
+import com.example.administrator.myapplication.util.GlobalData;
 
 
 public class NewsActivity extends BaseActivity {
@@ -22,9 +23,6 @@ public class NewsActivity extends BaseActivity {
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar)findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
-
-
-
         getNews();
         initLayoutview();
 
@@ -54,13 +52,17 @@ public class NewsActivity extends BaseActivity {
 
     private void initLayoutview() {
 
-        ImageView imageview = (ImageView)findViewById(R.id.NEWActivity_imageview);
+        ImageView imageview = (ImageView)findViewById(R.id.image_inside);
         // TextView  textview_title = (TextView)findViewById(R.id.NewAcitivity_titletext);
         TextView textview_main_content = (TextView)findViewById(R.id.NewAcitivity_Title_mainText);
-        int ImageId = one.getImage_Res_id() ;
-        String Main_Context = one.getBottom_title();
-        String Title_Context = one.getImage_title();
-        Glide.with(this).load(ImageId).into(imageview);
+
+        String Main_Context = one.getNew_content();
+        String Title_Context = one.getNew_title();
+        if(one.getNew_image()!=null) {
+            Glide.with(this).load(GlobalData.httpAddressPicture + one.getNew_image()).into(imageview);
+        }else {
+            Glide.with(this).load(one.getNew_drawable()).into(imageview);
+        }
         //       textview_title.setText(Title_Context);
         textview_main_content.setText(Main_Context);
         ImageView imageView = (ImageView)findViewById(R.id.Back_button);
