@@ -18,7 +18,7 @@
 
 
         <TextView
-            android:text="人物"
+            android:text="约战列表"
             android:layout_gravity="right|center"
             android:layout_marginRight="16dp"
             style="@style/Title_textstyle"
@@ -26,7 +26,7 @@
 
     </FrameLayout>
 
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

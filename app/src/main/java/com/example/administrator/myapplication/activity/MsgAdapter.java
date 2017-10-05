@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.thing_class.Msg;
+import com.example.administrator.myapplication.util.ApplicationUtil;
+import com.example.administrator.myapplication.util.GlobalData;
 
 import java.util.List;
 
@@ -25,12 +29,15 @@ public class MsgAdapter extends RecyclerView.Adapter <MsgAdapter.ViewHolder>{
 
         LinearLayout leftLayout;
         FrameLayout rightLayout;
-
+        ImageView otherImage;
+        ImageView meImage;
         TextView leftMsg;
         TextView rightMsg;
 
         public ViewHolder(View view) {
             super(view);
+            otherImage=(ImageView)view.findViewById(R.id.chat_image_other);
+            meImage=(ImageView)view.findViewById(R.id.chat_image_me);
             leftLayout=(LinearLayout)view.findViewById(R.id.left_layout);
             rightLayout=(FrameLayout)view.findViewById(R.id.right_layout);
             leftMsg=(TextView)view.findViewById(R.id.left_msg);
@@ -57,11 +64,14 @@ public class MsgAdapter extends RecyclerView.Adapter <MsgAdapter.ViewHolder>{
             holder.leftLayout.setVisibility(View.VISIBLE);
             holder.rightLayout.setVisibility(View.GONE);
             holder.leftMsg.setText(msg.getContent());
+            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+msg.getImageUrl()).into(holder.otherImage);
         }else if(msg.getType()==Msg.TYPE_SEND){
             //如果是发出的消息 ，则显示右边的消息布局，将左边的消息布局隐藏
             holder.rightLayout.setVisibility(View.VISIBLE);
             holder.leftLayout.setVisibility(View.GONE);
             holder.rightMsg.setText(msg.getContent());
+            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+msg.getImageUrl()).into(holder.meImage);
+
         }
     }
 

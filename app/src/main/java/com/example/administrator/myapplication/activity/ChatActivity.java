@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.base.BaseActivity;
 import com.example.administrator.myapplication.thing_class.Msg;
+import com.example.administrator.myapplication.util.LogUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,10 @@ public class ChatActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        if (savedInstanceState != null) {
+            msgList= (List<Msg>) savedInstanceState.getSerializable("msgList");
+            LogUtil.d(msgList.get(0).getContent()+"<<<<<<<<<");
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,6 +59,12 @@ public class ChatActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("msgList", (Serializable) msgList);
     }
 
     private  void initMsgs(){

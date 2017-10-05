@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:diagonal="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:id="@+id/user_info_background">
@@ -24,9 +25,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView android:id="@+id/iv_blur"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+
+                    <com.flaviofaria.kenburnsview.KenBurnsView
+                        android:id="@+id/user_myBigImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_scrolling_head" />
+
+
                 <TextView
                     android:id="@+id/my_name"
                     android:layout_width="wrap_content"

@@ -10,62 +10,7 @@
     android:transitionName="shareNames"
     >
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:fitsSystemWindows="true"
-        android:background="@color/colorAccent"
-        >
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorAccent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:src="@drawable/image_activity_background"
-                android:scaleType="fitXY"/>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/activity_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:layout_collapseMode="pin"
-                android:theme="@style/MyToolbar"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:id="@+id/Back_button"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/back_button5"
-                        android:layout_gravity="center"
-                        android:padding="5dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="热点"
-                        android:gravity="center"
-                        android:textSize="30dp"/>
-                </LinearLayout>
-
-            </android.support.v7.widget.Toolbar>
-
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/base_collapsing_toolbar"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -98,10 +43,10 @@
                         android:layout_height="30dp"
                         android:src="@drawable/icon_sort" />
 
-                    <EditText
+                    <com.alimuzaffar.lib.widgets.AnimatedEditText
                         android:id="@+id/activity_add_forum_title_edittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        app:animationType="fromRight"
+                        style="@style/animated_edit_text"
                         android:hint="标题" />
 
                 </LinearLayout>
@@ -116,10 +61,10 @@
                         android:layout_height="30dp"
                         android:src="@drawable/icon_type" />
 
-                    <EditText
+                    <com.alimuzaffar.lib.widgets.AnimatedEditText
                         android:id="@+id/activity_add_forum_type_edittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/animated_edit_text"
+                        app:animationType="fromRight"
                         android:hint="游戏类型" />
 
                 </LinearLayout>
@@ -134,10 +79,10 @@
                         android:layout_height="30dp"
                         android:src="@drawable/icon_content" />
 
-                    <EditText
+                    <com.alimuzaffar.lib.widgets.AnimatedEditText
                         android:id="@+id/activity_add_forum_date_edittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/animated_edit_text"
+                        app:animationType="fromRight"
                         android:hint="日期" />
                 </LinearLayout>
 
@@ -152,10 +97,10 @@
                         android:layout_height="30dp"
                         android:src="@drawable/icon_place" />
 
-                    <EditText
+                    <com.alimuzaffar.lib.widgets.AnimatedEditText
                         android:id="@+id/activity_add_forum_place_edittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/animated_edit_text"
+                        app:animationType="fromRight"
                         android:hint="地点" />
                 </LinearLayout>
 
@@ -169,11 +114,12 @@
                         android:layout_height="30dp"
                         android:src="@drawable/icon_content" />
 
-                    <EditText
+                    <com.alimuzaffar.lib.widgets.AnimatedEditText
                         android:id="@+id/activity_add_forum_content_edittext"
-                        android:layout_width="match_parent"
+                        app:animationType="fromRight"
                         android:layout_height="80dp"
                         android:gravity="top|left"
+                        style="@style/animated_edit_text"
                         android:hint="内容" />
 
                 </LinearLayout>
@@ -188,11 +134,16 @@
                     />
 
 
-                <Button
+                <com.allen.library.SuperButton
                     android:id="@+id/activity_add_forum_send_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
+                    app:sSolidColor="@color/colorAccent"
+                    app:sStrokeColor="@color/black"
+                    app:sCornersRadius="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_gravity="center"
                     android:text="立即发送"
                     android:textSize="20dp" />
 

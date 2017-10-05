@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.ForumAdapter;
+import com.example.administrator.myapplication.base.BaseActivity;
 import com.example.administrator.myapplication.thing_class.ForumItem;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;

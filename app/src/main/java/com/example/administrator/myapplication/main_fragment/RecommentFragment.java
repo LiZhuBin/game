@@ -32,6 +32,7 @@ import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
 import com.example.administrator.myapplication.util.StringUtil;
+import com.hanks.htextview.line.LineTextView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -58,7 +59,7 @@ public class RecommentFragment extends Fragment  {
     RecyclerView hottieRecyclerview;
     long    Reflash = 1500;
     List<Headview> headviewslist;
-
+    private LineTextView hTextView;
     private List<ForumItem> forumItemList=new ArrayList<>();
     private ForumAdapter forumAdapter;
     private GridLayoutManager manager;
@@ -83,6 +84,8 @@ public class RecommentFragment extends Fragment  {
                 parent.removeView(mRootView.get());
             }
         }
+
+
         return mRootView.get();
     }
 
@@ -124,6 +127,7 @@ public class RecommentFragment extends Fragment  {
         }
     }
     public void initRefresh(final View view){
+
         initHeadviewlist(view);
         initForum();
         initNewlist();
@@ -157,7 +161,7 @@ public class RecommentFragment extends Fragment  {
             public void onResponse(Call call, Response response) throws IOException {
                 List<Forum> appList = HttpUtil.getListForum(response);
                 for (final Forum forum : appList) {
-                    ForumItem forumItem=new ForumItem(forum.getTitle(), StringUtil.httpArrayStringLength(forum.getCommentId()),forum.getLike(),forum.getImage(),Integer.parseInt(forum.getId()));
+                    ForumItem forumItem=new ForumItem(forum.getTitle(), StringUtil.httpArrayStringLength(forum.getComment()),forum.getLike(),forum.getImage(),forum.getId());
                     forumItemList.add(forumItem);
                 }
             }

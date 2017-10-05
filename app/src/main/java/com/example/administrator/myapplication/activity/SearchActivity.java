@@ -5,6 +5,7 @@ import android.view.MenuItem;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.base.BaseActivity;
 
 public class SearchActivity extends BaseActivity {
 

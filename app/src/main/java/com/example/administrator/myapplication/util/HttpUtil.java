@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -20,10 +21,14 @@ import okhttp3.Response;
  */
 
 public class HttpUtil {
+    private  static String string = null;
     private static final String TAG = "HttpUtil";
-    private  static User me=null;
-    public static void sendOkHttpResquest(String address,RequestBody body,okhttp3.Callback callback){
-
+    public   static User user=null;
+    public static Forum forum=null;
+    public static void sendOkHttpResquest(String address,String id,okhttp3.Callback callback){
+        RequestBody body = new FormBody.Builder()
+                .add("id", id)//添加键值对
+                .build();
         OkHttpClient client=new OkHttpClient();
         Request request=new Request.Builder()
                 .url(address)
@@ -82,6 +87,7 @@ public class HttpUtil {
         }
         return appList;
     }
+
     public static List<Forum> getListForum(Response response){
         List<Forum> appList;
         appList = null;
@@ -118,4 +124,6 @@ public class HttpUtil {
         }
         return appList;
     }
+
+
 }

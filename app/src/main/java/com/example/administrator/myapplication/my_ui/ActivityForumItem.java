@@ -5,6 +5,25 @@ package com.example.administrator.myapplication.my_ui;
  */
 
 public class ActivityForumItem {
+    public String mImageUrl;
+
+    public ActivityForumItem(String mImageUrl, String mUsername, String mLou, String mTime, String mDetile) {
+        this.mImageUrl = mImageUrl;
+        this.mUsername = mUsername;
+        this.mLou = mLou;
+        this.mTime = mTime;
+        this.mDetile = mDetile;
+    }
+
+    public String getmImageUrl() {
+
+        return mImageUrl;
+    }
+
+    public void setmImageUrl(String mImageUrl) {
+        this.mImageUrl = mImageUrl;
+    }
+
     public int mImageId;
     public String mUsername;
     public String mLou;

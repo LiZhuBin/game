@@ -10,22 +10,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
   >
     <include layout="@layout/collapsing_toolbar"/>
-    <android.support.v4.widget.NestedScrollView
+    <com.example.administrator.myapplication.my_ui.MyViewPager
+        android:id="@+id/vp_2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-       >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<include layout="@layout/activity_forum_content"/>
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_forum_recycler"
-        android:layout_below="@+id/activity_forum_content"/>
-            <include layout="@layout/send" />
-    </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
-
+        />
+    <include layout="@layout/floating_button"/>
     </android.support.design.widget.CoordinatorLayout>

@@ -44,6 +44,7 @@
             android:label="帖子详情" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.AddActivity"
+            android:icon="@drawable/ic_dashboard_black_24dp"
             android:label="约战信息" />
         <activity
             android:name=".activity.NewsActivity"

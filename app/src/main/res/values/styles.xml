@@ -8,7 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
         <item name="android:windowIsTranslucent">true</item>
+        
         //set the right in/out animation of Activity,you can change this to yours
         <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
 
@@ -44,7 +46,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:clickable">true</item>
-
     </style>
 <style name="Super_style_unclick">
     <item name="android:layout_width">match_parent</item>
@@ -74,4 +75,17 @@
         <item name="android:text">text</item>
         <item name="android:textSize">25dp</item>
     </style>
+
+
+    <style name="animated_edit_text">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:textColorHint">#888888</item>
+        <item name="android:background">@drawable/rounded_edittext</item>
+        <item name="android:paddingBottom">25dip</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 </resources>

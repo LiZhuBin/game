@@ -14,10 +14,13 @@
     android:id="@+id/my_attention"
     stv:sLeftTopTextString="我关注的人"
     stv:sLeftBottomTextString="5"
-    stv:sCenterTextString="我的点赞数"
+    stv:sLeftBottomTextSize="@dimen/super_textview_bottom_text"
+    stv:sCenterTopTextString="我的点赞数"
     stv:sCenterBottomTextString="4"
+    stv:sCenterBottomTextSize="@dimen/super_textview_bottom_text"
     stv:sRightTopTextString="关注我的人"
-    stv:sRightBottomTextString="5"/>
+    stv:sRightBottomTextString="5"
+    stv:sRightBottomTextSize="@dimen/super_textview_bottom_text"/>
             <com.allen.library.SuperTextView
                 android:id="@+id/my_activities"
              style="@style/Super_style"

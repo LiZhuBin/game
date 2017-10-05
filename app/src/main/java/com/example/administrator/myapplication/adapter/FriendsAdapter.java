@@ -1,10 +1,10 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -12,6 +12,7 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.thing_class.Friends;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
+import com.example.administrator.myapplication.util.IntentHelp;
 
 import java.util.List;
 
@@ -21,39 +22,59 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by 10619 on 2017/9/11.
  */
 
-public class FriendsAdapter extends ArrayAdapter<Friends> {
+public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder>{
+    private Context context;
+  private List<Friends>friendsList;
 
-    private int resourceId;
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-    public FriendsAdapter(Context context, int textViewResourceId, List<Friends> objects){
-        super(context,textViewResourceId,objects);
-        resourceId=textViewResourceId;
+        if (context == null )
+        {
+            context = parent.getContext();
+        }
+        View view = LayoutInflater.from(context).inflate(R.layout.friends_item, parent, false);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.friendView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+               context .startActivity(IntentHelp.toPersonActivity(friendsList.get(position).getId()));
+
+            }
+        });
+        return holder;
+    }
+
+    public FriendsAdapter(List<Friends> friendsList) {
+        this.friendsList = friendsList;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Friends friends=getItem(position);//获取当前项的Friends实例
-        View view;
-        ViewHolder viewHolder;
-        if(convertView==null){
-            view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-            viewHolder=new ViewHolder();
-            viewHolder.friendsImage=(CircleImageView)view.findViewById(R.id.friends_image);
-            viewHolder.friendsName=(TextView)view.findViewById(R.id.friends_name);
-            view.setTag(viewHolder);
-        }else{
-            view=convertView;
-            viewHolder=(ViewHolder)view.getTag();
-        }
-        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+friends.getImageUrl()).into(viewHolder.friendsImage);
-        viewHolder.friendsName.setText(friends.getName());
-        return view;
+    public void onBindViewHolder(ViewHolder holder, int position) {
+Friends friends=friendsList.get(position);
+        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+friends.getImageUrl()).into(holder.friendsImage);
+        holder.friendsName.setText(friends.getName());
     }
 
-    class ViewHolder{
-        CircleImageView friendsImage;
+    @Override
+    public int getItemCount() {
+        return friendsList.size();
+    }
 
+
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        CircleImageView friendsImage;
+    View friendView;
         TextView friendsName;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            friendView=itemView;
+            friendsImage=(CircleImageView)itemView.findViewById(R.id.friends_image);
+            friendsName=(TextView)itemView.findViewById(R.id.friends_name);
+        }
     }
 
 }

@@ -6,21 +6,20 @@
         android:layout_alignParentBottom="true"
         >
 
-        <EditText
-            android:id="@+id/input_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Type something here"
-            android:maxLines="2"/>
+    <com.alimuzaffar.lib.widgets.AnimatedEditText
+        android:id="@+id/input_text"
+        android:hint="评论:"
 
-        <Button
+        android:layout_weight="1"
+    style="@style/animated_edit_text"/>
+
+    <com.allen.library.SuperButton
             android:layout_margin="5dp"
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#000"
-            android:alpha="0.4"
+
             android:textColor="@color/white"
             android:text="Send"/>
 

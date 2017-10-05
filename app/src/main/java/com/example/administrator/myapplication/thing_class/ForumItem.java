@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class ForumItem implements Serializable {
    String forumTitle,forumAddNum,forumLikeNum,forumImage;
-    int id;
+    String id;
 
     public String getForumImage() {
         return forumImage;
@@ -18,11 +18,11 @@ public class ForumItem implements Serializable {
         this.forumImage = forumImage;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -53,7 +53,7 @@ public class ForumItem implements Serializable {
     public ForumItem() {
     }
 
-    public ForumItem(String forumTitle, String forumAddNum, String forumLikeNum, String forumImage, int id) {
+    public ForumItem(String forumTitle, String forumAddNum, String forumLikeNum, String forumImage, String id) {
 
         this.forumTitle = forumTitle;
         this.forumAddNum = forumAddNum;

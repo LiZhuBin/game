@@ -20,49 +20,52 @@ public class LogUtil {
     public static void i(String msg)
     {
         if (isDebug)
-            Log.i(TAG, msg);
+            Log.i(TAG, string(msg));
     }
 
     public static void d(String msg)
     {
         if (isDebug)
-            Log.d(TAG, msg);
+            Log.d(TAG, string(msg));
     }
 
     public static void e(String msg)
     {
         if (isDebug)
-            Log.e(TAG, msg);
+            Log.e(TAG, string(msg));
     }
 
     public static void v(String msg)
     {
         if (isDebug)
-            Log.v(TAG, msg);
+            Log.v(TAG, string(msg));
     }
 
     // 下面是传入自定义tag的函数
     public static void i(String tag, String msg)
     {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.i(tag, string(msg));
     }
 
     public static void d(String tag, String msg)
     {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.i(tag, string(msg));
     }
 
     public static void e(String tag, String msg)
     {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.i(tag, string(msg));
     }
 
     public static void v(String tag, String msg)
     {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.i(tag, string(msg));
+    }
+    public static String string(String msg){
+        return "<<<<<<<<<<<<<<<<"+msg+">>>>>>>>>>>>>>>>";
     }
 }

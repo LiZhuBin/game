@@ -121,13 +121,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         adapter.addFragment(new ForumFragment());
         adapter.addFragment(new UserFragment());
         viewPager.setAdapter(adapter);
+      //  viewPager.setOnPageChangeListener(new MyPageChangeListener());
         viewPager.setOffscreenPageLimit(3);
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 
 

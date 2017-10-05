@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.administrator.myapplication.activity.BaseActivity;
+import com.example.administrator.myapplication.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

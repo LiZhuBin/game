@@ -88,8 +88,8 @@ public class ForumFragment extends Fragment {
 
 
                     ForumItem forumItem=new ForumItem(
-                            forum.getTitle(), StringUtil.httpArrayStringLength(forum.getCommentId())+1,
-                            forum.getLike(),forum.getImage(),Integer.parseInt(forum.getId())
+                            forum.getTitle(), StringUtil.httpArrayStringLength(forum.getComment())+1,
+                            forum.getLike(),forum.getImage(),forum.getId()
                     );
                     forumItemList.add(forumItem);
                 }

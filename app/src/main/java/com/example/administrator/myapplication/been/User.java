@@ -12,6 +12,7 @@ public class User extends DataSupport implements Serializable{
     /**
      * id : 1
      * praise_num : 0
+     * praise_id:2|3
      * name : 李主彬
      * friends : aaa|bbb|ccc
      * readingActivities : 1|2|3
@@ -27,6 +28,7 @@ public class User extends DataSupport implements Serializable{
 
     private String id;
     private String praise_num;
+    private String praise_id;
     private String name;
     private String friends;
     private String postActivities;
@@ -38,6 +40,14 @@ public class User extends DataSupport implements Serializable{
     private String posts;
 private String attentionId;
 private String beattentionId;
+
+    public String getPraise_id() {
+        return praise_id;
+    }
+
+    public void setPraise_id(String praise_id) {
+        this.praise_id = praise_id;
+    }
 
     public String getAttentionId() {
         return attentionId;
@@ -55,9 +65,10 @@ private String beattentionId;
         this.beattentionId = beattentionId;
     }
 
-    public User(String id, String praise_num, String name, String friends, String postActivities, String collectActivities, String doingActivities, String completeActivities, String image, String password, String posts,String attentionId,String beattentionId) {
+    public User(String id, String praise_num,String praise_id, String name, String friends, String postActivities, String collectActivities, String doingActivities, String completeActivities, String image, String password, String posts,String attentionId,String beattentionId) {
         this.id = id;
         this.praise_num = praise_num;
+        this.praise_id=praise_id;
         this.name = name;
         this.friends = friends;
         this.postActivities = postActivities;

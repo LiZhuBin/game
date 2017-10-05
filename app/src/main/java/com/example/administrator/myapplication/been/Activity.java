@@ -10,6 +10,7 @@ public class Activity implements Serializable {
     /**
      * id : 1
      * user_num : 0000000005
+     * build_data:
      * praise_num : 3
      * type : 狼人杀
      * organizes :  李主彬
@@ -19,6 +20,8 @@ public class Activity implements Serializable {
      * remark : 需要会玩的
      * participatorId : 1
      * title
+     * add_id
+     *comment 1|大家一起玩嘛|2|是啊|3|加我一个|是12号吗
      */
 
     private String id;
@@ -32,6 +35,33 @@ public class Activity implements Serializable {
     private String remark;
     private String participatorId;
     private String title;
+    private  String add_id;
+private String build_data;
+    private String comment;
+
+    public String getBuild_data() {
+        return build_data;
+    }
+
+    public void setBuild_data(String build_data) {
+        this.build_data = build_data;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getAdd_id() {
+        return add_id;
+    }
+
+    public void setAdd_id(String add_id) {
+        this.add_id = add_id;
+    }
 
     public String getTitle() {
         return title;
@@ -41,7 +71,7 @@ public class Activity implements Serializable {
         this.title = title;
     }
 
-    public Activity(String id, String user_num, String praise_num, String type, String organizes, String time, String address, String image, String remark, String participatorId, String title) {
+    public Activity(String id, String user_num, String praise_num, String type, String organizes, String time, String address, String image, String remark, String participatorId, String title,String add_id) {
         this.id = id;
         this.user_num = user_num;
         this.praise_num = praise_num;
@@ -53,6 +83,7 @@ public class Activity implements Serializable {
         this.remark = remark;
         this.participatorId = participatorId;
         this.title = title;
+        this.add_id=add_id;
     }
 
     public void setId(String id) {

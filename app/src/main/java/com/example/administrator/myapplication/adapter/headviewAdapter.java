@@ -1,7 +1,6 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.activity.PersonActivity;
 import com.example.administrator.myapplication.my_ui.Headview;
-import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
+import com.example.administrator.myapplication.util.IntentHelp;
 
 import java.util.List;
 
@@ -47,9 +45,7 @@ public class headviewAdapter extends RecyclerView.Adapter<headviewAdapter.HeadVi
             @Override
             public void onClick(View view) {
                 int position=holder.getAdapterPosition();
-                Intent intent = new Intent(ApplicationUtil.getContext(), PersonActivity.class);
-                intent.putExtra("id",list.get(position).getId());
-                context.startActivity(intent);
+                context.startActivity(IntentHelp.toPersonActivity(list.get(position).getId()));
             }
         });
         return holder;

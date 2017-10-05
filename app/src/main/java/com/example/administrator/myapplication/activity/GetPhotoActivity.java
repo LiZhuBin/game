@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.FolderAdapter;
 import com.example.administrator.myapplication.adapter.Imageadapter;
+import com.example.administrator.myapplication.base.BaseActivity;
 import com.example.administrator.myapplication.thing_class.Folder;
 import com.example.administrator.myapplication.thing_class.Images;
 import com.example.administrator.myapplication.thing_class.folderitemdecoration;

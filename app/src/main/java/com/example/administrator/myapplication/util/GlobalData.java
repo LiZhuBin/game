@@ -27,5 +27,13 @@ public static int isFriend(String friendId){
    }
     return -1;
 }
+public static  boolean hasAdd(String activityId){
+    for(String string:StringUtil.httpArray(UserFragment.me.getDoingActivities())){
+        if(string.equals(activityId)){
+            return true;
+        }
+    }
+    return false;
+}
 
 }

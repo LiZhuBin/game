@@ -18,26 +18,23 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.AddAdapter;
 import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
+import com.example.administrator.myapplication.base.BaseActivity;
 import com.example.administrator.myapplication.been.Activity;
 import com.example.administrator.myapplication.been.User;
 import com.example.administrator.myapplication.thing_class.AddItem;
-import com.example.administrator.myapplication.util.ActivityUtils;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.ClasstoItem;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
 import com.example.administrator.myapplication.util.LogUtil;
+import com.example.administrator.myapplication.util.SPUtil;
 import com.example.administrator.myapplication.util.StringUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.github.florent37.diagonallayout.DiagonalLayout;
 import com.sackcentury.shinebuttonlib.ShineButton;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,8 +43,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PersonActivity extends BaseActivity {
@@ -73,10 +68,8 @@ public class PersonActivity extends BaseActivity {
     Toolbar newactivityToolbar;
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @Bind(R.id.person_activity_recycle)
-    SwipeMenuRecyclerView personActivityRecycle;
+
     private List<AddItem> addList = new ArrayList<>();
-    private List<Activity>activities=new ArrayList<>();
     private AddAdapter addAdapter;
     private GridLayoutManager manager;
     protected ViewPagerAdapter adapter;
@@ -89,7 +82,9 @@ int isFriend=-1;
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         // getSupportActionBar().hide();
+        initAdd();
 
+        SPUtil.put(PersonActivity.this,"isFrist",true);
         setSupportActionBar(toolbar);
         ImageView imageView = (ImageView) findViewById(R.id.Back_button);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -121,53 +116,24 @@ int isFriend=-1;
                 }
             }
         });
-        initAdd();
-        initSwipeRecyclerView();
+
+
     }
 
     private void initSwipeRecyclerView() {
-        final SwipeMenuRecyclerView recyclerView = (SwipeMenuRecyclerView) findViewById(R.id.person_activity_recycle);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.person_activity_recycle);
         addAdapter = new AddAdapter(addList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ApplicationUtil.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(addAdapter);
-        recyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                ActivityUtils.startActivity(PersonActivity.this, AddActivity.class);
-            }
-        });
-        recyclerView.setLongPressDragEnabled(true); // 开启拖拽。
-        //recyclerView.setItemViewSwipeEnabled(true); // 开启滑动删除。f
-        OnItemMoveListener mItemMoveListener = new OnItemMoveListener() {
-            @Override
-            public boolean onItemMove(RecyclerView.ViewHolder srcHolder, RecyclerView.ViewHolder targetHolder) {
-                int fromPosition = srcHolder.getAdapterPosition();
-                int toPosition = targetHolder.getAdapterPosition();
 
-                // Item被拖拽时，交换数据，并更新adapter。
-                Collections.swap(addList, fromPosition, toPosition);
-                addAdapter.notifyItemMoved(fromPosition, toPosition);
-                return true;
-            }
-
-            @Override
-            public void onItemDismiss(RecyclerView.ViewHolder srcHolder) {
-                int position = srcHolder.getAdapterPosition();
-                // Item被侧滑删除时，删除数据，并更新adapter。
-                addList.remove(position);
-                addAdapter.notifyItemRemoved(position);
-            }
-        };
-        recyclerView.setOnItemMoveListener(mItemMoveListener);// 监听拖拽，更新UI。
     }
 
     private void initAdd() {
+
         String userId = getIntent().getExtras().getString("id");
-        RequestBody body = new FormBody.Builder()
-                .add("id", userId)//添加键值对
-                .build();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", body, new Callback() {
+
+        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", userId, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -187,11 +153,7 @@ int isFriend=-1;
     }
     private void getActivities(String[] friendsId) {
         for (int i = 0; i < friendsId.length; i++) {
-            RequestBody body = new FormBody.Builder()
-                    .add("id", friendsId[i])
-                    .build();
-
-            HttpUtil.sendOkHttpResquest(GlobalData.httpAddressActivity + "php/getById.php", body, new Callback() {
+            HttpUtil.sendOkHttpResquest(GlobalData.httpAddressActivity + "php/getById.php", friendsId[i], new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 
@@ -205,6 +167,7 @@ int isFriend=-1;
                 }
             });
         }
+        initSwipeRecyclerView();
     }
     class MyAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         User user;
@@ -247,4 +210,9 @@ int isFriend=-1;
         }
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+    }
 }

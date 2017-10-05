@@ -14,10 +14,8 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.administrator.myapplication.LoginActivity;
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.activity.FriendsActivity;
 import com.example.administrator.myapplication.activity.PersonActivity;
 import com.example.administrator.myapplication.activity.PhotoViewActivity;
 import com.example.administrator.myapplication.activity.PostActivity;
@@ -26,6 +24,7 @@ import com.example.administrator.myapplication.util.ActivityUtils;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
+import com.example.administrator.myapplication.util.IntentHelp;
 import com.example.administrator.myapplication.util.SPUtil;
 import com.example.administrator.myapplication.util.StringUtil;
 
@@ -33,12 +32,9 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
@@ -92,7 +88,7 @@ ImageView userMyBigImage;
 
     public void initData(final View view) {
 
-        userMyBigImage=(ImageView)view.findViewById(R.id.iv_blur) ;
+        userMyBigImage=(ImageView)view.findViewById(R.id.user_myBigImage) ;
          userMySmallImage=(ImageView)view.findViewById(R.id.iv_avatar);
 userMySmallImage.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -115,10 +111,8 @@ userMySmallImage.setOnClickListener(new View.OnClickListener() {
         imports=(SuperTextView)view.findViewById(R.id.imports);
 
          userId = SPUtil.get(ApplicationUtil.getContext(), "UserId", 1);
-        RequestBody body = new FormBody.Builder()
-                .add("id", userId.toString())//添加键值对
-                .build();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser+"php/getById.php", body, new Callback() {
+
+        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser+"php/getById.php", userId.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -135,6 +129,38 @@ userMySmallImage.setOnClickListener(new View.OnClickListener() {
             }
 
 public  void initSuperTextView(View view){
+    final SuperTextView myAttention = (SuperTextView) view.findViewById(R.id.my_attention);
+   myAttention.setLeftTopTvClickListener(new SuperTextView.OnLeftTopTvClickListener() {
+       @Override
+       public void onClickListener() {
+           startActivity(IntentHelp.toFriendsActivity(me.getAttentionId(),myAttention.getLeftTopString()));
+       }
+   }).setLeftBottomTvClickListener(new SuperTextView.OnLeftBottomTvClickListener() {
+       @Override
+       public void onClickListener() {
+           startActivity(IntentHelp.toFriendsActivity(me.getAttentionId(),myAttention.getLeftTopString()));
+       }
+   }).setCenterTopTvClickListener(new SuperTextView.OnCenterTopTvClickListener() {
+       @Override
+       public void onClickListener() {
+           startActivity(IntentHelp.toFriendsActivity(me.getPraise_id(),myAttention.getCenterTopString()));
+       }
+   }).setCenterBottomTvClickListener(new SuperTextView.OnCenterBottomTvClickListener() {
+       @Override
+       public void onClickListener() {
+           startActivity(IntentHelp.toFriendsActivity(me.getPraise_id(),myAttention.getCenterTopString()));
+       }
+   }).setRightTopTvClickListener(new SuperTextView.OnRightTopTvClickListener() {
+       @Override
+       public void onClickListener() {
+           startActivity(IntentHelp.toFriendsActivity(me.getBeattentionId(),myAttention.getRightTopString()));
+       }
+   }).setRightBottomTvClickListener(new SuperTextView.OnRightBottomTvClickListener() {
+       @Override
+       public void onClickListener() {
+           startActivity(IntentHelp.toFriendsActivity(me.getBeattentionId(),myAttention.getRightTopString()));
+       }
+   });
     SuperTextView myActivity = (SuperTextView) view.findViewById(R.id.my_activities);
     myActivity.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
         @Override
@@ -149,9 +175,7 @@ public  void initSuperTextView(View view){
     myFriends.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
         @Override
         public void onClickListener(SuperTextView superTextView) {
-            Bundle bundle=new Bundle();
-            bundle.putString("friends", me.getFriends());
-            ActivityUtils.startActivity(bundle,getActivity(), FriendsActivity.class, R.anim.enter_anim, R.anim.slide_out_right);
+            startActivity(IntentHelp.toFriendsActivity(me.getFriends(),"我的好友"));
         }
     });
     SuperTextView myCollects = (SuperTextView) view.findViewById(R.id.my_collection);
@@ -190,25 +214,25 @@ public  void initSuperTextView(View view){
      @Override
      protected void onPostExecute(Boolean aBoolean) {
 
-
-
      }
 
      @Override
      protected void onProgressUpdate(Integer... values) {
          userMyName.setText(user.getName());
-         Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
-                 .bitmapTransform(new BlurTransformation(ApplicationUtil.getContext(), 20), new CenterCrop(ApplicationUtil.getContext()))
+         Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+user.getImage())
                  .into(userMyBigImage);
 
          Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
                  .bitmapTransform(new CropCircleTransformation(ApplicationUtil.getContext()))
                  .into(userMySmallImage);
-         myAttention.setCenterBottomString(user.getPraise_num());
+
          myActivities.setRightString(StringUtil.httpArrayStringLength(user.getDoingActivities()));
          myCollection.setRightString(StringUtil.httpArrayStringLength(user.getCollectActivities()));
          myFriends.setRightString(StringUtil.httpArrayStringLength(user.getFriends()));
          myPost.setRightString(StringUtil.httpArrayStringLength(user.getPosts()));
+         myAttention.setCenterBottomString(user.getPraise_num());
+         myAttention.setLeftBottomString(StringUtil.httpArrayStringLength(user.getAttentionId()));
+         myAttention.setRightBottomString(StringUtil.httpArrayStringLength(user.getBeattentionId()));
      }
 
      @Override

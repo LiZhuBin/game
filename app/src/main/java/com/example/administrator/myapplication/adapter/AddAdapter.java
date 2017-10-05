@@ -56,7 +56,7 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         holder.forum_content.setText(addItem.getActivityContent());
         holder.forum_title.setText(addItem.getActivityTitle());
         holder.forum_time.setText(addItem.getActivityTime());
-        holder.forum_num.setText(addItem.getActivityNum());
+
     }
 
     @Override
@@ -83,7 +83,6 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         private ViewHolder(View view) {
             super(view);
             addView=view;
-            forum_num=(TextView)view.findViewById(R.id.forum_num);
             forum_user_image = (ImageView) view.findViewById(R.id.forum_user_image);
             forum_title = (TextView) view.findViewById(R.id.forum_title1);
             forum_content = (TextView) view.findViewById(R.id.forum_content);

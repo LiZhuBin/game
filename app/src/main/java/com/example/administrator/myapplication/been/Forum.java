@@ -7,16 +7,17 @@ import java.io.Serializable;
  */
 
 public class Forum implements Serializable {
+
     /**
      * id : 1
      * type : 狼人杀
      * userId : 1
      * title : 狼人杀心得
      * content : 平安夜预言家最好别跳
-     * commentId : 1|2
-     * commentInfo : 说得对|我反对
+     * comment : 1|上次我就是不跳了结果输了|2|有道理|3|嗯嗯
      * image : forum/狼人杀/picture1.jpg
-     * like : 0000000005
+     * like : 5
+     * data : 2017-10-04
      */
 
     private String id;
@@ -24,10 +25,10 @@ public class Forum implements Serializable {
     private String userId;
     private String title;
     private String content;
-    private String commentId;
-    private String commentInfo;
+    private String comment;
     private String image;
     private String like;
+    private String data;
 
     public void setId(String id) {
         this.id = id;
@@ -49,12 +50,8 @@ public class Forum implements Serializable {
         this.content = content;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
-    }
-
-    public void setCommentInfo(String commentInfo) {
-        this.commentInfo = commentInfo;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void setImage(String image) {
@@ -63,6 +60,10 @@ public class Forum implements Serializable {
 
     public void setLike(String like) {
         this.like = like;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getId() {
@@ -85,12 +86,8 @@ public class Forum implements Serializable {
         return content;
     }
 
-    public String getCommentId() {
-        return commentId;
-    }
-
-    public String getCommentInfo() {
-        return commentInfo;
+    public String getComment() {
+        return comment;
     }
 
     public String getImage() {
@@ -99,5 +96,9 @@ public class Forum implements Serializable {
 
     public String getLike() {
         return like;
+    }
+
+    public String getData() {
+        return data;
     }
 }

@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.administrator.myapplication.child_fragment.ForumListFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.CardView
+        android:orientation="vertical"
+        android:id="@+id/activity_forum_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        >
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/fragment_forum_list_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/image_scrolling_head"
+                android:layout_alignParentTop="true"
+                />
+
+            <TextView
+                android:id="@+id/fragment_forum_list_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carmen冯"
+                android:textSize="16sp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/fragment_forum_list_image"
+                android:layout_toEndOf="@+id/fragment_forum_list_image"/>
+
+            <TextView
+                android:id="@+id/fragment_forum_list_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="41分钟前"
+                android:layout_toRightOf="@+id/fragment_forum_list_image"
+                android:layout_toEndOf="@+id/fragment_forum_list_image"
+                android:layout_below="@+id/fragment_forum_list_name"/>
+
+            <TextView
+                android:id="@+id/fragment_forum_list_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="对于笔记本电脑的求助"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_below="@+id/fragment_forum_list_image"/>
+
+            <TextView
+                android:id="@+id/fragment_forum_list_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="师兄师姐或专业认识 本新生纺织工程，请问买什么牌的电脑好呀？具体到型号，要求不多，能上网刷剧"
+                android:textSize="16sp"
+                android:layout_below="@+id/fragment_forum_list_title"/>
+        </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
