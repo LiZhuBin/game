@@ -1,7 +1,6 @@
 package com.example.administrator.myapplication.child_fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,13 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.activity.MsgAdapter;
+import com.example.administrator.myapplication.adapter.MsgAdapter;
+import com.example.administrator.myapplication.base.BaseFragment;
+import com.example.administrator.myapplication.been.Activity;
 import com.example.administrator.myapplication.been.User;
 import com.example.administrator.myapplication.thing_class.Msg;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
 import com.example.administrator.myapplication.util.StringUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,10 +31,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.example.administrator.myapplication.child_fragment.AddListFragment.thisActivity;
 
-
-public class AddChatFragment extends Fragment {
+public class AddChatFragment extends BaseFragment{
 private static List<String> userIdList=new ArrayList<>();
 private static List<String> userCommentList=new ArrayList<>();
     private List<Msg> msgList=new ArrayList<>();
@@ -38,7 +40,7 @@ private static List<String> userCommentList=new ArrayList<>();
     private Button send;
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
-
+View view;
     public static String[] string;
     public static User user;
    public static String id=null;
@@ -51,10 +53,16 @@ private static List<String> userCommentList=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+            return view;
+        }
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_add_chat, container, false);
+        view=inflater.inflate(R.layout.fragment_add_chat, container, false);
 
-        initMsgs(view); //初始化消息数据
 
         return view;
     }
@@ -63,11 +71,9 @@ private static List<String> userCommentList=new ArrayList<>();
         AddChatFragment sf = new AddChatFragment();
         return sf;
     }
-
-    private  void initMsgs(View view){
-       string = StringUtil.httpArray(thisActivity.getComment());
-
-
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onEventBackgroundThread(Activity activity){
+        string = StringUtil.httpArray(activity.getComment());
         for (int i=0;i<string.length;i++){
 
             if(i%2==0) {
@@ -85,6 +91,7 @@ private static List<String> userCommentList=new ArrayList<>();
                     public void onResponse(Call call, Response response) throws IOException {
                         user=HttpUtil.getSingleUser(response);
                         userIdList.add(user.getImage());
+
                     }
                 });
             }
@@ -122,9 +129,9 @@ private static List<String> userCommentList=new ArrayList<>();
         });
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
+    public static AddChatFragment getInstance() {
+        AddChatFragment sf = new AddChatFragment();
+        return sf;
     }
 }

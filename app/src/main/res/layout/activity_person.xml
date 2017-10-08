@@ -1,65 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tl="http://schemas.android.com/tools"
     android:orientation="vertical"
 
-    android:transitionName="shareNames"
-    >
+    android:transitionName="shareNames">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:fitsSystemWindows="true"
+        android:layout_height="300dp"
         android:background="@color/colorAccent"
-        >
+        android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CollapsingToolbarLayout
-        android:id="@+id/collapsing_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:contentScrim="@color/colorAccent"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-
-
-            <include layout="@layout/user_info_head"/>
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/newactivity_toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:layout_collapseMode="pin"
-            android:theme="@style/MyToolbar"
-            >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="60dp"
-                android:id="@+id/Back_button"
-                android:layout_height="match_parent"
-                android:src="@drawable/back_button5"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorAccent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                android:padding="5dp"
-                />
-        </LinearLayout>
-</android.support.v7.widget.Toolbar>
-    </android.support.design.widget.CollapsingToolbarLayout>
+
+            <include layout="@layout/user_info_head" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/newactivity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/MyToolbar"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/Back_button"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+
+                        android:src="@drawable/back_button5" />
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+            <com.flyco.tablayout.SegmentTabLayout
+                android:id="@+id/tl_3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="8dp"
+                android:paddingLeft="100dp"
+                android:paddingRight="100dp"
+                tl:tl_bar_color="#ffffff"
+                tl:tl_indicator_anim_enable="true"
+                tl:tl_indicator_color="@color/colorAccent"
+                tl:tl_indicator_margin_bottom="2dp"
+                tl:tl_indicator_margin_left="2dp"
+                tl:tl_indicator_margin_right="2dp"
+                tl:tl_indicator_margin_top="2dp"
+                tl:tl_textBold="SELECT" />
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    >
-        <include layout="@layout/activity_person_activity"/>
+    <com.example.administrator.myapplication.my_ui.MyViewPager
+        android:id="@+id/vp_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-    </LinearLayout>
-    <include layout="@layout/bottom_button"/>
+    <include layout="@layout/layout_bottom_button" />
+
+    <include layout="@layout/layout_photo_view" />
 </android.support.design.widget.CoordinatorLayout>

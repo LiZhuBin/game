@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-
     <FrameLayout
-        android:layout_width="200dp" android:layout_height="40dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:layout_gravity="start"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/daohangtiao"
-        >
+        android:background="@drawable/daohangtiao">
 
 
         <TextView
-            android:text="约战列表"
+            style="@style/Title_textstyle"
             android:layout_gravity="right|center"
             android:layout_marginRight="16dp"
-            style="@style/Title_textstyle"
-            />
+            android:text="约战列表" />
 
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_weight="1"
+        android:id="@+id/person_activity_recycle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/person_activity_recycle"
-        android:orientation="horizontal"
-        />
+        android:layout_weight="1"
+        android:orientation="horizontal" />
 </LinearLayout>

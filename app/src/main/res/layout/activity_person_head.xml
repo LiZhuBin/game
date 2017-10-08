@@ -1,67 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:diagonal="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
 
     <com.github.florent37.diagonallayout.DiagonalLayout
+        android:id="@+id/person_diagonalLayout"
         android:layout_width="match_parent"
         android:layout_height="266dp"
-        android:id="@+id/person_diagonalLayout"
-        diagonal:diagonal_angle="10"
-        android:paddingBottom="16dp"
-        diagonal:diagonal_direction="left"
-        diagonal:diagonal_position="bottom"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        >
+        android:layout_alignParentTop="true"
+        android:paddingBottom="16dp"
+        diagonal:diagonal_angle="10"
+        diagonal:diagonal_direction="left"
+        diagonal:diagonal_position="bottom">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hugh Jackman"
-            android:textColor="@android:color/white"
             android:layout_gravity="top|left"
-            android:fontFamily="sans-serif-light"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="70dp"
-            android:textSize="25sp"
-            />
+            android:fontFamily="sans-serif-light"
+            android:text="Hugh Jackman"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:orientation="horizontal"
             android:layout_marginTop="105dp"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:fontFamily="sans-serif-condensed"
                 android:text="ACTOR"
                 android:textColor="@android:color/white"
-                android:layout_gravity="top|left"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-condensed"
                 android:textSize="14sp"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PRODUCER"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
                 android:layout_gravity="top|left"
-                android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="PRODUCER"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
-                />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <com.flaviofaria.kenburnsview.KenBurnsView
@@ -79,78 +74,76 @@
         android:layout_height="100dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="180dp"
-        android:src="@drawable/image_scrolling_head"/>
+        android:src="@drawable/image_scrolling_head" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4"
         android:layout_marginTop="230dp"
-        >
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <View
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <LinearLayout
+            android:id="@+id/main_head_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/person_diagonalLayout"
             android:layout_weight="1"
-            android:id="@+id/main_head_info"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="Followers"
                 android:textColor="#3E3E3E"
-                android:fontFamily="sans-serif-condensed"
-                android:layout_marginLeft="10dp"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3.5K"
-                android:textStyle="bold"
-                android:textColor="#3E3E3E"
-                android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="10dp"
-                android:textSize="14sp"/>
+                android:fontFamily="sans-serif-condensed"
+                android:text="3.5K"
+                android:textColor="#3E3E3E"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/person_shineButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:src="@android:color/darker_gray"
-            android:id="@+id/person_shineButton"
+            app:allow_random_color="true"
+
+            app:big_shine_color="#FF6666"
             app:btn_color="@android:color/darker_gray"
             app:btn_fill_color="#FF6666"
 
-            app:big_shine_color="#FF6666"
             app:click_animation_duration="200"
+            app:enable_flashing="true"
+
             app:shine_animation_duration="1500"
-
-            app:small_shine_offset_angle="20"
-            app:small_shine_color="#CC9999"
-
-            app:siShape="@raw/like"
-            app:shine_turn_angle="20"
             app:shine_count="15"
-            app:allow_random_color="true"
-            app:enable_flashing="true"/>
+            app:shine_turn_angle="20"
+            app:siShape="@raw/like"
+            app:small_shine_color="#CC9999"
+            app:small_shine_offset_angle="20" />
     </LinearLayout>
-
 
 
 </RelativeLayout>

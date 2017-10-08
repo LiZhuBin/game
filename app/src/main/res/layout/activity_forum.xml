@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    tools:context="com.example.administrator.myapplication.MainActivity"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@drawable/background4"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-  >
-    <include layout="@layout/collapsing_toolbar"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background4"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.myapplication.MainActivity">
+
+    <include layout="@layout/layout_toolbar_collapsing" />
+
     <com.example.administrator.myapplication.my_ui.MyViewPager
         android:id="@+id/vp_2"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
-    <include layout="@layout/floating_button"/>
-    </android.support.design.widget.CoordinatorLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <include layout="@layout/layout_floating_button" />
+
+    <include layout="@layout/layout_photo_view" />
+</android.support.design.widget.CoordinatorLayout>

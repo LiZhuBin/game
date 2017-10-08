@@ -16,9 +16,10 @@ public class IntentHelp {
         intent.putExtra("title",title);
         return intent;
     }
-    public static Intent toPersonActivity(String userId){
+    public static Intent toPersonActivity(String userId,int pager){
         Intent intent = new Intent(ApplicationUtil.getContext(), PersonActivity.class);
         intent.putExtra("id",userId);
+        intent.putExtra("pager",pager);
         return intent;
     }
 }

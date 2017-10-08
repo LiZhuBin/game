@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.my_ui.ActivityForumItem;
+import com.example.administrator.myapplication.util.ApplicationUtil;
+import com.example.administrator.myapplication.util.GlobalData;
 
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class ForumInfoAdapter extends RecyclerView.Adapter<ForumInfoAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ActivityForumItem forumItem=mforumItem.get(position);
-            holder.mIcon_image.setImageResource(forumItem.getmImageId());
+        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+forumItem.getmImageId()).into(holder.mIcon_image);
         holder.mUsername.setText(forumItem.getmUsername());
         holder.mLou.setText(forumItem.getmLou());
         holder.mTime.setText(forumItem.getmTime());

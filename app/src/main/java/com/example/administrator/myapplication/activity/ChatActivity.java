@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.adapter.MsgAdapter;
 import com.example.administrator.myapplication.base.BaseActivity;
 import com.example.administrator.myapplication.thing_class.Msg;
 import com.example.administrator.myapplication.util.LogUtil;

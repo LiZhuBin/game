@@ -6,7 +6,6 @@ package com.example.administrator.myapplication.my_ui;
 
 public class ActivityForumItem {
     public String mImageUrl;
-
     public ActivityForumItem(String mImageUrl, String mUsername, String mLou, String mTime, String mDetile) {
         this.mImageUrl = mImageUrl;
         this.mUsername = mUsername;

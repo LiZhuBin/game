@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/search_view"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_search_view" />
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_navigation"
         android:layout_weight="1"
         android:background="@drawable/background4"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/navigation"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:menu="@menu/navigation"
-        android:background="?android:attr/windowBackground"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
         app:itemBackground="@color/bottom_color"
         app:layout_behavior="com.example.administrator.myapplication.behavior.BottomNavigationViewBehavior"
-        />
+        app:menu="@menu/navigation" />
 
 </android.support.design.widget.CoordinatorLayout>

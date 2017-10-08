@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.activity.NewsActivity;
@@ -39,7 +38,7 @@ public class GlideImageLoader extends ImageLoader {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Are you Ok",Toast.LENGTH_SHORT).show();
+
                 }
             });
         }

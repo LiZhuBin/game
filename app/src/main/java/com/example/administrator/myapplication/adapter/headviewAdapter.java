@@ -38,14 +38,14 @@ public class headviewAdapter extends RecyclerView.Adapter<headviewAdapter.HeadVi
            context = parent.getContext();
        }
 
-       View view = LayoutInflater.from(context).inflate(R.layout.circle_people_headview,parent,false);
+       View view = LayoutInflater.from(context).inflate(R.layout.layout_circle_people_headview,parent,false);
        final HeadViewHolder holder=new HeadViewHolder(view);
         holder.view.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 int position=holder.getAdapterPosition();
-                context.startActivity(IntentHelp.toPersonActivity(list.get(position).getId()));
+                context.startActivity(IntentHelp.toPersonActivity(list.get(position).getId(),0));
             }
         });
         return holder;

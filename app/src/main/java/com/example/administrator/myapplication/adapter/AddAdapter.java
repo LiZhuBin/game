@@ -98,7 +98,7 @@ public class AddAdapter  extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
 //    add.setOnClickListener(new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
-//            CircleImageButton myImageView=new CircleImageButton(view.getContext());
+
 //            myImageView.setImageResource(R.drawable.image_whilte_me);
 //            layout2.addView(myImageView);
 //

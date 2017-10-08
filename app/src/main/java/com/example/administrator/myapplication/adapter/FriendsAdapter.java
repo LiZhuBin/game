@@ -33,14 +33,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         {
             context = parent.getContext();
         }
-        View view = LayoutInflater.from(context).inflate(R.layout.friends_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_friends, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.friendView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-               context .startActivity(IntentHelp.toPersonActivity(friendsList.get(position).getId()));
+               context .startActivity(IntentHelp.toPersonActivity(friendsList.get(position).getId(),0));
 
             }
         });

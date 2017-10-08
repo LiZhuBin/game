@@ -1,12 +1,13 @@
 package com.example.administrator.myapplication.been;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Administrator on 2017/9/17 0017.
  */
 
-public class Forum implements Serializable {
+public class Forum implements Parcelable {
 
     /**
      * id : 1
@@ -101,4 +102,49 @@ public class Forum implements Serializable {
     public String getData() {
         return data;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.type);
+        dest.writeString(this.userId);
+        dest.writeString(this.title);
+        dest.writeString(this.content);
+        dest.writeString(this.comment);
+        dest.writeString(this.image);
+        dest.writeString(this.like);
+        dest.writeString(this.data);
+    }
+
+    public Forum() {
+    }
+
+    protected Forum(Parcel in) {
+        this.id = in.readString();
+        this.type = in.readString();
+        this.userId = in.readString();
+        this.title = in.readString();
+        this.content = in.readString();
+        this.comment = in.readString();
+        this.image = in.readString();
+        this.like = in.readString();
+        this.data = in.readString();
+    }
+
+    public static final Parcelable.Creator<Forum> CREATOR = new Parcelable.Creator<Forum>() {
+        @Override
+        public Forum createFromParcel(Parcel source) {
+            return new Forum(source);
+        }
+
+        @Override
+        public Forum[] newArray(int size) {
+            return new Forum[size];
+        }
+    };
 }

@@ -2,7 +2,6 @@ package com.example.administrator.myapplication.child_fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,21 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.base.BaseFragment;
 import com.example.administrator.myapplication.been.Activity;
 import com.example.administrator.myapplication.util.IntentHelp;
 import com.example.administrator.myapplication.util.StringUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class AddListFragment extends Fragment {
+public class AddListFragment extends BaseFragment {
 
-    public static Activity thisActivity;
+
     ImageView activityAddImage;
     String obj;
     @Bind(R.id.add_content_title)
@@ -34,7 +37,7 @@ public class AddListFragment extends Fragment {
     SuperTextView addContentAddress;
 
     SuperTextView addContentPerson;
-
+    View view;
 
 
     @Override
@@ -47,20 +50,31 @@ public class AddListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_list, container, false);
-        initClick(view,thisActivity);
-   new MyAsyncTask(thisActivity).execute();
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+            return view;
+        }
+         view= inflater.inflate(R.layout.fragment_add_list, container, false);
+
 
         ButterKnife.bind(this, view);
         return view;
     }
-    public void initClick(View view,Activity activity){
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onEventBackgroundThread(Activity activity){
+        initClick(view,activity);
+        new MyAsyncTask(activity).execute();
+    }
+    public void initClick(View view, final Activity activity){
         addContentPerson=(SuperTextView)view.findViewById(R.id.add_content_person);
         addContentPerson.setOnClickListener(new SuperTextView.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                startActivity(IntentHelp.toFriendsActivity(thisActivity.getAdd_id(),"已加入的人"));
+                startActivity(IntentHelp.toFriendsActivity(activity.getAdd_id(),"已加入的人"));
             }
         });
     }
@@ -107,7 +121,7 @@ public class AddListFragment extends Fragment {
         }
     }
 
-    public static AddListFragment getInstance(String title) {
+    public static AddListFragment getInstance() {
         AddListFragment sf = new AddListFragment();
         return sf;
     }

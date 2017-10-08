@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     tools:context="com.example.administrator.myapplication.child_fragment.AddListFragment">
 
@@ -10,54 +10,56 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="5dp"
 
-        app:cardElevation="5dp"
-        >
+        app:cardElevation="5dp">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <com.allen.library.SuperTextView
-                    style="@style/Super_style_unclick"
                     android:id="@+id/add_content_title"
+                    style="@style/Super_style_unclick"
                     app:sCenterTextString="标题"
-                    app:sLeftIconRes="@drawable/icon_title"/>
+                    app:sLeftIconRes="@drawable/icon_title" />
+
                 <TextView
                     android:id="@+id/output_autofit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ffffffffffffffffffffffffffffffffffffffffff"
-                    android:textSize="50sp"
                     android:gravity="center"
+                    android:text="ffffffffffffffffffffffffffffffffffffffffff"
 
-                    />
+                    android:textSize="50sp" />
+
                 <com.allen.library.SuperTextView
-                    style="@style/Super_style_unclick"
                     android:id="@+id/add_content_time"
-                    app:sLeftTextString="时间"
+                    style="@style/Super_style_unclick"
                     app:sLeftIconRes="@drawable/icon_data"
-                    />
+                    app:sLeftTextString="时间" />
+
                 <com.allen.library.SuperTextView
-                    style="@style/Super_style_unclick"
                     android:id="@+id/add_content_address"
-                    app:sLeftTextString="地点"
-                app:sLeftIconRes="@drawable/icon_address"
-                    />
-                <com.allen.library.SuperTextView
                     style="@style/Super_style_unclick"
+                    app:sLeftIconRes="@drawable/icon_address"
+                    app:sLeftTextString="地点" />
+
+                <com.allen.library.SuperTextView
                     android:id="@+id/add_content_person"
+                    style="@style/Super_style_unclick"
                     app:sLeftTextString="已加入"
-                    app:sRightTextString=" fff"
-                    app:sRightIconRes="@drawable/icon_user"/>
+                    app:sRightIconRes="@drawable/icon_user"
+                    app:sRightTextString=" fff" />
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

@@ -1,101 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:diagonal="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_head"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_height="match_parent">
 
-   <com.github.florent37.diagonallayout.DiagonalLayout
-       android:id="@+id/diagonalLayout"
-       android:layout_width="match_parent"
-       android:layout_height="250dp"
-       diagonal:diagonal_angle="10"
-       android:paddingBottom="16dp"
-       diagonal:diagonal_direction="right"
-       diagonal:diagonal_position="bottom"
-       android:layout_alignParentTop="true"
-       android:layout_alignParentLeft="true"
-       android:layout_alignParentStart="true"
-       >
+    <com.github.florent37.diagonallayout.DiagonalLayout
+        android:id="@+id/diagonalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="16dp"
+        diagonal:diagonal_angle="10"
+        diagonal:diagonal_direction="right"
+        diagonal:diagonal_position="bottom">
 
-      <com.flaviofaria.kenburnsview.KenBurnsView
-          android:id="@+id/user_myBigImage"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType="centerCrop"
-          android:src="@drawable/image_scrolling_head" />
+        <com.flaviofaria.kenburnsview.KenBurnsView
+            android:id="@+id/user_myBigImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_scrolling_head" />
 
-   </com.github.florent37.diagonallayout.DiagonalLayout>
+    </com.github.florent37.diagonallayout.DiagonalLayout>
 
 
-   <de.hdodenhof.circleimageview.CircleImageView
-       android:id="@+id/user_mySmallImage"
-       android:layout_width="100dp"
-       android:layout_height="100dp"
-       android:layout_marginTop="120dp"
-       android:layout_marginLeft="40dp"
-       android:src="@drawable/image_scrolling_head"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_mySmallImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/image_scrolling_head" />
 
 
-   <TextView
-       android:layout_marginLeft="40dp"
-       android:id="@+id/user_myName"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Hugh Jackman"
-       android:textColor="@color/black"
-       android:textSize="20dp"
-         android:layout_below="@+id/user_mySmallImage"
-       />
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:weightSum="5.3"
-       android:layout_marginTop="200dp"
-       >
+    <TextView
+        android:id="@+id/user_myName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_mySmallImage"
+        android:layout_marginLeft="40dp"
+        android:text="Hugh Jackman"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
 
-      <View
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:orientation="horizontal"
+        android:weightSum="5.3">
 
-      <View
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
 
-      <com.sackcentury.shinebuttonlib.ShineButton
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:layout_centerInParent="true"
-          android:src="@android:color/darker_gray"
-          android:id="@+id/shineButton"
-          app:btn_color="@android:color/darker_gray"
-          app:btn_fill_color="#FF6666"
-          app:big_shine_color="#FF6666"
-          app:click_animation_duration="200"
-          app:shine_animation_duration="1500"
-          app:small_shine_offset_angle="20"
-          app:small_shine_color="#CC9999"
-          app:siShape="@raw/like"
-          app:shine_turn_angle="20"
-          app:shine_count="15"
-          app:allow_random_color="true"
-          app:enable_flashing="true"/>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textSize="25dp"
-          android:text="5"
-          android:id="@+id/user_myLike"/>
-   </LinearLayout>
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/shineButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@android:color/darker_gray"
+            app:allow_random_color="true"
+            app:big_shine_color="#FF6666"
+            app:btn_color="@android:color/darker_gray"
+            app:btn_fill_color="#FF6666"
+            app:click_animation_duration="200"
+            app:enable_flashing="true"
+            android:clickable="true"
+            app:shine_animation_duration="1500"
+            app:shine_count="15"
+            app:shine_turn_angle="20"
+            app:siShape="@raw/like"
+            app:small_shine_color="#CC9999"
+            app:small_shine_offset_angle="20" />
 
+        <TextView
+            android:id="@+id/user_myLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="25dp" />
+    </LinearLayout>
 
 
 </RelativeLayout>

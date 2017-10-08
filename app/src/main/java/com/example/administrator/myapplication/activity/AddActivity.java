@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseActivity;
@@ -17,12 +18,13 @@ import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
 import com.example.administrator.myapplication.util.SPUtil;
+import com.example.administrator.myapplication.util.UiUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
-import com.flyco.tablayout.SegmentTabLayout;
 import com.melnykov.fab.FloatingActionButton;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,8 +33,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import static com.example.administrator.myapplication.child_fragment.AddListFragment.thisActivity;
 
 public class AddActivity extends BaseActivity {
 
@@ -47,13 +47,11 @@ public class AddActivity extends BaseActivity {
     KenBurnsView ivBlur;
     @Bind(R.id.fab_add_add)
     FloatingActionButton fabAddAdd;
+Activity activity;
 
 
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     private String[] mTitles_3 = {"首页", "讨论"};
-    private View mDecorView;
-    private SegmentTabLayout mTabLayout_3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +59,11 @@ public class AddActivity extends BaseActivity {
         setContentView(R.layout.activity_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
+
         getData();
-        initViewPager(mTitles_3,"add");
+
         ImageView imageView = (ImageView) findViewById(R.id.Back_button);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +83,7 @@ public class AddActivity extends BaseActivity {
 
     @OnClick(R.id.fab_add_add)
     public void onViewClicked() {
-        if(!GlobalData.hasAdd(thisActivity.getId())){
+        if(!GlobalData.hasAdd(activity.getId())){
             new SweetAlertDialog(AddActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("终于等到你")
                     .setContentText("还好我没放弃")
@@ -121,8 +121,6 @@ public class AddActivity extends BaseActivity {
     public void getData() {
         Intent intent = getIntent();
         String obj = (String) intent.getSerializableExtra("Object_userId");
-
-
         HttpUtil.sendOkHttpResquest(GlobalData.httpAddressActivity + "php/getById.php", obj, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -132,10 +130,13 @@ public class AddActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
-                thisActivity = HttpUtil.getSingleActivity(response);
-                new MyAsyncTask(thisActivity).execute();
+                activity = HttpUtil.getSingleActivity(response);
+                EventBus.getDefault().post(activity);
+                new MyAsyncTask(activity).execute();
+
             }
         });
+        initViewPager(mTitles_3,"add",0);
     }
 
     class MyAsyncTask extends AsyncTask<Void, Integer, Boolean> {
@@ -161,6 +162,10 @@ public class AddActivity extends BaseActivity {
         protected void onProgressUpdate(Integer... values) {
            // Picasso.with(ApplicationUtil.getContext()) .load(GlobalData.httpAddressPicture + activity.getImage()).into(ivBlur);
             Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + activity.getImage()).into(ivBlur);
+            PhotoView photoView=(PhotoView)findViewById(R.id.photo_view);
+            photoView.enable();
+            final FrameLayout frameLayout=(FrameLayout)findViewById(R.id.photo_view_frame_layout);
+            UiUtil.photoView(ivBlur,ivBlur,frameLayout,photoView);
         }
 
         @Override

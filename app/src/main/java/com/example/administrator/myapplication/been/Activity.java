@@ -1,12 +1,13 @@
 package com.example.administrator.myapplication.been;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Administrator on 2017/9/17 0017.
  */
 
-public class Activity implements Serializable {
+public class Activity implements Parcelable {
     /**
      * id : 1
      * user_num : 0000000005
@@ -165,4 +166,56 @@ private String build_data;
     public String getParticipatorId() {
         return participatorId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.user_num);
+        dest.writeString(this.praise_num);
+        dest.writeString(this.type);
+        dest.writeString(this.organizes);
+        dest.writeString(this.time);
+        dest.writeString(this.address);
+        dest.writeString(this.image);
+        dest.writeString(this.remark);
+        dest.writeString(this.participatorId);
+        dest.writeString(this.title);
+        dest.writeString(this.add_id);
+        dest.writeString(this.build_data);
+        dest.writeString(this.comment);
+    }
+
+    protected Activity(Parcel in) {
+        this.id = in.readString();
+        this.user_num = in.readString();
+        this.praise_num = in.readString();
+        this.type = in.readString();
+        this.organizes = in.readString();
+        this.time = in.readString();
+        this.address = in.readString();
+        this.image = in.readString();
+        this.remark = in.readString();
+        this.participatorId = in.readString();
+        this.title = in.readString();
+        this.add_id = in.readString();
+        this.build_data = in.readString();
+        this.comment = in.readString();
+    }
+
+    public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {
+        @Override
+        public Activity createFromParcel(Parcel source) {
+            return new Activity(source);
+        }
+
+        @Override
+        public Activity[] newArray(int size) {
+            return new Activity[size];
+        }
+    };
 }

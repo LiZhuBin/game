@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true">
+
+    <com.alimuzaffar.lib.widgets.AnimatedEditText
+        android:id="@+id/input_text"
+        style="@style/animated_edit_text"
+        android:layout_weight="1"
+
+        android:hint="评论:" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="#000"
+
+        android:text="Send"
+        android:textColor="@color/white" />
+
+</LinearLayout>

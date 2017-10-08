@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background4"
-    android:id="@+id/add_background"
     android:fitsSystemWindows="true"
-    >
+    android:orientation="vertical">
 
-<include layout="@layout/collapsing_toolbar"/>
-        <com.example.administrator.myapplication.my_ui.MyViewPager
-            android:id="@+id/vp_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />
-    <RelativeLayout
+    <include layout="@layout/layout_toolbar_collapsing" />
+
+    <com.example.administrator.myapplication.my_ui.MyViewPager
+        android:id="@+id/vp_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       >
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</RelativeLayout>
-    <include layout="@layout/floating_button"/>
+
+
+    <include layout="@layout/layout_floating_button" />
+
+    <include layout="@layout/layout_photo_view" />
 </android.support.design.widget.CoordinatorLayout>
-

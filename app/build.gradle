@@ -4,6 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.administrator.myapplication"
         minSdkVersion 15
         targetSdkVersion 26
@@ -26,13 +27,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile files('libs/butterknife-7.0.1.jar')
-
+    //leakcanary
 
     compile 'com.github.armcha:SpaceNavigationView:1.6.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'com.github.armcha:SpaceNavigationView:1.6.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.github.kassisdion:Android-animated-toolbar:v1.1.0'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
@@ -41,15 +40,12 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
     compile 'com.android.support:cardview-v7:26.+'
-
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
     compile 'com.github.florent37:diagonallayout:1.0.7'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
-    compile 'com.nightonke:boommenu:2.1.0'
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.roger.match.library:library:1.0.1'
@@ -70,14 +66,14 @@ dependencies {
     compile 'com.daimajia.swipelayout:library:1.2.0'
     compile 'cn.pedant.sweetalert:library:1.3'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.tubb.smrv:swipemenu-recyclerview:3.0.2'
     compile 'com.bm.photoview:library:1.4.1'
-    compile 'com.ms-square:expandableTextView:0.1.4'
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.hanks:htextview-line:0.1.1'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     compile 'com.alimuzaffar.lib:animated-edit-text:1.1'
+    compile 'com.github.mmin18.layoutcast:library:1.+@aar'
+    compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
 }

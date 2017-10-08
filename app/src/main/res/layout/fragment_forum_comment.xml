@@ -5,9 +5,9 @@
     tools:context="com.example.administrator.myapplication.child_fragment.ForumCommentFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_forum_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activity_forum_recycler"
-        android:layout_below="@+id/activity_forum_content"/>
+        android:layout_below="@+id/activity_forum_content" />
 </LinearLayout>

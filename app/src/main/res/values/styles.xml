@@ -10,7 +10,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
         <item name="android:windowIsTranslucent">true</item>
-        
+
         //set the right in/out animation of Activity,you can change this to yours
         <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
 
@@ -21,15 +21,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/vpi__bright_foreground_holo_dark</item>
-        <item name="colorControlNormal">@color/vpi__bright_foreground_holo_dark</item>
-        <item name="android:textSize">14sp</item>
-    </style>
+
+
     <style name="popupAnimation" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/pop_in</item>
         <item name="android:windowExitAnimation">@anim/pop_out</item>
     </style>
+
     <style name="Title_textstyle">
         <item name="android:textColor">@color/black</item>
         <item name="android:layout_width">wrap_content</item>
@@ -37,6 +35,7 @@
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="MyToolbar" parent="Widget.AppCompat.Toolbar">
 
         <item name="contentInsetStart">0dp</item>
@@ -46,14 +45,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:clickable">true</item>
+
     </style>
-<style name="Super_style_unclick">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">50dp</item>
-    <item name="android:textSize">25dp</item>
-    <item name="sUseRipple">false</item>
-<item name="sRightViewGravity">right_center</item>
-</style>
+
+    <style name="Super_style_unclick">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">25dp</item>
+        <item name="sUseRipple">false</item>
+        <item name="sRightViewGravity">right_center</item>
+    </style>
+
     <style name="CardView_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_margin">5dp</item>
@@ -61,7 +63,7 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:stateListAnimator">@drawable/card_lift_on_touch</item>
+
         <item name="android:elevation">10dp</item>
 
     </style>

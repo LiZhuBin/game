@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout
-    android:padding="10dp"
-    android:layout_height="100dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="100dp"
+    android:padding="10dp">
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon_image"
-            android:layout_height="40dp"
             android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentTop="true"
-            android:src="@drawable/image_scrolling_head"/>
-        <TextView android:id="@+id/username"
-            android:layout_height="wrap_content"
+            android:src="@drawable/image_scrolling_head" />
+
+        <TextView
+            android:id="@+id/username"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/icon_image"
             android:layout_toRightOf="@+id/icon_image"
-            android:textSize="16sp"
-            android:text="Carmen冯"/>
-        <TextView android:id="@+id/lou"
-            android:layout_height="wrap_content"
+            android:text="Carmen冯"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/lou"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username"
             android:layout_toEndOf="@+id/icon_image"
             android:layout_toRightOf="@+id/icon_image"
-            android:text="第1楼"
-            android:layout_below="@+id/username"/>
-        <TextView android:id="@+id/time"
-            android:layout_height="wrap_content"
+            android:text="第1楼" />
+
+        <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username"
             android:layout_toEndOf="@+id/lou"
             android:layout_toRightOf="@+id/lou"
-            android:text=" 41分钟前"
-            android:layout_below="@+id/username"/>
+            android:text=" 41分钟前" />
     </RelativeLayout>
-    <TextView android:id="@+id/detile"
-        android:layout_height="40dp"
+
+    <TextView
+        android:id="@+id/detile"
         android:layout_width="match_parent"
-        android:layout_alignParentStart="true"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:textSize="16sp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
         android:text="师兄师姐或专业认识 本新生纺织工程，请问买什么牌的电脑好呀？具体到型号，要求不多，能上网刷剧"
-        android:layout_below="@+id/relativeLayout"/>
+        android:textSize="16sp" />
 </RelativeLayout>

@@ -1,11 +1,15 @@
 package com.example.administrator.myapplication.activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.base.BaseActivity;
@@ -13,8 +17,11 @@ import com.example.administrator.myapplication.been.Forum;
 import com.example.administrator.myapplication.thing_class.ForumItem;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
+import com.example.administrator.myapplication.util.UiUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.melnykov.fab.FloatingActionButton;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -35,11 +42,17 @@ KenBurnsView kenBurnsView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
-        initViewPager(mTitles_3, "forum");
+        initViewPager(mTitles_3, "forum",0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
-
+ImageView backButton=(ImageView)findViewById(R.id.Back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         fabAddAdd=(FloatingActionButton)findViewById(R.id.fab_add_add);
         fabAddAdd.setImageResource(R.drawable.icon_fab_add);
         fabAddAdd.setOnClickListener(new View.OnClickListener() {
@@ -64,15 +77,15 @@ KenBurnsView kenBurnsView;
     }
 
     public void initForumContent() {
-
-        ForumItem obj = (ForumItem) getIntent().getSerializableExtra("Object_forum");
-        one = obj;
+String string=getIntent().getExtras().getString("id");
         kenBurnsView=(KenBurnsView)findViewById(R.id.iv_blur);
-      Glide.with(this).load(GlobalData.httpAddressPicture+one.getForumImage()).into(kenBurnsView);
+        PhotoView photoView=(PhotoView)findViewById(R.id.photo_view);
+        final FrameLayout frameLayout=(FrameLayout)findViewById(R.id.photo_view_frame_layout);
+        UiUtil.photoView(kenBurnsView,kenBurnsView,frameLayout,photoView);
+
         TextView title=(TextView)findViewById(R.id.toolbar_text);
         title.setText("帖子");
-//        username.setText(one.get);
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/getById", one.getId(),new Callback() {
+        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/getById.php",string,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -80,9 +93,41 @@ KenBurnsView kenBurnsView;
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //forum=HttpUtil.getSingleForum(response);
+                forum=HttpUtil.getSingleForum(response);
+               new MyAsyncTask(forum).execute();
+                EventBus.getDefault().post(forum);
             }
         });
+    }
+    class MyAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+        Forum forum;
+
+        public MyAsyncTask(Forum forum) {
+            super();
+            this.forum=forum;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+
+            Glide.with(ForumActivity.this).load(GlobalData.httpAddressPicture+forum.getImage()).into(kenBurnsView);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            publishProgress(1);
+            return true;
+        }
     }
 
     @OnClick(R.id.fab_add_add)

@@ -1,13 +1,14 @@
 package com.example.administrator.myapplication.been;
 
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by lenovo on 2017/9/6.
  */
 
-public class News implements Serializable {
+public class News implements Parcelable {
 
 
     /**
@@ -123,4 +124,42 @@ private int new_drawable;
         this.new_comment_id = new_comment_id;
         this.new_comment = new_comment;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.new_id);
+        dest.writeString(this.new_title);
+        dest.writeString(this.new_content);
+        dest.writeString(this.new_image);
+        dest.writeString(this.new_comment_id);
+        dest.writeString(this.new_comment);
+        dest.writeInt(this.new_drawable);
+    }
+
+    protected News(Parcel in) {
+        this.new_id = in.readString();
+        this.new_title = in.readString();
+        this.new_content = in.readString();
+        this.new_image = in.readString();
+        this.new_comment_id = in.readString();
+        this.new_comment = in.readString();
+        this.new_drawable = in.readInt();
+    }
+
+    public static final Parcelable.Creator<News> CREATOR = new Parcelable.Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel source) {
+            return new News(source);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 }

@@ -1,6 +1,7 @@
 package com.example.administrator.myapplication.util;
 
 import com.example.administrator.myapplication.been.Activity;
+import com.example.administrator.myapplication.been.Advertise;
 import com.example.administrator.myapplication.been.Forum;
 import com.example.administrator.myapplication.been.News;
 import com.example.administrator.myapplication.been.User;
@@ -25,6 +26,7 @@ public class HttpUtil {
     private static final String TAG = "HttpUtil";
     public   static User user=null;
     public static Forum forum=null;
+    private static Advertise advertise=null;
     public static void sendOkHttpResquest(String address,String id,okhttp3.Callback callback){
         RequestBody body = new FormBody.Builder()
                 .add("id", id)//添加键值对
@@ -101,6 +103,19 @@ public class HttpUtil {
         }
         return appList;
     }
+    public static List<Advertise> getListAdvertise(Response response){
+        List<Advertise> appList;
+        appList = null;
+        try {
+            String responseData=response.body().string();
+            Gson gson=new Gson();
+            appList=gson.fromJson(responseData,new TypeToken<List<Advertise>>(){}.getType());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return appList;
+    }
     public static User getSingleUser(Response response){
         return HttpUtil.getListUser(response).get(0);
     }
@@ -110,19 +125,8 @@ public class HttpUtil {
     public static Forum getSingleForum(Response response){
         return HttpUtil.getListForum(response).get(0);
     }
-
-    public static List<Forum> parseForumJSONWithGSON(Response response){
-        List<Forum> appList;
-        appList = null;
-        try {
-            String responseData=response.body().string();
-            Gson gson=new Gson();
-            appList=gson.fromJson(responseData,new TypeToken<List<Forum>>(){}.getType());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return appList;
+    public static Advertise getSingleAdvertise(Response response){
+        return HttpUtil.getListAdvertise(response).get(0);
     }
 
 

@@ -14,11 +14,16 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.ZoomOutPageTransformer;
 import com.example.administrator.myapplication.child_fragment.AddChatFragment;
 import com.example.administrator.myapplication.child_fragment.AddListFragment;
 import com.example.administrator.myapplication.child_fragment.ForumCommentFragment;
 import com.example.administrator.myapplication.child_fragment.ForumListFragment;
+import com.example.administrator.myapplication.child_fragment.MessageChatFragment;
+import com.example.administrator.myapplication.child_fragment.MessageSystemFragment;
 import com.example.administrator.myapplication.child_fragment.NewListFragment;
+import com.example.administrator.myapplication.child_fragment.PersonAddFragment;
+import com.example.administrator.myapplication.child_fragment.PersonForumFragment;
 import com.example.administrator.myapplication.my_ui.MyViewPager;
 import com.example.administrator.myapplication.util.ViewFindUtils;
 import com.flyco.tablayout.SegmentTabLayout;
@@ -93,20 +98,26 @@ public class BaseActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-    public void initViewPager(String[] mTitles_3,String which) {
+    public void initViewPager(String[] mTitles_3,String which,int pager) {
         this.mTitles_3=mTitles_3;
-        for (String title : mTitles_3) {
+
             if(which.equals("add")) {
-                mFragments.add(AddListFragment.getInstance("Switch ViewPager " + title));
-                mFragments.add(AddChatFragment.getInstance("Switch ViewPager " + title));
+                mFragments.add(AddListFragment.getInstance());
+                mFragments.add(AddChatFragment.getInstance());
             }else  if(which.equals("forum")){
-                mFragments.add(ForumListFragment.getInstance("Switch ViewPager " + title));
-                mFragments.add(ForumCommentFragment.getInstance("Switch ViewPager " + title));
+                mFragments.add(ForumListFragment.getInstance());
+                mFragments.add(ForumCommentFragment.getInstance());
             }else if(which.equals("new")){
-                mFragments.add(NewListFragment.getInstance("Switch ViewPager " + title));
-                mFragments.add(ForumCommentFragment.getInstance("Switch ViewPager " + title));
+                mFragments.add(NewListFragment.getInstance());
+                mFragments.add(ForumCommentFragment.getInstance());
+            }else if(which.equals("person")){
+                mFragments.add(PersonAddFragment.getInstance());
+                mFragments.add(PersonForumFragment.getInstance());
+            }else if(which.equals("message")){
+                mFragments.add(MessageChatFragment.getInstance());
+                mFragments.add(MessageSystemFragment.getInstance());
             }
-        }
+
 
 
         mDecorView = getWindow().getDecorView();
@@ -116,7 +127,8 @@ public class BaseActivity extends AppCompatActivity {
 
         final MyViewPager vp_3 = ViewFindUtils.find(mDecorView, R.id.vp_2);
         vp_3.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-
+        vp_3.setOffscreenPageLimit(2);
+        vp_3.setPageTransformer(true, new ZoomOutPageTransformer());
         mTabLayout_3.setTabData(mTitles_3);
         mTabLayout_3.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -145,12 +157,9 @@ public class BaseActivity extends AppCompatActivity {
 
             }
         });
-        vp_3.setCurrentItem(0);
+        vp_3.setCurrentItem(pager);
 
-        mTabLayout_3.showDot(1);
 
-        //设置未读消息红点
-        mTabLayout_3.showDot(2);
         MsgView rtv_3_2 = mTabLayout_3.getMsgView(2);
         if (rtv_3_2 != null) {
             rtv_3_2.setBackgroundColor(Color.parseColor("#6D8FB0"));
@@ -159,9 +168,11 @@ public class BaseActivity extends AppCompatActivity {
 
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
+
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
 
         @Override
         public int getCount() {

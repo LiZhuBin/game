@@ -16,7 +16,6 @@ import com.example.administrator.myapplication.activity.ForumActivity;
 import com.example.administrator.myapplication.thing_class.ForumItem;
 import com.example.administrator.myapplication.util.ApplicationUtil;
 import com.example.administrator.myapplication.util.GlobalData;
-import com.example.administrator.myapplication.util.StringUtil;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
@@ -50,7 +49,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
             public void onClick(View view) {
                 int position =holder.getAdapterPosition();
                 Intent intent=new Intent(ApplicationUtil.getContext(), ForumActivity.class);
-                intent.putExtra("Object_forum",mforumItem.get(position));
+                intent.putExtra("id",mforumItem.get(position).getId());
                 mContext.startActivity(intent);
             }
         });
@@ -58,8 +57,8 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
 
         final ShineButton shineButton1 = (ShineButton) view.findViewById(R.id.forum_shineButton_like);
         final ShineButton shineButton2 = (ShineButton) view.findViewById(R.id.forum_shineButton_heart);
-        good(view,shineButton1,"+1");
-        good(view,shineButton2,"收藏成功");
+        good(shineButton1,"+1",holder.forumLikeNum);
+        good(shineButton2,"收藏成功",null);
         return holder;
     }
 
@@ -70,7 +69,8 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
         Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture+forumItem.getForumImage()).into(holder.forumImage);
         holder.forumAddNum.setText(forumItem.getForumAddNum());
         holder.forumLikeNum.setText(forumItem.getForumLikeNum());
-        holder.forumAddNum.setText(StringUtil.httpArrayStringLength(forumItem.getForumAddNum()));
+        int addNum=Integer.parseInt(forumItem.getForumAddNum())/2;
+        holder.forumAddNum.setText(addNum+"");
     }
 
     @Override

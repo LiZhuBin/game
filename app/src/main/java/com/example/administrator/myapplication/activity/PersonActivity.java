@@ -4,38 +4,30 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.adapter.AddAdapter;
-import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
 import com.example.administrator.myapplication.base.BaseActivity;
-import com.example.administrator.myapplication.been.Activity;
 import com.example.administrator.myapplication.been.User;
-import com.example.administrator.myapplication.thing_class.AddItem;
-import com.example.administrator.myapplication.util.ApplicationUtil;
-import com.example.administrator.myapplication.util.ClasstoItem;
 import com.example.administrator.myapplication.util.GlobalData;
 import com.example.administrator.myapplication.util.HttpUtil;
-import com.example.administrator.myapplication.util.LogUtil;
 import com.example.administrator.myapplication.util.SPUtil;
-import com.example.administrator.myapplication.util.StringUtil;
+import com.example.administrator.myapplication.util.UiUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.github.florent37.diagonallayout.DiagonalLayout;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,6 +36,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static com.example.administrator.myapplication.util.UiUtil.good;
 
 public class PersonActivity extends BaseActivity {
     @Bind(R.id.bottom_button)
@@ -68,24 +62,30 @@ public class PersonActivity extends BaseActivity {
     Toolbar newactivityToolbar;
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
-
-    private List<AddItem> addList = new ArrayList<>();
-    private AddAdapter addAdapter;
-    private GridLayoutManager manager;
-    protected ViewPagerAdapter adapter;
-    User user;
-int isFriend=-1;
+ShineButton praise;
+    int pager;
+    public static User user;
+    int isFriend=-1;
+    private String[] mTitles_3 = {"约战", "帖子"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
+        initAdd();
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         // getSupportActionBar().hide();
-        initAdd();
+
 
         SPUtil.put(PersonActivity.this,"isFrist",true);
+        praise=(ShineButton)findViewById(R.id.shineButton);
+
+               good(praise,"+1",userMyLike);
+
         setSupportActionBar(toolbar);
+        PhotoView photoView=(PhotoView)findViewById(R.id.photo_view);
+        final FrameLayout frameLayout=(FrameLayout)findViewById(R.id.photo_view_frame_layout);
+        UiUtil.photoView(userMySmallImage,userMyBigImage,frameLayout,photoView);
         ImageView imageView = (ImageView) findViewById(R.id.Back_button);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,19 +120,12 @@ int isFriend=-1;
 
     }
 
-    private void initSwipeRecyclerView() {
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.person_activity_recycle);
-        addAdapter = new AddAdapter(addList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ApplicationUtil.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(addAdapter);
 
-    }
 
     private void initAdd() {
 
         String userId = getIntent().getExtras().getString("id");
-
+         pager=getIntent().getExtras().getInt("pager");
         HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", userId, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -143,32 +136,20 @@ int isFriend=-1;
             public void onResponse(Call call, Response response) throws IOException {
 
                 user = HttpUtil.getSingleUser(response);
-                    isFriend=GlobalData.isFriend(user.getId());
-               getActivities(StringUtil.httpArray(user.getDoingActivities()));
+
+                EventBus.getDefault().post(user);
+            //   EventBus.getDefault().post(user);
+                isFriend=GlobalData.isFriend(user.getId());
+
                 new MyAsyncTask(user).execute();
+
             }
-        });
 
-     //  getActivities(StringUtil.httpArray(user.getDoingActivities()));
+        }  );
+        initViewPager(mTitles_3,"person",pager);
+
     }
-    private void getActivities(String[] friendsId) {
-        for (int i = 0; i < friendsId.length; i++) {
-            HttpUtil.sendOkHttpResquest(GlobalData.httpAddressActivity + "php/getById.php", friendsId[i], new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
 
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Activity activity = HttpUtil.getSingleActivity(response);
-                    ClasstoItem.ActivitytoAddItem(activity, addList);
-                    LogUtil.d( user.getImage() + "<<<<<<<<<<<<<<");
-                }
-            });
-        }
-        initSwipeRecyclerView();
-    }
     class MyAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         User user;
 
@@ -191,6 +172,7 @@ int isFriend=-1;
 
         @Override
         protected void onProgressUpdate(Integer... values) {
+
             if(isFriend==1){
                 addAsFriend.setText("发消息");
             }else if(isFriend==0){

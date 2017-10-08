@@ -1,14 +1,13 @@
 package com.example.administrator.myapplication.been;
 
-import org.litepal.crud.DataSupport;
-
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Administrator on 2017/9/17 0017.
  */
 
-public class User extends DataSupport implements Serializable{
+public class User implements Parcelable {
     /**
      * id : 1
      * praise_num : 0
@@ -170,4 +169,56 @@ private String beattentionId;
     public String getPosts() {
         return posts;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.praise_num);
+        dest.writeString(this.praise_id);
+        dest.writeString(this.name);
+        dest.writeString(this.friends);
+        dest.writeString(this.postActivities);
+        dest.writeString(this.collectActivities);
+        dest.writeString(this.doingActivities);
+        dest.writeString(this.completeActivities);
+        dest.writeString(this.image);
+        dest.writeString(this.password);
+        dest.writeString(this.posts);
+        dest.writeString(this.attentionId);
+        dest.writeString(this.beattentionId);
+    }
+
+    protected User(Parcel in) {
+        this.id = in.readString();
+        this.praise_num = in.readString();
+        this.praise_id = in.readString();
+        this.name = in.readString();
+        this.friends = in.readString();
+        this.postActivities = in.readString();
+        this.collectActivities = in.readString();
+        this.doingActivities = in.readString();
+        this.completeActivities = in.readString();
+        this.image = in.readString();
+        this.password = in.readString();
+        this.posts = in.readString();
+        this.attentionId = in.readString();
+        this.beattentionId = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

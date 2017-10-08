@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
- <android.support.v7.widget.RecyclerView
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:id="@+id/add_right_fragment_list"
-     />
- <com.melnykov.fab.FloatingActionButton
-     android:id="@+id/fab_add"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_gravity="bottom|right"
-     android:layout_marginBottom="130dp"
-     android:layout_marginRight="30dp"
-     android:src="@drawable/icon_fab_add"
-     fab:fab_colorNormal="@color/bottom_color"
-android:background="@android:color/transparent"
-     fab:fab_shadow="false"
-  />
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/add_right_fragment_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="130dp"
+        android:layout_marginRight="30dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_fab_add"
+        fab:fab_colorNormal="@color/bottom_color"
+        fab:fab_shadow="false" />
 </FrameLayout>

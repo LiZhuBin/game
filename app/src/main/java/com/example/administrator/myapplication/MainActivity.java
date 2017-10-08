@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.example.administrator.myapplication.activity.MessageActivity;
 import com.example.administrator.myapplication.activity.SearchActivity;
 import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
 import com.example.administrator.myapplication.main_fragment.AddFragment;
@@ -25,6 +26,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
@@ -89,6 +91,18 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
             }
+        });
+
+        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+            @Override
+            public void onActionMenuItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.message:
+                        startActivity(new Intent(MainActivity.this, MessageActivity.class));
+                }
+            }
+
+
         });
 
         mSearchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
@@ -190,6 +204,7 @@ public void initBottomNavigationViewEx(){
             } return true;
         } return super.onKeyDown(keyCode, event);
     }
+
 
 }
 

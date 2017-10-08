@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-android:background="@drawable/background4"
->
-
+    android:background="@drawable/background4">
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -14,40 +11,38 @@ android:background="@drawable/background4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:srlPrimaryColor="@android:color/transparent"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="false">
+        app:srlEnableLoadmore="false"
+        app:srlPrimaryColor="@android:color/transparent">
+
         <com.scwang.smartrefresh.header.TaurusHeader
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+            android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.youth.banner.Banner
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/Banner"
-                app:title_textsize="18dp"
-                app:indicator_width="10dp"
-                app:indicator_height="10dp"
-                />
-            <include layout="@layout/peoplelayout" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include layout="@layout/hotpoint_right"/>
-            <include layout="@layout/hotpoint_left"/>
+                <include layout="@layout/recomment_busine" />
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+                <include layout="@layout/recomment_people" />
+
+                <include layout="@layout/recomment_new" />
+
+                <include layout="@layout/recomment_banner" />
+
+                <include layout="@layout/recomment_forum" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <include layout="@layout/layout_photo_view"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -8,35 +8,30 @@
     <ImageView
         android:id="@+id/folder_firstImageview"
         android:layout_width="150dp"
-        android:layout_alignParentLeft="true"
         android:layout_height="match_parent"
-        android:src="@drawable/hezhao"
+        android:layout_alignParentLeft="true"
         android:padding="5dp"
-        />
+        android:src="@drawable/image_hezhao" />
 
 
     <TextView
-        android:layout_toRightOf="@id/folder_firstImageview"
         android:id="@+id/folder_NameTextview"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
         android:layout_marginLeft="20dp"
-        android:text="String"
-        />
+        android:layout_toRightOf="@id/folder_firstImageview"
+        android:gravity="center_vertical"
+        android:text="String" />
 
     <ImageView
+        android:id="@+id/folder_bechooseicon"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/signcheckicon"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:id="@+id/folder_bechooseicon"
-        android:visibility="gone"
-        />
-
-
+        android:src="@drawable/signcheckicon"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

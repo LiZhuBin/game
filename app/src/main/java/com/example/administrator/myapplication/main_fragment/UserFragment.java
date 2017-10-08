@@ -4,21 +4,22 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allen.library.SuperTextView;
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.administrator.myapplication.LoginActivity;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.activity.PersonActivity;
-import com.example.administrator.myapplication.activity.PhotoViewActivity;
-import com.example.administrator.myapplication.activity.PostActivity;
+import com.example.administrator.myapplication.base.BaseFragment;
 import com.example.administrator.myapplication.been.User;
 import com.example.administrator.myapplication.util.ActivityUtils;
 import com.example.administrator.myapplication.util.ApplicationUtil;
@@ -27,6 +28,8 @@ import com.example.administrator.myapplication.util.HttpUtil;
 import com.example.administrator.myapplication.util.IntentHelp;
 import com.example.administrator.myapplication.util.SPUtil;
 import com.example.administrator.myapplication.util.StringUtil;
+import com.example.administrator.myapplication.util.UiUtil;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -38,15 +41,15 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class UserFragment extends Fragment {
+public class UserFragment extends BaseFragment {
 
     View view;
     public static  User me;
-
     public  static  Object userId;
     ImageView userMySmallImage;
 ImageView userMyBigImage;
     TextView userMyName;
+    PhotoView photoView;
     SuperTextView myAttention;
     SuperTextView myActivities;
     SuperTextView myCollection;
@@ -54,12 +57,11 @@ ImageView userMyBigImage;
     SuperTextView myPost;
     SuperTextView settings;
     SuperTextView imports;
-    String friendsData;
     protected WeakReference<View> mRootView;//缓存fragment数据
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        initData();
     }
 
     @Override
@@ -68,7 +70,7 @@ ImageView userMyBigImage;
         if (mRootView == null || mRootView.get() == null) {
         view = inflater.inflate(R.layout.user_info, container, false);
             mRootView = new WeakReference<View>(view);
-        initData(view);
+        initData();
         ButterKnife.bind(this, view);
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
@@ -76,6 +78,7 @@ ImageView userMyBigImage;
                 parent.removeView(mRootView.get());
             }
         }
+        initSuperTextView(view);
         return mRootView.get();
     }
 
@@ -86,29 +89,9 @@ ImageView userMyBigImage;
         ButterKnife.unbind(this);
     }
 
-    public void initData(final View view) {
-
-        userMyBigImage=(ImageView)view.findViewById(R.id.user_myBigImage) ;
-         userMySmallImage=(ImageView)view.findViewById(R.id.iv_avatar);
-userMySmallImage.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent=new Intent(ApplicationUtil.getContext(), PhotoViewActivity.class);
-        intent.putExtra("imageUrl",GlobalData.httpAddressUser+me.getImage());
-        startActivity(intent);
-    }
-});
+    public void initData() {
 
 
-
-        myAttention=(SuperTextView)view.findViewById(R.id.my_attention);
-        userMyName=(TextView)view.findViewById(R.id.my_name);
-        myActivities=(SuperTextView)view.findViewById(R.id.my_activities);
-        myCollection=(SuperTextView)view.findViewById(R.id.my_collection);
-        myFriends=(SuperTextView)view.findViewById(R.id.my_friends);
-        myPost=(SuperTextView)view.findViewById(R.id.my_post);
-        settings=(SuperTextView)view.findViewById(R.id.settings);
-        imports=(SuperTextView)view.findViewById(R.id.imports);
 
          userId = SPUtil.get(ApplicationUtil.getContext(), "UserId", 1);
 
@@ -122,13 +105,30 @@ userMySmallImage.setOnClickListener(new View.OnClickListener() {
             public void onResponse(Call call, Response response) throws IOException {
 
                     me=HttpUtil.getSingleUser(response);
-                initSuperTextView(view);
+
                     new MyAsyncTask(me).execute();
             }
         });
             }
 
 public  void initSuperTextView(View view){
+    userMyBigImage=(ImageView)view.findViewById(R.id.user_myBigImage) ;
+    userMySmallImage=(ImageView)view.findViewById(R.id.iv_avatar);
+    photoView=(PhotoView)view.findViewById(R.id.photo_view);
+    final FrameLayout frameLayout=(FrameLayout)view.findViewById(R.id.photo_view_frame_layout);
+    photoView.setMaxScale(5f);
+    UiUtil.photoView(userMySmallImage,userMyBigImage,frameLayout,photoView);
+
+
+
+    myAttention=(SuperTextView)view.findViewById(R.id.my_attention);
+    userMyName=(TextView)view.findViewById(R.id.my_name);
+    myActivities=(SuperTextView)view.findViewById(R.id.my_activities);
+    myCollection=(SuperTextView)view.findViewById(R.id.my_collection);
+    myFriends=(SuperTextView)view.findViewById(R.id.my_friends);
+    myPost=(SuperTextView)view.findViewById(R.id.my_post);
+    settings=(SuperTextView)view.findViewById(R.id.settings);
+    imports=(SuperTextView)view.findViewById(R.id.imports);
     final SuperTextView myAttention = (SuperTextView) view.findViewById(R.id.my_attention);
    myAttention.setLeftTopTvClickListener(new SuperTextView.OnLeftTopTvClickListener() {
        @Override
@@ -167,10 +167,20 @@ public  void initSuperTextView(View view){
         public void onClickListener(SuperTextView superTextView) {
            Intent intent=new Intent(ApplicationUtil.getContext(),PersonActivity.class);
             intent.putExtra("id",me.getId());
+            intent.putExtra("pager",0);
             startActivity(intent);
         }
     });
-
+SuperTextView myPost=(SuperTextView)view.findViewById(R.id.my_post);
+    myPost.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+        @Override
+        public void onClickListener(SuperTextView superTextView) {
+            Intent intent=new Intent(ApplicationUtil.getContext(),PersonActivity.class);
+            intent.putExtra("id",me.getId());
+            intent.putExtra("pager",1);
+            startActivity(intent);
+        }
+    });
     SuperTextView myFriends = (SuperTextView) view.findViewById(R.id.my_friends);
     myFriends.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
         @Override
@@ -182,9 +192,7 @@ public  void initSuperTextView(View view){
     myCollects.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
         @Override
         public void onClickListener(SuperTextView superTextView) {
-           // Bundle bundle=new Bundle();
-            //bundle.putInt("my_id", Integer.parseInt(me.getId()));
-            ActivityUtils.startActivity(getActivity(), PostActivity.class);
+            TastyToast.makeText(ApplicationUtil.getContext(),"敬请期待", Toast.LENGTH_LONG,TastyToast.SUCCESS);
         }
     });
     SuperTextView superTextView2 = (SuperTextView) view.findViewById(R.id.imports);

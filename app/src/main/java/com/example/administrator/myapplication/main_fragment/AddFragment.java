@@ -1,7 +1,6 @@
 package com.example.administrator.myapplication.main_fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.activity.AddAddActivity;
 import com.example.administrator.myapplication.adapter.AddAdapter;
 import com.example.administrator.myapplication.adapter.ViewPagerAdapter;
+import com.example.administrator.myapplication.base.BaseFragment;
 import com.example.administrator.myapplication.been.Activity;
 import com.example.administrator.myapplication.thing_class.AddItem;
 import com.example.administrator.myapplication.util.ActivityUtils;
@@ -36,17 +36,17 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class AddFragment extends Fragment {
+public class AddFragment extends BaseFragment {
     protected WeakReference<View> mRootView;//缓存fragment数据
     private List<AddItem> addList=new ArrayList<>();
     private AddAdapter addAdapter;
     private GridLayoutManager manager;
     protected ViewPagerAdapter adapter;
-
+   RecyclerView recyclerView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+initData();
     }
 
     @Override
@@ -56,10 +56,9 @@ public class AddFragment extends Fragment {
         View view = inflater.inflate(R.layout.add_info, container, false);
             mRootView = new WeakReference<View>(view);
         ButterKnife.bind(this, view);
-        initRefresh(view);
-       // initAdd();
-            initSwipeRecyclerView(view);
 
+        initRefresh(view);
+            initRecycle(view);
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
@@ -76,14 +75,13 @@ public class AddFragment extends Fragment {
     }
 
     public void initRefresh(final View view){
-        initData();
+
 
         RefreshLayout refreshLayout = (RefreshLayout)view.findViewById(R.id.add_refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                initRefresh(view);
-
+                onCreate(null);
                 refreshlayout.finishRefresh(2000);
             }
         });
@@ -94,21 +92,7 @@ public class AddFragment extends Fragment {
             }
         });
     }
-private  void initSwipeRecyclerView(View view){
-    final RecyclerView recyclerView=(RecyclerView)view.findViewById(R.id.add_right_fragment_list);
-    addAdapter=new AddAdapter(addList);
-    LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ApplicationUtil.getContext());
-    recyclerView.setLayoutManager(linearLayoutManager);
-    recyclerView.setAdapter(addAdapter);
-    FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
-    fab.attachToRecyclerView(recyclerView);
-    fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            ActivityUtils.startActivity(getActivity(), AddAddActivity.class, R.anim.enter_anim, R.anim.slide_out_right);
-        }
-    });
-}
+
 
     public void initData(){
 
@@ -123,11 +107,28 @@ private  void initSwipeRecyclerView(View view){
                 List<Activity> appList = HttpUtil.getListActivity(response);
                 for (final Activity activity : appList) {
                    // GlobalData.httpAddressActivity+activity.getImage(),
-                    ClasstoItem.ActivitytoAddItem(activity,addList);
+                    ClasstoItem.ActivityToAddItem(activity,addList);
 
                 }
 
             }
         });
+
     }
+    private  void initRecycle(View view){
+        recyclerView=(RecyclerView)view.findViewById(R.id.add_right_fragment_list);
+        addAdapter=new AddAdapter(addList);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ApplicationUtil.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(addAdapter);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        fab.attachToRecyclerView(recyclerView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityUtils.startActivity(getActivity(), AddAddActivity.class, R.anim.enter_anim, R.anim.slide_out_right);
+            }
+        });
+    }
+
 }
