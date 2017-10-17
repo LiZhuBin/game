@@ -16,6 +16,7 @@
 
 
         <TextView
+            android:id="@+id/recomment_text_person"
             style="@style/Title_textstyle"
             android:layout_gravity="right|center"
             android:layout_marginRight="30dp"

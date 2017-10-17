@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@color/colorAccent"
+android:id="@+id/app_bar_layout"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -42,8 +43,8 @@
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:padding="5dp"
-
-                        android:src="@drawable/back_button5" />
+                        android:src="@drawable/back_button5"
+                      />
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
             <com.flyco.tablayout.SegmentTabLayout
@@ -64,7 +65,7 @@
                 tl:tl_textBold="SELECT" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <com.example.administrator.myapplication.my_ui.MyViewPager
+    <com.example.administrator.happygame.my_ui.MyViewPager
         android:id="@+id/vp_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

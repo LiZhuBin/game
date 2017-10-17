@@ -7,7 +7,7 @@
     android:orientation="vertical"
 
 
-    tools:context="com.example.administrator.myapplication.activity.SearchActivity">
+    tools:context="com.example.administrator.happygame.activity.SearchActivity">
 
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"

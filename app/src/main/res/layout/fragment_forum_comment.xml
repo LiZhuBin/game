@@ -2,12 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.myapplication.child_fragment.ForumCommentFragment">
+    tools:context="com.example.administrator.happygame.child_fragment.ForumCommentFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_forum_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/activity_forum_content" />
+   <include layout="@layout/layout_recycle"/>
 </LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lib.homhomlib.design.SlidingLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:stv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.happygame.activity.SetActivity">
+    <com.allen.library.SuperTextView
+        android:id="@+id/settings"
+        style="@style/Super_style"
+        stv:sLeftTextString="分享"
+        stv:sLeftIconRes="@drawable/icon_about"
+        stv:sRightTextColor="@color/colorAccent"
+        />
+</lib.homhomlib.design.SlidingLayout>

@@ -21,6 +21,7 @@
 
 
             <TextView
+                android:id="@+id/recomment_text_post"
                 style="@style/Title_textstyle"
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="30dp"

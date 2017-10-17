@@ -10,7 +10,7 @@
 
     <include layout="@layout/layout_toolbar_collapsing" />
 
-    <com.example.administrator.myapplication.my_ui.MyViewPager
+    <com.example.administrator.happygame.my_ui.MyViewPager
         android:id="@+id/vp_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,4 +22,5 @@
     <include layout="@layout/layout_floating_button" />
 
     <include layout="@layout/layout_photo_view" />
+
 </android.support.design.widget.CoordinatorLayout>

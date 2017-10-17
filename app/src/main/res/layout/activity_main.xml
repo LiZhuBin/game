@@ -2,17 +2,18 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    xmlns:ripple="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background4"
     android:orientation="vertical"
-    tools:context="com.example.administrator.myapplication.MainActivity"
+    tools:context="com.example.administrator.happygame.MainActivity"
+    ripple:rv_type="rectangle"
+    android:id="@+id/drawer_layout"
 
     >
 
     <include layout="@layout/layout_search_view" />
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -31,7 +32,26 @@
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         app:itemBackground="@color/bottom_color"
-        app:layout_behavior="com.example.administrator.myapplication.behavior.BottomNavigationViewBehavior"
+        app:layout_behavior="com.example.administrator.happygame.behavior.BottomNavigationViewBehavior"
         app:menu="@menu/navigation" />
+    <io.codetail.widget.RevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/main_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum" />
+
+
+        </FrameLayout>
+
+    </io.codetail.widget.RevealFrameLayout>
 </android.support.design.widget.CoordinatorLayout>

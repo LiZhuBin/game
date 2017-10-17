@@ -7,7 +7,7 @@
     >
 
 
-    <com.example.administrator.myapplication.my_ui.BezierViewPager
+    <com.example.administrator.happygame.my_ui.BezierViewPager
         android:id="@+id/view_page"
         android:layout_width="match_parent"
         android:layout_height="220dp"

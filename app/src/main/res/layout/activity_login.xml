@@ -16,14 +16,16 @@
             android:id="@+id/icon_image"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_gravity="center_horizontal" />
-        android:src="@drawable/icon_head"
-        />
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center_horizontal"
+        android:src="@drawable/icon_head"/>
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="40dp"
             android:layout_margin="16dp"
             android:layout_weight="0.05"
             card_view:cardCornerRadius="4dp"
@@ -131,21 +133,7 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/qq" />
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/wechat" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/weibo" />
+            <include layout="@layout/layout_bottom_share"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

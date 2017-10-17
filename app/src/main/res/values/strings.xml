@@ -11,7 +11,7 @@
     <string name="text_ham_button_sub_text_normal">Ham Button Sub Text(Normal)</string>
     <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
     <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
-    <string name="app_name">My Application</string>
+    <string name="app_name">悦游</string>
     <string name="bottom1">推荐</string>
     <string name="bottom2">加入</string>
     <string name="bottom3">论坛</string>
@@ -20,27 +20,20 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="one_title">
-        <item>狼人杀</item>
-        <item>三国杀</item>
-        <item>游戏王</item>
-        <item>其它</item>
-    </string-array>
-    <string-array name="two_title">
-        <item>围棋</item>
-        <item>五子棋</item>
-        <item>飞行棋</item>
-        <item>其它</item>
-    </string-array>
-    <string-array name="three_title">
-        <item>lol</item>
-        <item>王者荣耀</item>
-        <item>守望先峰</item>
-        <item>其它</item>
-    </string-array>
+
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_begin">BeginActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_message">MessageActivity</string>
-
+    <string name="title_activity_test">TestActivity</string>
+    <string-array name="sorts">
+        <item>狼人杀</item>
+        <item>UNO</item>
+        <item>三国杀</item>
+        <item>谁是卧底</item>
+    </string-array>
+    <string name="action_settings">Settings</string>
+    <string name="hint">Type emoji here</string>
+    <string name="i_love_emojicon">I \ue32d emojicon</string>
+    <string name="use_system_default">Use system default emojicon</string>
 </resources>

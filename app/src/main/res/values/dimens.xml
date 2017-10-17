@@ -15,4 +15,7 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="super_textview_bottom_text">30dp</dimen>
+    <dimen name="image_width">120dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 </resources>

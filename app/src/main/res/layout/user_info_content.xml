@@ -3,14 +3,18 @@
     xmlns:stv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:gravity="center"
     android:orientation="vertical"
     stv:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_attention"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:duplicateParentState="true"
         stv:sCenterBottomTextSize="@dimen/super_textview_bottom_text"
         stv:sCenterBottomTextString="4"
         stv:sCenterTopTextString="我的点赞数"
@@ -57,8 +61,7 @@
     <com.allen.library.SuperTextView
         android:id="@+id/settings"
         style="@style/Super_style"
-        android:layout_marginTop="10dp"
-        stv:sLeftTextString="关于"
+        stv:sLeftTextString="设置"
 stv:sLeftIconRes="@drawable/icon_about"
         stv:sRightTextColor="@color/colorAccent"
         />
