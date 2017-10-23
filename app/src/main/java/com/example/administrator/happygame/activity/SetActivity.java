@@ -1,6 +1,8 @@
 package com.example.administrator.happygame.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.example.administrator.happygame.R;
@@ -17,8 +19,11 @@ import cn.sharesdk.tencent.qq.QQ;
 
 public class SetActivity extends BaseActivity {
 
+
     @Bind(R.id.settings)
     SuperTextView settings;
+    @Bind(R.id.about)
+    SuperTextView about;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +32,6 @@ public class SetActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.settings)
-    public void onViewClicked() {
-        showShare();
-    }
 
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
@@ -61,6 +62,19 @@ public class SetActivity extends BaseActivity {
 // 启动分享GUI
         oks.show(this);
     }
+
+    @OnClick({R.id.settings, R.id.about})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.settings:
+                showShare();
+                break;
+            case R.id.about:
+                startActivity(new Intent(SetActivity.this,AboutActivity.class));
+                break;
+        }
+    }
+
 
     public class ShareContentCustomizeDemo implements ShareContentCustomizeCallback {
 

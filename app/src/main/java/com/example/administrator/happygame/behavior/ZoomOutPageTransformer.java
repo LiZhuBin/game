@@ -1,4 +1,4 @@
-package com.example.administrator.happygame;
+package com.example.administrator.happygame.behavior;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

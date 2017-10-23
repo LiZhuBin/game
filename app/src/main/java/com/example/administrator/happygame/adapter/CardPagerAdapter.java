@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.my_ui.BezierViewPager;
 import com.example.administrator.happygame.thing_class.Advertisement;
-import com.example.administrator.happygame.thing_class.Until;
+import com.example.administrator.happygame.util.Until;
 
 import java.util.ArrayList;
 import java.util.List;

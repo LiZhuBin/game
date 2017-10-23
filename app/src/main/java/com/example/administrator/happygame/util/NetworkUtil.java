@@ -4,14 +4,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.example.administrator.happygame.activity.Main2Activity;
-
 /**
  * Created by Administrator on 2017/10/12 0012.
  */
 
 public class NetworkUtil {
-    public static boolean isNetworkAvailable(Main2Activity activity) {
+    public static boolean isNetworkAvailable() {
         Context context = ApplicationUtil.getContext();
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

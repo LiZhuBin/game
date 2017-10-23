@@ -1,4 +1,4 @@
-package com.example.administrator.happygame.thing_class;
+package com.example.administrator.happygame.util;
 
 import android.app.Activity;
 

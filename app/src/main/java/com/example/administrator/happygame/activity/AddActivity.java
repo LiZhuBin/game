@@ -132,6 +132,7 @@ public class AddActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
 
                 activity = HttpUtil.getSingleActivity(response);
+
                 EventBus.getDefault().post(activity);
                 new MyAsyncTask(activity).execute();
 

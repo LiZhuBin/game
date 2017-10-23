@@ -22,13 +22,12 @@ import com.example.administrator.happygame.activity.GetPhotoActivity;
 import com.example.administrator.happygame.adapter.ForumAdapter;
 import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Forum;
+import com.example.administrator.happygame.mvp.api.ApiServiceManager;
 import com.example.administrator.happygame.my_ui.GlideRoundTransform;
 import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.thing_class.Images;
 import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.ClasstoItem;
-import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.UiUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
@@ -36,7 +35,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +44,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.TwoOptionsDialog;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ForumFragment extends BaseFragment {
@@ -104,23 +102,36 @@ public class ForumFragment extends BaseFragment {
 
     private void initData() {
         forumItemList = new ArrayList<ForumItem>();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/userData.php", new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        ApiServiceManager.getForumData("1")            //获取Observable对象
+                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
+                .subscribe(new Consumer<List<Forum>>() {
+                    @Override
+                    public void accept(List<Forum> forumList) throws Exception {
+                        for (final Forum forum : forumList) {
+                            // GlobalData.httpAddressActivity+activity.getImage(),
+                            ClasstoItem.ForumToForumItem(forum, forumItemList);
 
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                List<Forum> appList = HttpUtil.getListForum(response);
-                for (final Forum forum : appList) {
-                    // GlobalData.httpAddressActivity+activity.getImage(),
-                    ClasstoItem.ForumToForumItem(forum, forumItemList);
-
-                }
-
-            }
-        });
+                        }
+                    }
+                });
+//        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/userData.php", new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                List<Forum> appList = HttpUtil.getListForum(response);
+//                for (final Forum forum : appList) {
+//                    // GlobalData.httpAddressActivity+activity.getImage(),
+//                    ClasstoItem.ForumToForumItem(forum, forumItemList);
+//
+//                }
+//
+//            }
+//        });
     }
 
     public void initRefresh(final View view) {

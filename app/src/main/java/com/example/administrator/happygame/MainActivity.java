@@ -17,6 +17,7 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.happygame.activity.MessageActivity;
 import com.example.administrator.happygame.activity.SearchActivity;
 import com.example.administrator.happygame.adapter.ViewPagerAdapter;
+import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
 import com.example.administrator.happygame.main_fragment.AddFragment;
 import com.example.administrator.happygame.main_fragment.ForumFragment;
 import com.example.administrator.happygame.main_fragment.RecommentFragment;

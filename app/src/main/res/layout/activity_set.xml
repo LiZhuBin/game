@@ -5,11 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.happygame.activity.SetActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
     <com.allen.library.SuperTextView
         android:id="@+id/settings"
         style="@style/Super_style"
         stv:sLeftTextString="分享"
+        stv:sLeftIconRes="@drawable/icon_fab_forum"
+        stv:sRightTextColor="@color/colorAccent"
+        />
+    <com.allen.library.SuperTextView
+        android:id="@+id/about"
+        style="@style/Super_style"
+        stv:sLeftTextString="关于"
         stv:sLeftIconRes="@drawable/icon_about"
         stv:sRightTextColor="@color/colorAccent"
         />
+    </LinearLayout>
 </lib.homhomlib.design.SlidingLayout>

@@ -23,6 +23,7 @@ import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.News;
 import com.example.administrator.happygame.been.User;
+import com.example.administrator.happygame.mvp.api.ApiServiceManager;
 import com.example.administrator.happygame.my_ui.BezierViewPager;
 import com.example.administrator.happygame.my_ui.GlideImageLoader;
 import com.example.administrator.happygame.my_ui.Headview;
@@ -46,6 +47,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -154,19 +158,19 @@ public class RecommentFragment extends BaseFragment {
 
     private void initForum() {
         forumItemList = new ArrayList<ForumItem>();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/userData.php", new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
+        ApiServiceManager.getForumData("1")            //获取Observable对象
+                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
+                .subscribe(new Consumer<List<Forum>>() {
+                    @Override
+                    public void accept(List<Forum> forumList) throws Exception {
+                        for (final Forum forum : forumList) {
+                            // GlobalData.httpAddressActivity+activity.getImage(),
+                            ClasstoItem.ForumToForumItem(forum, forumItemList);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                List<Forum> appList = HttpUtil.getListForum(response);
-                for (final Forum forum : appList) {
-                    ClasstoItem.ForumToForumItem(forum, forumItemList);
-                }
-            }
-        });
+                        }
+                    }
+                });
     }
 
     private void initRecycle(View view) {
@@ -216,20 +220,20 @@ public class RecommentFragment extends BaseFragment {
 
     private void initHeadviewlist() {
         headviewslist = new ArrayList<Headview>();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/userData.php", new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        ApiServiceManager.getUserData("1")            //获取Observable对象
+                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
+                .subscribe(new Consumer<List<User>>() {
+                    @Override
+                    public void accept(List<User> userList) throws Exception {
+                        for (final User user : userList) {
+                            // GlobalData.httpAddressActivity+activity.getImage(),
+                            ClasstoItem.UserToHeadview(user, headviewslist);
 
-            }
+                        }
+                    }
+                });
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                List<User> appList = HttpUtil.getListUser(response);
-                for (final User user : appList) {
-                    ClasstoItem.UserToHeadview(user, headviewslist);
-                }
-            }
-        });
 
     }
 

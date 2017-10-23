@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Administrator on 2017/10/1 0001.
  */
 
-public class Advertise implements Parcelable {
+public class Advertise  implements Parcelable {
     public static final Parcelable.Creator<Advertise> CREATOR = new Parcelable.Creator<Advertise>() {
         public Advertise createFromParcel(Parcel source) {
             return new Advertise(source);

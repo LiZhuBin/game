@@ -29,6 +29,12 @@
         stv:sRightBottomTextColor="@color/colorAccent"
 
         stv:sUseShape="true" />
+    <com.allen.library.SuperTextView
+        android:id="@+id/my_information"
+        style="@style/Super_style"
+        stv:sLeftTextString="我的信息"
+        stv:sLeftIconRes="@drawable/icon_my_information"
+        stv:sRightTextColor="@color/colorAccent"/>
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_activities"

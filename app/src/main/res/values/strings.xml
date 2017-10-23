@@ -36,4 +36,20 @@
     <string name="hint">Type emoji here</string>
     <string name="i_love_emojicon">I \ue32d emojicon</string>
     <string name="use_system_default">Use system default emojicon</string>
+    <string name="function_introduction">功能介绍</string>
+    <string name="complaint">投诉</string>
+    <string name="check_update">检查更新</string>
+    <string name="terms_of_use_and_privacy_policy">使用条约</string>
+    <string name="header_pic">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="wechat_credit">信用</string>
+    <string name="six">性别</string>
+    <string name="my_location">地区</string>
+    <string name="area">地区</string>
+    <string name="password">密码</string>
+    <string name="verification_code">验证码</string>
+    <string name="my_signature">个性签名</string>
+    <string name="edit_information">编辑...</string>
+    <string name="ensure">确定</string>
+    <string name="cancel">取消</string>
 </resources>

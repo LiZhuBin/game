@@ -211,7 +211,16 @@ public class GetPhotoActivity extends BaseActivity {
     }
 
 
+    private void startOpenPhotoMap() {
 
+        if (ContextCompat.checkSelfPermission(GetPhotoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(GetPhotoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Request_OpenPhotoMap);
+        } else {
+
+            openPhotoMap();
+        }
+    }
 
     private void openPhotoMap() {
 

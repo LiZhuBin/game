@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -46,5 +47,14 @@ public class TimeUtil {
             return r + "分钟前";
         }
         return "刚刚";
+    }
+    public static String getImageName(){
+        String str=null;
+        Date date=null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");//获取当前时间，进一步转化为字符串
+        date =new Date();
+        str=format.format(date);
+       String fileName = str+".jpg";
+        return fileName;
     }
 }

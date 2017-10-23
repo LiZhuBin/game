@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.administrator.happygame.base.BaseActivity;
 
@@ -29,12 +26,6 @@ public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.icon_image)
     CircleImageView iconImage;
-    @Bind(R.id.email_edittext)
-    EditText emailEdittext;
-    @Bind(R.id.password_edittext)
-    EditText passwordEdittext;
-    @Bind(R.id.button)
-    Button button;
     @Bind(R.id.share_wx)
     ImageView shareWx;
     @Bind(R.id.mRlWechat)
@@ -64,17 +55,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.button)
-    public void onViewClicked() {
-        String str = emailEdittext.getText().toString();
-        // Toast.makeText(this, str+"", Toast.LENGTH_SHORT).show();
-        if (str.equals("lizhubin")) {
-            startActivity(new Intent(this, MainActivity.class));
-        } else {
-            Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
-        }
 
-    }
 
     @OnClick({R.id.share_wx, R.id.share_weibo, R.id.share_qq})
     public void onViewClicked(View view) {

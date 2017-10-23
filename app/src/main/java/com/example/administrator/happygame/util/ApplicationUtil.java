@@ -19,6 +19,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 public class ApplicationUtil extends Application {
     private static Context context;
 
+
     public static Context getContext() {
         return context;
     }
@@ -60,9 +61,9 @@ public class ApplicationUtil extends Application {
 
         MobSDK.init(this, "21819c0c884c1 ", "0acef4983fd0549ea3a27b3ea5d0f8a3");
 
-
-        TastyToast.makeText(getApplicationContext(), "你好，悦游!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
-
+if(NetworkUtil.isNetworkAvailable()) {
+    TastyToast.makeText(getApplicationContext(), "你好，悦游!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+}
 
     }
 }

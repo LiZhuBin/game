@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Administrator on 2017/9/17 0017.
  */
 
-public class Activity implements Parcelable {
+public class Activity  implements Parcelable {
     public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {
         @Override
         public Activity createFromParcel(Parcel source) {
@@ -50,6 +50,9 @@ public class Activity implements Parcelable {
     private String add_id;
     private String build_data;
     private String comment;
+
+    public Activity() {
+    }
 
     public Activity(String id, String user_num, String praise_num, String type, String organizes, String time, String address, String image, String remark, String participatorId, String title, String add_id) {
         this.id = id;

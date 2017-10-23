@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.administrator.happygame.R;
-import com.example.administrator.happygame.ZoomOutPageTransformer;
+import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
 import com.example.administrator.happygame.child_fragment.AddChatFragment;
 import com.example.administrator.happygame.child_fragment.AddListFragment;
 import com.example.administrator.happygame.child_fragment.ForumCommentFragment;
@@ -23,11 +23,13 @@ import com.example.administrator.happygame.child_fragment.NewListFragment;
 import com.example.administrator.happygame.child_fragment.PersonAddFragment;
 import com.example.administrator.happygame.child_fragment.PersonForumFragment;
 import com.example.administrator.happygame.my_ui.MyViewPager;
-import com.example.administrator.happygame.util.ViewFindUtils;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.flyco.tablayout.widget.MsgView;
 import com.jude.swipbackhelper.SwipeBackHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ public class BaseActivity extends AppCompatActivity {
     SegmentTabLayout mTabLayout_3;
     String[] mTitles_3;
 
+    @Subscribe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,7 @@ public class BaseActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         SwipeBackHelper.getCurrentPage(this).setSwipeEdgePercent(0.2f);//get current instance
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -64,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SwipeBackHelper.onDestroy(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -106,10 +110,10 @@ public class BaseActivity extends AppCompatActivity {
 
         mDecorView = getWindow().getDecorView();
 
-        mTabLayout_3 = ViewFindUtils.find(mDecorView, R.id.tl_3);
+        mTabLayout_3 = (SegmentTabLayout)mDecorView.findViewById(R.id.tl_3);
 
 
-        final MyViewPager vp_3 = ViewFindUtils.find(mDecorView, R.id.vp_2);
+        final MyViewPager vp_3=(MyViewPager)mDecorView.findViewById(R.id.vp_2);
         vp_3.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         vp_3.setOffscreenPageLimit(1);
         vp_3.setPageTransformer(true, new ZoomOutPageTransformer());

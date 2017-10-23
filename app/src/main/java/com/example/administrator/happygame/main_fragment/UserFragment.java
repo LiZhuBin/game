@@ -65,6 +65,8 @@ public class UserFragment extends BaseFragment {
     SuperTextView settings;
     @Bind(R.id.imports)
     SuperTextView imports;
+    @Bind(R.id.my_information)
+    SuperTextView myInformation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +105,29 @@ public class UserFragment extends BaseFragment {
 
 
         userId = SPUtil.get(ApplicationUtil.getContext(), "UserId", 1);
+//        GlobalData.login(userId.toString()).subscribeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<User>() {
+//                    @Override
+//                    public void accept(User user) throws Exception {
+//                        LogUtil.e(user.getImage());
+//                    }
+//                });
+
+//        GlobalData.getRetrofit()
+//                .getSingleUser(userId.toString())
+//                //获取Observable对象
+//                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+//                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
+//                .subscribe(new Consumer<User>() {
+//                    @Override
+//                    public void accept(User users) throws Exception {
+//                        me = users;
+//
+//                        new MyAsyncTask(me).execute();
+//                    }
+//                });
+
 
         HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", userId.toString(), new Callback() {
             @Override
@@ -119,6 +144,7 @@ public class UserFragment extends BaseFragment {
             }
         });
     }
+
 
     public void initSuperTextView(View view) {
         userMyBigImage = (ImageView) view.findViewById(R.id.user_myBigImage);
@@ -166,9 +192,12 @@ public class UserFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.my_attention, R.id.my_activities, R.id.my_post, R.id.my_collection, R.id.my_friends, R.id.settings, R.id.imports})
+    @OnClick({R.id.my_information,R.id.my_attention, R.id.my_activities, R.id.my_post, R.id.my_collection, R.id.my_friends, R.id.settings, R.id.imports})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.my_information:
+                startActivity(IntentHelp.toMyInformationActivity(me,userMySmallImage));
+                break;
             case R.id.my_attention:
                 break;
             case R.id.my_activities:
@@ -199,7 +228,6 @@ public class UserFragment extends BaseFragment {
 
                         //这里可以放一个bitmap
                         startActivity(IntentHelp.toLoginActivity(userMySmallImage));
-                        //ActivityUtils.startActivity(getActivity(), LoginActivity.class);
                     }
                 });
 
@@ -234,12 +262,13 @@ public class UserFragment extends BaseFragment {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
+            me=user;
             userMyName.setText(user.getName());
             Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).asBitmap()
-                   .into(userMyBigImage);
+                    .into(userMyBigImage);
 
-           // Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).into(userMySmallImage);
-             Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
+            // Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).into(userMySmallImage);
+            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
                     .bitmapTransform(new CropCircleTransformation(ApplicationUtil.getContext()))
                     .into(userMySmallImage);
 

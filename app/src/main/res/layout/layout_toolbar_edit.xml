@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_edit"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#00000000"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:id="@+id/toolbar_title"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:text="title"
+                android:layout_alignParentLeft="true"/>
+        <com.allen.library.SuperButton
+            android:id="@+id/toolbar_ensure"
+            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/ensure"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+</android.support.design.widget.AppBarLayout>

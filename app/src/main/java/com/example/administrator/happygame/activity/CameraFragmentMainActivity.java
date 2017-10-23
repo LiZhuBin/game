@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.thing_class.Images;
+import com.example.administrator.happygame.util.TimeUtil;
 import com.github.florent37.camerafragment.CameraFragment;
 import com.github.florent37.camerafragment.CameraFragmentApi;
 import com.github.florent37.camerafragment.configuration.Configuration;
@@ -32,6 +33,7 @@ import com.github.florent37.camerafragment.widgets.RecordButton;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -68,70 +70,7 @@ public class CameraFragmentMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camerafragment_activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         ButterKnife.bind(this);
-        onAddCameraClicked();
-    }
-
-    @OnClick(R.id.flash_switch_view)
-    public void onFlashSwitcClicked() {
-        final CameraFragmentApi cameraFragment = getCameraFragment();
-        if (cameraFragment != null) {
-            cameraFragment.toggleFlashMode();
-        }
-    }
-
-    @OnClick(R.id.front_back_camera_switcher)
-    public void onSwitchCameraClicked() {
-        final CameraFragmentApi cameraFragment = getCameraFragment();
-        if (cameraFragment != null) {
-            cameraFragment.switchCameraTypeFrontBack();
-        }
-    }
-
-    @OnClick(R.id.record_button)
-    public void onRecordButtonClicked() {
-        final CameraFragmentApi cameraFragment = getCameraFragment();
-        if (cameraFragment != null) {
-            cameraFragment.takePhotoOrCaptureVideo(new CameraFragmentResultAdapter() {
-                                                       @Override
-                                                       public void onVideoRecorded(String filePath) {
-                                                           Toast.makeText(getBaseContext(), "onVideoRecorded " + filePath, Toast.LENGTH_SHORT).show();
-                                                       }
-
-                                                       @Override
-                                                       public void onPhotoTaken(byte[] bytes, String filePath) {
-                                                           Images choseImages = new Images(filePath,5000,"image1.jpg");
-                                                           Intent intent = new Intent();
-                                                           intent.putExtra("Return_images", choseImages);
-                                                           CameraFragmentMainActivity.this.setResult(1, intent);
-                                                           CameraFragmentMainActivity.this.finish();
-                                                           Toast.makeText(getBaseContext(), "onPhotoTaken " + filePath, Toast.LENGTH_SHORT).show();
-                                                       }
-                                                   },
-                    "/storage/self/primary",
-                    "photo0");
-        }
-    }
-
-    @OnClick(R.id.settings_view)
-    public void onSettingsClicked() {
-        final CameraFragmentApi cameraFragment = getCameraFragment();
-        if (cameraFragment != null) {
-            cameraFragment.openSettingDialog();
-        }
-    }
-
-    @OnClick(R.id.photo_video_camera_switcher)
-    public void onMediaActionSwitchClicked() {
-        final CameraFragmentApi cameraFragment = getCameraFragment();
-        if (cameraFragment != null) {
-            cameraFragment.switchActionPhotoVideo();
-        }
-    }
-
-
-    public void onAddCameraClicked() {
         if (Build.VERSION.SDK_INT > 15) {
             final String[] permissions = {
                     Manifest.permission.CAMERA,
@@ -153,6 +92,74 @@ public class CameraFragmentMainActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.flash_switch_view)
+    public void onFlashSwitcClicked() {
+        final CameraFragmentApi cameraFragment = getCameraFragment();
+        if (cameraFragment != null) {
+            cameraFragment.toggleFlashMode();
+        }
+    }
+
+    @OnClick(R.id.front_back_camera_switcher)
+    public void onSwitchCameraClicked() {
+        final CameraFragmentApi cameraFragment = getCameraFragment();
+        if (cameraFragment != null) {
+            cameraFragment.switchCameraTypeFrontBack();
+        }
+    }
+
+    @OnClick(R.id.record_button)
+    public void onRecordButtonClicked() {
+
+        final CameraFragmentApi cameraFragment = getCameraFragment();
+
+        if (cameraFragment != null) {
+            cameraFragment.takePhotoOrCaptureVideo(new CameraFragmentResultAdapter() {
+                                                       @Override
+                                                       public void onVideoRecorded(String filePath) {
+                                                           Toast.makeText(getBaseContext(), "onVideoRecorded " + filePath, Toast.LENGTH_SHORT).show();
+                                                       }
+
+                                                       @Override
+                                                       public void onPhotoTaken(byte[] bytes, String filePath) {
+                                                           Toast.makeText(getBaseContext(), "onPhotoTaken " + filePath, Toast.LENGTH_SHORT).show();
+                                                           Images choseImages = new Images(filePath,new Date().getTime(),TimeUtil.getImageName());
+                                                           if (choseImages != null) {
+                                                               //只要返回的image不为空就可以获得该images了
+                                                               //从这里就可以返回 images给原本的活动了
+                                                               Intent intent = new Intent();
+                                                               intent.putExtra("Return_images", choseImages);
+                                                               CameraFragmentMainActivity.this.setResult(1, intent);
+                                                               CameraFragmentMainActivity.this.finish();
+                                                           }
+                                                       }
+                                                   },
+                    "/storage/self/primary",
+                    TimeUtil.getImageName());
+
+        }
+    }
+
+    @OnClick(R.id.settings_view)
+    public void onSettingsClicked() {
+        final CameraFragmentApi cameraFragment = getCameraFragment();
+        if (cameraFragment != null) {
+            cameraFragment.openSettingDialog();
+        }
+    }
+
+    @OnClick(R.id.photo_video_camera_switcher)
+    public void onMediaActionSwitchClicked() {
+        final CameraFragmentApi cameraFragment = getCameraFragment();
+        if (cameraFragment != null) {
+            cameraFragment.switchActionPhotoVideo();
+        }
+    }
+
+
+
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -173,6 +180,7 @@ public class CameraFragmentMainActivity extends AppCompatActivity {
 
     @RequiresPermission(Manifest.permission.CAMERA)
     public void addCamera() {
+
         cameraLayout.setVisibility(View.VISIBLE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {

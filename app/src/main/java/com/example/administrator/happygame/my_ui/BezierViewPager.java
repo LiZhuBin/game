@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import com.example.administrator.happygame.MainActivity;
 import com.example.administrator.happygame.adapter.CardAdapter;
 import com.example.administrator.happygame.adapter.CardPagerAdapter;
-import com.example.administrator.happygame.thing_class.Until;
+import com.example.administrator.happygame.util.Until;
 
 import java.util.ArrayList;
 import java.util.List;
