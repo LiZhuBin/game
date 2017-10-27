@@ -41,10 +41,14 @@ public class PersonForumFragment extends BaseFragment {
     View view;
     private ForumAdapter adapter;
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     initRecycle();
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -82,7 +86,7 @@ public class PersonForumFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(User user1) {
         for (String string : StringUtil.httpArray(user1.getPosts())) {
-            HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/getById.php", string, new Callback() {
+            HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_FORUM + "php/getById.php", string, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 

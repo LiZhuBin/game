@@ -90,6 +90,7 @@ public class BezierRoundView extends View implements ViewPager.OnPageChangeListe
     public BezierRoundView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+
     public BezierRoundView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -246,6 +247,8 @@ public class BezierRoundView extends View implements ViewPager.OnPageChangeListe
                     }
                     return true;
                 }
+                break;
+            default:
                 break;
         }
         return super.onTouchEvent(event);
@@ -455,7 +458,9 @@ public class BezierRoundView extends View implements ViewPager.OnPageChangeListe
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (isAniming)     //如果是手动选择pos，就用animatorValue去计算 0-->3
+        {
             return;
+        }
         Log.w(TAG, "onPageScrolled positionOffset==" + positionOffset);
 
         animatedValue = positionOffset;
@@ -464,7 +469,9 @@ public class BezierRoundView extends View implements ViewPager.OnPageChangeListe
         nextPos = direction ? curPos + 1 : curPos - 1;  //右 +1   左 -1
 
         if (!direction)   //如果是向左
+        {
             animatedValue = 1 - animatedValue;  //让 animatedValue 不管是左滑还是右滑，都从[0,1)开始计算
+        }
 
         if (positionOffset == 0) {
             curPos = position;

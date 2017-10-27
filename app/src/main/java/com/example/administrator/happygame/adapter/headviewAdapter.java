@@ -53,7 +53,7 @@ public class headviewAdapter extends RecyclerView.Adapter<headviewAdapter.HeadVi
     @Override
     public void onBindViewHolder(HeadViewHolder holder, int position) {
 
-        Glide.with(context).load(GlobalData.httpAddressPicture + list.get(position).getImageview_url()).into(holder.imageview);
+        Glide.with(context).load(GlobalData.HTTP_ADDRESS_PICTURE + list.get(position).getImageview_url()).into(holder.imageview);
 
 
         holder.userName.setText(list.get(position).getImageview_name());

@@ -17,9 +17,9 @@ import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.Msg;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.HttpUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +47,7 @@ public class AddChatFragment extends BaseFragment {
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
@@ -56,11 +57,14 @@ public class AddChatFragment extends BaseFragment {
                         msgList.add(new Msg(userIdList.get(i1), userCommentList.get(i1)));
                     }
                     msgRecyclerView = (RecyclerView) view.findViewById(R.id.msg_recycler_view);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(ApplicationUtil.getContext());
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(MyApplication.getContext());
                     msgRecyclerView.setLayoutManager(layoutManager);
 
                     adapter = new MsgAdapter(msgList);
                     msgRecyclerView.setAdapter(adapter);
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -121,7 +125,7 @@ public class AddChatFragment extends BaseFragment {
                 id = string[i];
             } else {
                 userCommentList.add(string[i]);
-                HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", id, new Callback() {
+                HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", id, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
 

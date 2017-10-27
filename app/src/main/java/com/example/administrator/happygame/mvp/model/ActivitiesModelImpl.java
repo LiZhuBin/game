@@ -19,9 +19,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ActivitiesModelImpl implements ActivitiesModel {
     private OnActivitiesListener mOnActivitiesListener;
+
     public ActivitiesModelImpl(OnActivitiesListener onActivitiesListener) {
         this.mOnActivitiesListener = onActivitiesListener;
     }
+
     //        ApiServiceManager.getActivityData("1")            //获取Observable对象
 //                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
 //                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
@@ -29,7 +31,7 @@ public class ActivitiesModelImpl implements ActivitiesModel {
 //                    @Override
 //                    public void accept(List<Activity> activityList) throws Exception {
 //                        for (final Activity activity : activityList) {
-//                            // GlobalData.httpAddressActivity+activity.getImage(),
+//                            // GlobalData.HTTP_ADDRESS_ACTIVITY+activity.getImage(),
 //                            ClasstoItem.ActivityToAddItem(activity, addList);
 //
 //                        }
@@ -46,13 +48,14 @@ public class ActivitiesModelImpl implements ActivitiesModel {
                         if (mOnActivitiesListener != null) {
                             LogUtil.e(activityList.get(0).getImage());
                             mOnActivitiesListener.onSuccess(activityList);
-                        }else {
+                        } else {
                             LogUtil.e("ffffffff");
                         }
                     }
                 });
         return subscribe;
     }
+
     public interface OnActivitiesListener {
         void onSuccess(List<Activity> activityList);
 

@@ -31,10 +31,10 @@ public class EditActivity extends BaseActivity {
         setContentView(R.layout.activity_edit);
         ButterKnife.bind(this);
         type = getIntent().getExtras().getString("type");
-        if (type.equals("name")) {
+        if ("name".equals(type)) {
             toolbar.setTitle("修改名字");
             origin = 2;
-        } else if (type.equals("signature")) {
+        } else if ("signature".equals(type)) {
             toolbar.setTitle("修改签名");
             origin = 3;
         }
@@ -45,28 +45,30 @@ public class EditActivity extends BaseActivity {
     }
 
 
-public boolean onCreateOptionsMenu(Menu menu){
-    getMenuInflater().inflate(R.menu.menu_edit,menu);
-    return true;
-}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.ensure:
-                        Intent intent = new Intent();
-        LogUtil.e(hasChangeData.getText().toString());
-        intent.putExtra("data", hasChangeData.getText().toString());
-        EditActivity.this.setResult(origin, intent);
-        EditActivity.this.finish();
+                Intent intent = new Intent();
+                LogUtil.e(hasChangeData.getText().toString());
+                intent.putExtra("data", hasChangeData.getText().toString());
+                EditActivity.this.setResult(origin, intent);
+                EditActivity.this.finish();
+                break;
+            default:
                 break;
         }
-        return  true;
+        return true;
     }
-
 
 
 }

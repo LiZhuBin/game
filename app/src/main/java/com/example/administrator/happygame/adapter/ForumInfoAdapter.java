@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.my_ui.ActivityForumItem;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.MyApplication;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class ForumInfoAdapter extends RecyclerView.Adapter<ForumInfoAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ActivityForumItem forumItem = mforumItem.get(position);
-        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + forumItem.getmImageUrl()).into(holder.mIcon_image);
+        Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + forumItem.getmImageUrl()).into(holder.mIcon_image);
         holder.mUsername.setText(forumItem.getmUsername());
         holder.mLou.setText(forumItem.getmLou());
         holder.mTime.setText(forumItem.getmTime());

@@ -24,11 +24,13 @@ public class PlatformPagePort extends PlatformPage {
         super(impl);
     }
 
+    @Override
     public void onCreate() {
         requestPortraitOrientation();
         super.onCreate();
     }
 
+    @Override
     protected PlatformPageAdapter newAdapter(ArrayList<Object> cells) {
         return new com.example.administrator.happygame.onekeyshare.themes.classic.port.PlatformPageAdapterPort(this, cells);
     }

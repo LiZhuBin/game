@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.happygame.Listener.MyPageChangeListener;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.RecyclerView_itemdecoration.headitemdire;
@@ -23,36 +24,34 @@ import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.News;
 import com.example.administrator.happygame.been.User;
-import com.example.administrator.happygame.mvp.api.ApiServiceManager;
 import com.example.administrator.happygame.my_ui.BezierViewPager;
 import com.example.administrator.happygame.my_ui.GlideImageLoader;
 import com.example.administrator.happygame.my_ui.Headview;
 import com.example.administrator.happygame.thing_class.Advertisement;
 import com.example.administrator.happygame.thing_class.ForumItem;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.ClasstoItem;
 import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
+import com.example.administrator.happygame.util.LogUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.UiUtil;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+
+import static com.example.administrator.happygame.util.GlobalData.mForumDao;
+import static com.example.administrator.happygame.util.GlobalData.mNewsDao;
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 public class RecommentFragment extends BaseFragment {
 
@@ -65,47 +64,34 @@ public class RecommentFragment extends BaseFragment {
     List<News> list;
     List<Headview> headviewslist;
     CardPagerAdapter cardAdapter;
-
     RoundedImageView forumChooseImage;
     TextView recommentTextPerson;
     TextView recommentTextNew;
     TextView recommentTextPost;
 
+    View view;
+    BottomNavigationViewEx bottomNavigationViewEx;
+    FloatingSearchView searchView;
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter forumAdapter;
     private List<Advertisement> advertisementList = new ArrayList<>();
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        initHeadBanner();
-        initHeadviewlist();
-        initForum();
-        initNewlist();
-
-        initBusineBanner();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mRootView == null || mRootView.get() == null) {
-            View view = inflater.inflate(R.layout.recomment_info, container, false);
+            view = inflater.inflate(R.layout.recomment_info, container, false);
             ButterKnife.bind(this, view);
             mRootView = new WeakReference<View>(view);
-            cardAdapter = new CardPagerAdapter(ApplicationUtil.getContext(), advertisementList);
-            //只要在adapter加入广告列即可
-            viewPager = (BezierViewPager) view.findViewById(R.id.view_page);
-            viewPager.setCurrentItem(2);
-            // viewPager.setDataList(AdvertisementList);
-            viewPager.setClipToPadding(false);
-            viewPager.setAdapter(cardAdapter);
-            viewPager.showTransformer(0.5f);
-            viewPager.setPadding(200, 100, 200, 100);
-            viewPager.setOnPageChangeListener(new MyPageChangeListener(ApplicationUtil.getContext(), viewPager));
-            initRefresh(view);
-            initRecycle(view);
+            initData();
+
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
@@ -123,10 +109,11 @@ public class RecommentFragment extends BaseFragment {
         super.onDestroy();
     }
 
+
     public void initRefresh(final View view) {
-        recommentTextNew=(TextView)view.findViewById(R.id.recomment_text_new);
-        recommentTextPerson=(TextView)view.findViewById(R.id.recomment_text_person);
-        recommentTextPost=(TextView)view.findViewById(R.id.recomment_text_post);
+        recommentTextNew = (TextView) view.findViewById(R.id.recomment_text_new);
+        recommentTextPerson = (TextView) view.findViewById(R.id.recomment_text_person);
+        recommentTextPost = (TextView) view.findViewById(R.id.recomment_text_post);
         UiUtil.jumpBean(recommentTextNew);
         UiUtil.jumpBean(recommentTextPerson);
         UiUtil.jumpBean(recommentTextPost);
@@ -136,7 +123,10 @@ public class RecommentFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 //onCreate(null);
+
+
                 refreshlayout.finishRefresh(2000);
+
             }
 
 
@@ -151,27 +141,11 @@ public class RecommentFragment extends BaseFragment {
 
     private void initHeadBanner() {
 
-        advertisementList.add(new Advertisement(GlobalData.httpAddressPicture + "advertise/4703fbe8dcfc601964ad8f92b61d98a6.png"));
-        advertisementList.add(new Advertisement(GlobalData.httpAddressPicture + "advertise/2457f0f5834ea526a9118b023ad6c00d.jpg"));
-        advertisementList.add(new Advertisement(GlobalData.httpAddressPicture + "advertise/b1c912544ddb731b847bfd148165f936.jpg"));
+        advertisementList.add(new Advertisement(GlobalData.HTTP_ADDRESS_PICTURE + "advertise/4703fbe8dcfc601964ad8f92b61d98a6.png"));
+        advertisementList.add(new Advertisement(GlobalData.HTTP_ADDRESS_PICTURE + "advertise/2457f0f5834ea526a9118b023ad6c00d.jpg"));
+        advertisementList.add(new Advertisement(GlobalData.HTTP_ADDRESS_PICTURE + "advertise/b1c912544ddb731b847bfd148165f936.jpg"));
     }
 
-    private void initForum() {
-        forumItemList = new ArrayList<ForumItem>();
-        ApiServiceManager.getForumData("1")            //获取Observable对象
-                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
-                .subscribe(new Consumer<List<Forum>>() {
-                    @Override
-                    public void accept(List<Forum> forumList) throws Exception {
-                        for (final Forum forum : forumList) {
-                            // GlobalData.httpAddressActivity+activity.getImage(),
-                            ClasstoItem.ForumToForumItem(forum, forumItemList);
-
-                        }
-                    }
-                });
-    }
 
     private void initRecycle(View view) {
 
@@ -179,25 +153,25 @@ public class RecommentFragment extends BaseFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         hottieRecyclerview = (RecyclerView) view.findViewById(R.id.Recycler2);
         headviewRecyclerView.setAdapter(new headviewAdapter(headviewslist));
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(ApplicationUtil.getContext());
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(MyApplication.getContext());
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
         headviewRecyclerView.setLayoutManager(layoutManager1);
-        headviewRecyclerView.addItemDecoration(new headitemdire(ApplicationUtil.getContext()));
+        headviewRecyclerView.addItemDecoration(new headitemdire(MyApplication.getContext()));
         /*
         * */
 
         adapter = new MyRecyclerAdapter(ChooseNews);  //定义好数据
         recyclerView.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(ApplicationUtil.getContext(), 2); //设置布局
+        GridLayoutManager layoutManager = new GridLayoutManager(MyApplication.getContext(), 2); //设置布局
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new hotpoint_item(ApplicationUtil.getContext())); //进行边界装饰
+        recyclerView.addItemDecoration(new hotpoint_item(MyApplication.getContext())); //进行边界装饰
         /*
         * */
 
         //  hottieAdapter = new HottieAdapter(ChooseTie) ;
         forumAdapter = new ForumAdapter(forumItemList);
         hottieRecyclerview.setAdapter(forumAdapter);
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(ApplicationUtil.getContext(), 2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(MyApplication.getContext(), 2);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -206,7 +180,7 @@ public class RecommentFragment extends BaseFragment {
             }
         });
         hottieRecyclerview.setLayoutManager(gridLayoutManager);
-        hottieRecyclerview.addItemDecoration(new hottie_fenxi(ApplicationUtil.getContext()));
+        hottieRecyclerview.addItemDecoration(new hottie_fenxi(MyApplication.getContext()));
 
         Banner banner = (Banner) view.findViewById(R.id.Banner);
         banner.setImageLoader(new GlideImageLoader()); //该ImageLoader 只要就是要重写displayImageview后，去对传入的 Imagelist操作，传入的东西可以是Object然后我们对他解析，提取西药的东西
@@ -220,41 +194,23 @@ public class RecommentFragment extends BaseFragment {
 
     private void initHeadviewlist() {
         headviewslist = new ArrayList<Headview>();
-        ApiServiceManager.getUserData("1")            //获取Observable对象
-                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
-                .subscribe(new Consumer<List<User>>() {
-                    @Override
-                    public void accept(List<User> userList) throws Exception {
-                        for (final User user : userList) {
-                            // GlobalData.httpAddressActivity+activity.getImage(),
-                            ClasstoItem.UserToHeadview(user, headviewslist);
 
-                        }
-                    }
-                });
+        List<User> users = mUserDao.loadAll();
 
+        for (User user : users) {
+            LogUtil.e(user.getImage());
+            ClasstoItem.UserToHeadview(user, headviewslist);
+        }
 
-    }
-
-
-    private void initNewlist() {
+        forumItemList = new ArrayList<ForumItem>();
+        for (Forum forum : mForumDao.loadAll()) {
+            LogUtil.e(forum.getImage());
+            ClasstoItem.ForumToForumItem(forum, forumItemList);
+        }
         ChooseNews = new ArrayList<>();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressNew + "php/userData.php", new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                List<News> appList = HttpUtil.getListNews(response);
-                for (final News news : appList) {
-                    ClasstoItem.NewToChooseNews(news, ChooseNews);
-                }
-            }
-        });
-
+        for (News news : mNewsDao.loadAll()) {
+            ClasstoItem.NewToChooseNews(news, ChooseNews);
+        }
     }
 
 
@@ -275,6 +231,30 @@ public class RecommentFragment extends BaseFragment {
 
     }
 
+    public void initData() {
+
+        bottomNavigationViewEx = (BottomNavigationViewEx) getActivity().findViewById(R.id.bottom_navigation);
+        searchView = (FloatingSearchView) getActivity().findViewById(R.id.floating_search_view);
+        initHeadBanner();
+        initBusineBanner();
+        initHeadviewlist();
+        cardAdapter = new CardPagerAdapter(MyApplication.getContext(), advertisementList);
+        //只要在adapter加入广告列即可
+        viewPager = (BezierViewPager) view.findViewById(R.id.view_page);
+        viewPager.setCurrentItem(2);
+        // viewPager.setDataList(AdvertisementList);
+        viewPager.setClipToPadding(false);
+        viewPager.setAdapter(cardAdapter);
+        viewPager.showTransformer(0.5f);
+        viewPager.setPadding(200, 100, 200, 100);
+        viewPager.setOnPageChangeListener(new MyPageChangeListener(MyApplication.getContext(), viewPager));
+        initRefresh(view);
+        initRecycle(view);
+
+        TastyToast.makeText(MyApplication.getContext(), "你好，悦游!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+
+
+    }
 
     public List<String> getTitleList(List<News> list) {
 
@@ -292,6 +272,7 @@ public class RecommentFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         ButterKnife.unbind(this);
     }
 }

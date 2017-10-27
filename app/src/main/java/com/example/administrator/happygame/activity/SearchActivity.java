@@ -32,6 +32,8 @@ public class SearchActivity extends BaseActivity {
 
                         //get获得搜索栏点击的名字！！
                         break;
+                    default:
+                        break;
                 }
             }
         });

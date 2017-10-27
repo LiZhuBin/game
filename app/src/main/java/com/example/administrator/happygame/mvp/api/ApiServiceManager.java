@@ -2,6 +2,7 @@ package com.example.administrator.happygame.mvp.api;
 
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.Forum;
+import com.example.administrator.happygame.been.News;
 import com.example.administrator.happygame.been.User;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import static com.example.administrator.happygame.util.GlobalData.client;
 
 public class ApiServiceManager {
 
-    private  static ApiServer api=createRetrofit().create(ApiServer.class);
+    private static ApiServer api = createRetrofit().create(ApiServer.class);
 
     public static Retrofit createRetrofit() {
         return new Retrofit.Builder()
@@ -35,27 +36,24 @@ public class ApiServiceManager {
         Observable<List<User>> movieBeanObservable = apiService.getUserData(id);
         return movieBeanObservable;
     }
+
     public static Observable<List<Activity>> getActivityData(String id) {
         ApiServer apiService = createRetrofit().create(ApiServer.class);
         Observable<List<Activity>> movieBeanObservable = apiService.getActivityData(id);
         return movieBeanObservable;
     }
+
     public static Observable<List<Forum>> getForumData(String id) {
         ApiServer apiService = createRetrofit().create(ApiServer.class);
         Observable<List<Forum>> movieBeanObservable = apiService.getForumData(id);
         return movieBeanObservable;
     }
 
-
-
-
-
-
-
-
-
-
-
+    public static Observable<List<News>> getNewsData(String id) {
+        ApiServer apiService = createRetrofit().create(ApiServer.class);
+        Observable<List<News>> movieBeanObservable = apiService.getNewData(id);
+        return movieBeanObservable;
+    }
 
 
 }

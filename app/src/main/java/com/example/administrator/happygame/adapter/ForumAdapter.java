@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.activity.ForumActivity;
 import com.example.administrator.happygame.thing_class.ForumItem;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.MyApplication;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                Intent intent = new Intent(ApplicationUtil.getContext(), ForumActivity.class);
+                Intent intent = new Intent(MyApplication.getContext(), ForumActivity.class);
                 intent.putExtra("id", mforumItem.get(position).getId());
                 mContext.startActivity(intent);
             }
@@ -66,7 +66,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         ForumItem forumItem = mforumItem.get(position);
         holder.forumTitle.setText(forumItem.getForumTitle());
-        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + forumItem.getForumImage()).into(holder.forumImage);
+        Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + forumItem.getForumImage()).into(holder.forumImage);
         holder.forumAddNum.setText(forumItem.getForumAddNum());
         holder.forumLikeNum.setText(forumItem.getForumLikeNum());
         int addNum = Integer.parseInt(forumItem.getForumAddNum()) / 2;

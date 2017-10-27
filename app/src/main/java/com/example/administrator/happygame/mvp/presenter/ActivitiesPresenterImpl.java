@@ -12,9 +12,10 @@ import java.util.List;
  * Created by Administrator on 2017/10/19 0019.
  */
 
-public class ActivitiesPresenterImpl extends BasePresenter<ActivitiesView> implements ActivitiesPresenter,ActivitiesModelImpl.OnActivitiesListener {
+public class ActivitiesPresenterImpl extends BasePresenter<ActivitiesView> implements ActivitiesPresenter, ActivitiesModelImpl.OnActivitiesListener {
     private ActivitiesModel mActivitiesModel;
     private ActivitiesView mActivitiesView;
+
     public ActivitiesPresenterImpl(ActivitiesView movieView) {
         this.mActivitiesView = movieView;
         mActivitiesModel = new ActivitiesModelImpl(this);

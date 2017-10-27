@@ -16,10 +16,10 @@ import android.view.WindowManager;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
 import com.example.administrator.happygame.child_fragment.AddChatFragment;
-import com.example.administrator.happygame.child_fragment.AddListFragment;
+import com.example.administrator.happygame.child_fragment.AddContentFragment;
 import com.example.administrator.happygame.child_fragment.ForumCommentFragment;
-import com.example.administrator.happygame.child_fragment.ForumListFragment;
-import com.example.administrator.happygame.child_fragment.NewListFragment;
+import com.example.administrator.happygame.child_fragment.ForumContentFragment;
+import com.example.administrator.happygame.child_fragment.NewContentFragment;
 import com.example.administrator.happygame.child_fragment.PersonAddFragment;
 import com.example.administrator.happygame.child_fragment.PersonForumFragment;
 import com.example.administrator.happygame.my_ui.MyViewPager;
@@ -77,6 +77,8 @@ public class BaseActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -93,16 +95,16 @@ public class BaseActivity extends AppCompatActivity {
     public void initViewPager(String[] mTitles_3, String which, int pager) {
         this.mTitles_3 = mTitles_3;
 
-        if (which.equals("add")) {
-            mFragments.add(AddListFragment.getInstance());
+        if ("add".equals(which)) {
+            mFragments.add(AddContentFragment.getInstance());
             mFragments.add(AddChatFragment.getInstance());
-        } else if (which.equals("forum")) {
-            mFragments.add(ForumListFragment.getInstance());
+        } else if ("forum".equals(which)) {
+            mFragments.add(ForumContentFragment.getInstance());
             mFragments.add(ForumCommentFragment.getInstance());
-        } else if (which.equals("new")) {
-            mFragments.add(NewListFragment.getInstance());
+        } else if ("new".equals(which)) {
+            mFragments.add(NewContentFragment.getInstance());
             mFragments.add(ForumCommentFragment.getInstance());
-        } else if (which.equals("person")) {
+        } else if ("person".equals(which)) {
             mFragments.add(PersonAddFragment.getInstance());
             mFragments.add(PersonForumFragment.getInstance());
         }
@@ -110,10 +112,10 @@ public class BaseActivity extends AppCompatActivity {
 
         mDecorView = getWindow().getDecorView();
 
-        mTabLayout_3 = (SegmentTabLayout)mDecorView.findViewById(R.id.tl_3);
+        mTabLayout_3 = (SegmentTabLayout) mDecorView.findViewById(R.id.tl_3);
 
 
-        final MyViewPager vp_3=(MyViewPager)mDecorView.findViewById(R.id.vp_2);
+        final MyViewPager vp_3 = (MyViewPager) mDecorView.findViewById(R.id.vp_2);
         vp_3.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         vp_3.setOffscreenPageLimit(1);
         vp_3.setPageTransformer(true, new ZoomOutPageTransformer());

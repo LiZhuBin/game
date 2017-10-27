@@ -15,9 +15,9 @@ import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.my_ui.ActivityForumItem;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.HttpUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -43,6 +43,7 @@ public class ForumCommentFragment extends BaseFragment {
     View view;
     private ForumInfoAdapter adapter;
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
@@ -51,7 +52,8 @@ public class ForumCommentFragment extends BaseFragment {
                         forumItemList.add(new ActivityForumItem(userList.get(i1).getImage(), userList.get(i1).getName(), "第" + i1 + "楼", forum.getData(), stringList.get(i1)));
                     }
                     initRecyclerView();
-
+                default:
+                    break;
             }
         }
     };
@@ -76,7 +78,7 @@ public class ForumCommentFragment extends BaseFragment {
                 id = string[i];
             } else {
                 stringList.add(string[i]);
-                HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", id, new Callback() {
+                HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", id, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
 
@@ -110,7 +112,7 @@ public class ForumCommentFragment extends BaseFragment {
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.layout_recycle_view);
 
         adapter = new ForumInfoAdapter(forumItemList);
-        LinearLayoutManager manager = new LinearLayoutManager(ApplicationUtil.getContext());
+        LinearLayoutManager manager = new LinearLayoutManager(MyApplication.getContext());
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
     }

@@ -90,10 +90,12 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
         }
     }
 
+    @Override
     public void onComplete(Platform plat, int action, HashMap<String, Object> res) {
         final FollowersResult followersResult = parseFollowers(platform.getName(), res, map);
         if (followersResult == null) {
             UIHandler.sendEmptyMessage(0, new Callback() {
+                @Override
                 public boolean handleMessage(Message msg) {
                     notifyDataSetChanged();
                     return false;
@@ -109,6 +111,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
             msg.what = 1;
             msg.obj = followersResult.list;
             UIHandler.sendMessage(msg, new Callback() {
+                @Override
                 public boolean handleMessage(Message msg) {
                     if (curPage <= 0) {
                         follows.clear();
@@ -219,12 +222,15 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
         return ret;
     }
 
+    @Override
     public void onError(Platform plat, int action, Throwable t) {
         t.printStackTrace();
     }
 
+    @Override
     public void onCancel(Platform plat, int action) {
         UIHandler.sendEmptyMessage(0, new Callback() {
+            @Override
             public boolean handleMessage(Message msg) {
                 activity.finish();
                 return false;
@@ -232,18 +238,22 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
         });
     }
 
+    @Override
     public Following getItem(int position) {
         return follows.get(position);
     }
 
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
+    @Override
     public int getCount() {
         return follows == null ? 0 : follows.size();
     }
 
+    @Override
     public View getHeaderView() {
         if (llHeader == null) {
             llHeader = new PRTHeader(getContext());
@@ -251,10 +261,12 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
         return llHeader;
     }
 
+    @Override
     public void onPullDown(int percent) {
         llHeader.onPullDown(percent);
     }
 
+    @Override
     public void onRefresh() {
         llHeader.onRequest();
         curPage = -1;
@@ -263,10 +275,12 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
         next();
     }
 
+    @Override
     public void onReversed() {
         llHeader.reverse();
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             FriendListItem llItem = new FriendListItem(parent.getContext(), ratio);
@@ -281,6 +295,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
         return convertView;
     }
 
+    @Override
     public View getFooterView() {
         LinearLayout footerView = new LinearLayout(getContext());
         footerView.setMinimumHeight(10);

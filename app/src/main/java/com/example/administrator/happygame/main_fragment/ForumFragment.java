@@ -17,18 +17,18 @@ import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
-import com.example.administrator.happygame.activity.CameraFragmentMainActivity;
 import com.example.administrator.happygame.activity.GetPhotoActivity;
+import com.example.administrator.happygame.activity.fifth.CameraFragmentMainActivity;
 import com.example.administrator.happygame.adapter.ForumAdapter;
 import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Forum;
-import com.example.administrator.happygame.mvp.api.ApiServiceManager;
 import com.example.administrator.happygame.my_ui.GlideRoundTransform;
 import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.thing_class.Images;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.ClasstoItem;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.UiUtil;
+import com.jaouan.revealator.Revealator;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -44,17 +44,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.TwoOptionsDialog;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+
+import static com.example.administrator.happygame.util.GlobalData.mForumDao;
 
 
 public class ForumFragment extends BaseFragment {
     protected WeakReference<View> mRootView;//缓存fragment数据
     @Bind(R.id.fab_forum)
     FloatingActionButton fabForum;
-    @Bind(R.id.activity_add_forum_send_button)
-    Button activityAddForumSendButton;
+
     @Bind(R.id.activity_add_forum_content_left)
     Button activityAddForumContentLeft;
 
@@ -64,6 +62,9 @@ public class ForumFragment extends BaseFragment {
     Spinner forumSpinner;
     @Bind(R.id.forum_chooseImage)
     RoundedImageView forumChooseImage;
+    @Bind(R.id.activity_add_forum_send_button)
+    Button activityAddForumSendButton;
+
 
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter adapter;
@@ -102,36 +103,10 @@ public class ForumFragment extends BaseFragment {
 
     private void initData() {
         forumItemList = new ArrayList<ForumItem>();
-        ApiServiceManager.getForumData("1")            //获取Observable对象
-                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
-                .subscribe(new Consumer<List<Forum>>() {
-                    @Override
-                    public void accept(List<Forum> forumList) throws Exception {
-                        for (final Forum forum : forumList) {
-                            // GlobalData.httpAddressActivity+activity.getImage(),
-                            ClasstoItem.ForumToForumItem(forum, forumItemList);
+        for (Forum forum : mForumDao.loadAll()) {
+            ClasstoItem.ForumToForumItem(forum, forumItemList);
+        }
 
-                        }
-                    }
-                });
-//        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/userData.php", new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                List<Forum> appList = HttpUtil.getListForum(response);
-//                for (final Forum forum : appList) {
-//                    // GlobalData.httpAddressActivity+activity.getImage(),
-//                    ClasstoItem.ForumToForumItem(forum, forumItemList);
-//
-//                }
-//
-//            }
-//        });
     }
 
     public void initRefresh(final View view) {
@@ -174,52 +149,34 @@ public class ForumFragment extends BaseFragment {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         // recyclerView.setOnItemMoveListener(mItemMoveListener);// 监听拖拽，更新UI。
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_forum);
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_forum);
         fab.attachToRecyclerView(recyclerView);
         UiUtil.revealatFab(forumFrame, fab, activityAddForumContentLeft);
+
+
     }
 
-    @OnClick(R.id.forum_chooseImage)
-    public void onViewClicked() {
-        final TwoOptionsDialog dialog = SmartisanDialog.createTwoOptionsDialog(getActivity());
-        dialog.setTitle("请选择")
-                .setOp1Text("拍照")   // 设置第一个选项的文本
-                .setOp2Text("从相册中选择")   // 设置第二个选项的文本
-                .show();
-        dialog.setOnSelectListener(new TwoOptionsDialog.OnSelectListener() {
-            @Override
-            public void onOp1() {
-                dialog.dismiss();
-                Intent intent = new Intent(ApplicationUtil.getContext(),CameraFragmentMainActivity.class);
-                startActivityForResult(intent,2);
-            }
 
-            @Override
-            public void onOp2() {
-                dialog.dismiss();
-                Intent intent = new Intent(ApplicationUtil.getContext(),GetPhotoActivity.class);
-                startActivityForResult(intent,2);
-            }
-        });
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode)
-        {
-            case 2 :
-                switch (resultCode)
-                {
-                    case 1 :
+        switch (requestCode) {
+            case 2:
+                switch (resultCode) {
+                    case 1:
                         Images one = (Images) data.getSerializableExtra("Return_images");
                         setHeadview(one.getPath()); //这里去获得返回来的数据 地址！然后获得图片
                         break;
+                    default:
+                        break;
                 }
+                break;
+            default:
                 break;
         }
     }
-    public void setHeadview(String path)
-    {
+
+    public void setHeadview(String path) {
         //在这里去设置框的装饰！！！！！！！！！
 
         forumChooseImage.setBackground(null);
@@ -227,7 +184,43 @@ public class ForumFragment extends BaseFragment {
         forumChooseImage.setCornerRadius(20f);
         forumChooseImage.setBorderWidth(1f);
         forumChooseImage.setBorderColor(getResources().getColor(R.color.light_gray));
-        Glide.with(this).load(path).transform(new GlideRoundTransform(ApplicationUtil.getContext(),10)).into(forumChooseImage);
+        Glide.with(this).load(path).transform(new GlideRoundTransform(MyApplication.getContext(), 10)).into(forumChooseImage);
 
+    }
+
+    @OnClick({R.id.forum_chooseImage, R.id.activity_add_forum_send_button})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.forum_chooseImage:
+                final TwoOptionsDialog dialog = SmartisanDialog.createTwoOptionsDialog(getActivity());
+                dialog.setTitle("请选择")
+                        .setOp1Text("拍照")   // 设置第一个选项的文本
+                        .setOp2Text("从相册中选择")   // 设置第二个选项的文本
+                        .show();
+                dialog.setOnSelectListener(new TwoOptionsDialog.OnSelectListener() {
+                    @Override
+                    public void onOp1() {
+                        dialog.dismiss();
+                        Intent intent = new Intent(MyApplication.getContext(), CameraFragmentMainActivity.class);
+                        startActivityForResult(intent, 2);
+                    }
+
+                    @Override
+                    public void onOp2() {
+                        dialog.dismiss();
+                        Intent intent = new Intent(MyApplication.getContext(), GetPhotoActivity.class);
+                        startActivityForResult(intent, 2);
+                    }
+                });
+                break;
+            case R.id.activity_add_forum_send_button:
+                Revealator.unreveal(forumFrame)
+                        .to(fabForum)
+                        .withCurvedTranslation()
+                        .start();
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -19,6 +19,7 @@ public class MyViewPager extends ViewPager {
     public MyViewPager(Context context) {
         super(context);
     }
+
     public MyViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -48,6 +49,8 @@ public class MyViewPager extends ViewPager {
                     onSingleTouch(this);
                     return true;
                 }
+                break;
+            default:
                 break;
         }
         return super.onTouchEvent(evt);

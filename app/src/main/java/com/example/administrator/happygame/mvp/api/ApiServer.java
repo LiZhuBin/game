@@ -2,6 +2,7 @@ package com.example.administrator.happygame.mvp.api;
 
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.Forum;
+import com.example.administrator.happygame.been.News;
 import com.example.administrator.happygame.been.User;
 
 import java.util.List;
@@ -26,23 +27,27 @@ import retrofit2.http.Query;
 public interface ApiServer {
 
     @GET("user/php/userData.php")
-   Observable<List<User>> getUserData(@Query("ip") String ip);
-@GET("activity/php/userData.php")
-Observable<List<Activity>> getActivityData(@Query("id") String id);
+    Observable<List<User>> getUserData(@Query("ip") String ip);
+
+    @GET("activity/php/userData.php")
+    Observable<List<Activity>> getActivityData(@Query("id") String id);
+
     @GET("forum/php/userData.php")
     Observable<List<Forum>> getForumData(@Query("id") String id);
+
+    @GET("new/php/userData.php")
+    Observable<List<News>> getNewData(@Query("id") String id);
+
     @FormUrlEncoded
     @POST("user/php/getById.php")
 //    1.4.通过@Field来指定key，后面跟上value
-    Observable<User> getSingleUser( @Field( "id") String id);
+    Observable<User> getSingleUser(@Field("id") String id);
+
     @Multipart
     @POST("upload")
     Call<ResponseBody> upload(@Part("description") RequestBody description,
                               @Part MultipartBody.Part file);
     //  上传一个文件/图片
-
-
-
 
 
 }

@@ -30,6 +30,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
     private Imageadapter CallImageadapter;
     private ViewHolder PreChooseFolderhold;
     private TextView folderTextview;
+
     public FolderAdapter(Context context, Imageadapter imageadapter) {
         Mycontext = context;
         CallImageadapter = imageadapter;
@@ -75,7 +76,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
         final Folder one = folders.get(position);
         holder.FolderName.setText(one.getName());
-      //  Glide.with(Mycontext).load(one.getImageList().get(0).getPath()).centerCrop().into(holder.Folder_Firstphoto);
+        //  Glide.with(Mycontext).load(one.getImageList().get(0).getPath()).centerCrop().into(holder.Folder_Firstphoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

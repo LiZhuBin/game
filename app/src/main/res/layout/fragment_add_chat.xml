@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.administrator.happygame.child_fragment.AddChatFragment">
 
@@ -11,15 +11,16 @@
         android:id="@+id/slidingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:sliding_mode="both"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/msg_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-</lib.homhomlib.design.SlidingLayout>
+        app:sliding_mode="both">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/msg_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </lib.homhomlib.design.SlidingLayout>
+
     <include layout="@layout/layout_send" />
 
 </LinearLayout>

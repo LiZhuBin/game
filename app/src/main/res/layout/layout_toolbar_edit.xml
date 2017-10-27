@@ -12,27 +12,30 @@
         android:background="#00000000"
         app:layout_scrollFlags="scroll|enterAlways|snap"
         app:popupTheme="@style/AppTheme.PopupOverlay">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:id="@+id/toolbar_title"
+                android:layout_alignParentLeft="true"
                 android:gravity="center"
-                android:textSize="25dp"
-                android:textColor="@color/white"
+                android:paddingTop="10dp"
                 android:text="title"
-                android:layout_alignParentLeft="true"/>
-        <com.allen.library.SuperButton
-            android:id="@+id/toolbar_ensure"
-            android:layout_margin="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/ensure"
-            android:layout_alignParentRight="true"
-            android:padding="5dp"/>
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+
+            <com.allen.library.SuperButton
+                android:id="@+id/toolbar_ensure"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_margin="4dp"
+                android:padding="5dp"
+                android:text="@string/ensure" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

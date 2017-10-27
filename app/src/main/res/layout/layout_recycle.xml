@@ -5,11 +5,12 @@
     android:id="@+id/slidingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:sliding_mode="both"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/layout_recycle_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </lib.homhomlib.design.SlidingLayout>
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:sliding_mode="both">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/layout_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+</lib.homhomlib.design.SlidingLayout>

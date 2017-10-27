@@ -3,10 +3,14 @@ package com.example.administrator.happygame.been;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * Created by Administrator on 2017/9/17 0017.
  */
-
+@Entity
 public class Forum implements Parcelable {
 
     public static final Parcelable.Creator<Forum> CREATOR = new Parcelable.Creator<Forum>() {
@@ -31,7 +35,7 @@ public class Forum implements Parcelable {
      * like : 5
      * data : 2017-10-04
      */
-
+    @Id
     private String id;
     private String type;
     private String userId;
@@ -55,6 +59,20 @@ public class Forum implements Parcelable {
         this.image = in.readString();
         this.like = in.readString();
         this.data = in.readString();
+    }
+
+    @Generated(hash = 1182769316)
+    public Forum(String id, String type, String userId, String title, String content,
+                 String comment, String image, String like, String data) {
+        this.id = id;
+        this.type = type;
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.comment = comment;
+        this.image = image;
+        this.like = like;
+        this.data = data;
     }
 
     public String getId() {

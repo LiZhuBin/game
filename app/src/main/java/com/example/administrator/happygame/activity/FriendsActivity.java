@@ -13,9 +13,9 @@ import com.example.administrator.happygame.adapter.FriendsAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.Friends;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.HttpUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 
 import java.io.IOException;
@@ -32,6 +32,7 @@ public class FriendsActivity extends BaseActivity {
     Toolbar toolbar;
     String title;
     Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 1:
@@ -39,8 +40,11 @@ public class FriendsActivity extends BaseActivity {
                     RecyclerView listview = (RecyclerView) findViewById(R.id.list_view);
 
                     listview.setAdapter(adapter);
-                    GridLayoutManager manager = new GridLayoutManager(ApplicationUtil.getContext(), 3);
+                    GridLayoutManager manager = new GridLayoutManager(MyApplication.getContext(), 3);
                     listview.setLayoutManager(manager);
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -76,6 +80,8 @@ public class FriendsActivity extends BaseActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -84,7 +90,7 @@ public class FriendsActivity extends BaseActivity {
         friends.clear();
         for (int i = 0; i < friendsId.length; i++) {
 
-            HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", friendsId[i], new Callback() {
+            HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", friendsId[i], new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 

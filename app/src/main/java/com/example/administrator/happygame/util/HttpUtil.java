@@ -162,27 +162,30 @@ public class HttpUtil {
     public static Advertise getSingleAdvertise(Response response) {
         return HttpUtil.getListAdvertise(response).get(0);
     }
-public static String getJson(Object object){
-    Gson gson2=new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-    String obj2=gson2.toJson(object);
-    return obj2;
-}
-    public static void postImage(Images images){
+
+    public static String getJson(Object object) {
+
+        Gson gson2 = new GsonBuilder().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+        String obj2 = gson2.toJson(object);
+        return obj2;
+    }
+
+    public static void postImage(Images images) {
         //这里方便演示。读取drawable里的图片。
-        Bitmap bitmap= BitmapUtil.getUsableImage(ApplicationUtil.getContext(),images.getPath());
+
+        Bitmap bitmap = BitmapUtil.getUsableImage(MyApplication.getContext(), images.getPath());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("img_1",images.getName(), RequestBody.create(MediaType.parse("image/jpeg"),byteArrayOutputStream.toByteArray()))
-                ;
+                .addFormDataPart("img_1", images.getName(), RequestBody.create(MediaType.parse("image/jpeg"), byteArrayOutputStream.toByteArray()));
         //有多个图片就用for循环添加即可
 
         MultipartBody build = builder.build();
 
         okhttp3.Request bi = new okhttp3.Request.Builder()
-                .url(GlobalData.httpAddressPicture+"addImage.php")
+                .url(GlobalData.HTTP_ADDRESS_PICTURE + "addImage.php")
                 .post(build)
                 .build();
 

@@ -44,5 +44,7 @@
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    <include layout="@layout/layout_photo_view"/>
+
+    <include layout="@layout/layout_photo_view" />
+
 </android.support.design.widget.CoordinatorLayout>

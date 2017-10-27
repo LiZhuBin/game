@@ -34,6 +34,7 @@ public class ClassicTheme extends OnekeyShareThemeImpl {
     private static final int MIN_CLICK_DELAY_TIME = 1000;
     private static long lastTime;
 
+    @Override
     protected void showPlatformPage(Context context) {
         PlatformPage page;
         int orientation = context.getResources().getConfiguration().orientation;
@@ -53,6 +54,7 @@ public class ClassicTheme extends OnekeyShareThemeImpl {
     /**
      * 展示编辑界面
      */
+    @Override
     protected void showEditPage(Context context, Platform platform, ShareParams sp) {
         EditPage page;
         int orientation = context.getResources().getConfiguration().orientation;

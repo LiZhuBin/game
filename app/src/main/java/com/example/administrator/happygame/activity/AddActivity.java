@@ -15,9 +15,9 @@ import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.main_fragment.UserFragment;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.HttpUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.SPUtil;
 import com.example.administrator.happygame.util.UiUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
@@ -36,6 +36,7 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 
 public class AddActivity extends BaseActivity {
 
@@ -59,6 +60,7 @@ public class AddActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
 
@@ -100,7 +102,7 @@ public class AddActivity extends BaseActivity {
                 .add("actiivityID", activity.getId())
                 .add("userid", UserFragment.me.getId())
                 .build();
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/addDoingActivity.php", body, new Callback() {
+        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/addDoingActivity.php", body, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -122,7 +124,7 @@ public class AddActivity extends BaseActivity {
     public void getData() {
         Intent intent = getIntent();
         String obj = (String) intent.getSerializableExtra("Object_userId");
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressActivity + "php/getById.php", obj, new Callback() {
+        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/getById.php", obj, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -162,8 +164,7 @@ public class AddActivity extends BaseActivity {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            // Picasso.with(ApplicationUtil.getContext()) .load(GlobalData.httpAddressPicture + activity.getImage()).into(ivBlur);
-            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + activity.getImage()).into(ivBlur);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + activity.getImage()).into(ivBlur);
             PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
             photoView.enable();
             final FrameLayout frameLayout = (FrameLayout) findViewById(R.id.photo_view_frame_layout);

@@ -17,6 +17,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <include layout="@layout/layout_floating_button" />
+
     <include layout="@layout/layout_bottom_button" />
+
     <include layout="@layout/layout_photo_view" />
 </android.support.design.widget.CoordinatorLayout>

@@ -3,6 +3,7 @@ package com.example.administrator.happygame;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -10,36 +11,73 @@ import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.happygame.activity.MessageActivity;
 import com.example.administrator.happygame.activity.SearchActivity;
 import com.example.administrator.happygame.adapter.ViewPagerAdapter;
+import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
 import com.example.administrator.happygame.main_fragment.AddFragment;
 import com.example.administrator.happygame.main_fragment.ForumFragment;
 import com.example.administrator.happygame.main_fragment.RecommentFragment;
 import com.example.administrator.happygame.main_fragment.UserFragment;
-import com.example.administrator.happygame.util.SPUtil;
+import com.example.administrator.happygame.mvp.api.ApiServiceManager;
+import com.example.administrator.happygame.util.LogUtil;
+import com.example.administrator.happygame.util.MyApplication;
+import com.example.administrator.happygame.util.NetworkUtil;
+import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMError;
+import com.hyphenate.util.NetUtils;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.ldoublem.loadingviewlib.view.LVGhost;
 import com.sdsmdg.tastytoast.TastyToast;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
+import static com.example.administrator.happygame.util.GlobalData.initActivityData;
+import static com.example.administrator.happygame.util.GlobalData.initForumData;
+import static com.example.administrator.happygame.util.GlobalData.initNewsData;
+import static com.example.administrator.happygame.util.GlobalData.initUserData;
+import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
+import static com.example.administrator.happygame.util.GlobalData.mForumDao;
+import static com.example.administrator.happygame.util.GlobalData.mNewsDao;
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
-public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageChangeListener {
+
+public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageChangeListener{
 
     private static final String TAG = "MainActivity";
-    @Bind(R.id.main_frame)
-    FrameLayout mainFrame;
+    SearchView searchView;
+    @Bind(R.id.lv_ghost)
+    LVGhost lvGhost;
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    lvGhost.stopAnim();
+                    lvGhost.setVisibility(View.GONE);
+                    setupViewPager(viewPager);
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     private boolean mIsExit;
     private BottomNavigationViewEx navigation;
     private ViewPager viewPager;
-
     private BottomNavigationViewEx.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
 
@@ -83,12 +121,48 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
         initBottomNavigationViewEx();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        lvGhost.setVisibility(View.VISIBLE);
+        lvGhost.startAnim(500);
+        if(NetworkUtil.isNetworkAvailable()) {
+            if (mUserDao.count() == 0) {
+                LogUtil.e("fgggggggggggg");
+                initUserData();
+            }
+            if (mForumDao.count() == 0) {
+                initForumData();
+            }
+            if (mNewsDao.count() == 0) {
+                initNewsData();
+            }
+            if (mActivityDao.count() == 0) {
+                initActivityData();
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            } else {
+                ApiServiceManager.getActivityData("1")            //获取Observable对象
+                        .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
+                        .subscribe(new Consumer<List<Activity>>() {
+                            @Override
+                            public void accept(List<Activity> activityList) throws Exception {
+                                for (final Activity activity : activityList) {
+                                    mActivityDao.insertOrReplace(activity);
+                                }
+                                Message message = new Message();
+                                message.what = 1;
+                                handler.sendMessage(message);
+                            }
+                        });
 
-        setupViewPager(viewPager);
+            }
 
+        }else {
+            TastyToast.makeText(getApplicationContext(), "当前无网络", TastyToast.INFO, TastyToast.ERROR);
+        }
         viewPager.addOnPageChangeListener(this);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        initData();
+
 
         final FloatingSearchView mSearchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
@@ -105,6 +179,9 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
                     case R.id.message:
 
                         startActivity(new Intent(MainActivity.this, MessageActivity.class));
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -124,6 +201,8 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
 
             }
         });
+
+
     }
 
     @Override
@@ -131,7 +210,7 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
         getMenuInflater().inflate(R.menu.toolbar, menu);
         //找到searchView
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -142,7 +221,6 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
         adapter.addFragment(new ForumFragment());
         adapter.addFragment(new UserFragment());
         viewPager.setAdapter(adapter);
-        //  viewPager.setOnPageChangeListener(new MyPageChangeListener());
         viewPager.setOffscreenPageLimit(3);
     }
 
@@ -175,6 +253,7 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
                 break;
             case 3:
                 navigation.setSelectedItemId(R.id.navigation_email2);
+
                 break;
             default:
                 break;
@@ -186,12 +265,7 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
 
     }
 
-    public void initData() {
-        if (SPUtil.get(MainActivity.this, "UserId", 1) == null) {
-            SPUtil.put(MainActivity.this, "UserId", "1");
-        }
 
-    }
 
     @Override
     /** * 双击返回键退出 */
@@ -214,6 +288,39 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+
+    private class MyConnectionListener implements EMConnectionListener {
+        @Override
+        public void onConnected() {
+        }
+        @Override
+        public void onDisconnected(final int error) {
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    if(error == EMError.USER_REMOVED){
+                        // 显示帐号已经被移除
+                    }else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                        // 显示帐号在其他设备登录
+                    } else {
+                        if (NetUtils.hasNetwork(MainActivity.this))
+                        {
+                            TastyToast.makeText(MyApplication.getContext(),"连接不到服务器",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                        }else {
+
+                        }
+                        //连接不到聊天服务器
+
+                        //当前网络不可用，请检查网络设置
+                    }
+                }
+            });
+        }
+    }
+
 
 
 }

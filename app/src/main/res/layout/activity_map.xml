@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/locationtextview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="20dp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/Show"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+
+        <TextView
+            android:id="@+id/Text_type"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="地点搜索"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:id="@+id/Layout_Button"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/Button_get"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:text="搜索"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/Button_SetLocation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="选择地点"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <AutoCompleteTextView
+            android:id="@+id/editWhere"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/Layout_Button"
+            android:layout_toRightOf="@id/Text_type" />
+
+
+    </RelativeLayout>
+
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/MapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Show"></com.baidu.mapapi.map.MapView>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/Recyclerview"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Show"
+        android:visibility="gone">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

@@ -18,4 +18,8 @@
     <dimen name="image_width">120dp</dimen>
     <dimen name="image_final_width">32dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="floating_margin">50dp</dimen>
+    <dimen name="floating_margin_right">40dp</dimen>
+    <dimen name="floating_margin_bottom">60dp</dimen>
+    <dimen name="comment_avatar_size">50dp</dimen>
 </resources>

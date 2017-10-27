@@ -36,9 +36,7 @@ public class Imageadapter extends RecyclerView.Adapter<Imageadapter.ViewHolder> 
     }
 
     public void RefreshLst(List<Images> list) {
-        if (list != null) {
-            mImages = list;
-        }
+        if (list != null) mImages = list;
     }
 
     @Override
@@ -83,8 +81,9 @@ public class Imageadapter extends RecyclerView.Adapter<Imageadapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        if (mImages == null)
+        if (mImages == null) {
             Log.d("baba", "Change" + (mImages == null ? 0 : mImages.size()));
+        }
         return mImages == null ? 0 : mImages.size();
     }
 

@@ -19,7 +19,7 @@ import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.administrator.happygame.util.ApplicationUtil.mobAccredit;
+import static com.example.administrator.happygame.util.MyApplication.mobAccredit;
 
 public class LoginActivity extends BaseActivity {
 
@@ -46,15 +46,13 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        if (intent  != null &&  intent.getParcelableExtra("BITMAP") != null) {
-            Bitmap bitmap = (Bitmap)getIntent().getParcelableExtra("BITMAP");
+        if (intent != null && intent.getParcelableExtra("BITMAP") != null) {
+            Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BITMAP");
             iconImage.setImageBitmap(bitmap);
         }
 
 
-
     }
-
 
 
     @OnClick({R.id.share_wx, R.id.share_weibo, R.id.share_qq})
@@ -71,6 +69,8 @@ public class LoginActivity extends BaseActivity {
             case R.id.share_qq:
                 Platform qq = ShareSDK.getPlatform(QQ.NAME);
                 mobAccredit(qq);
+                break;
+            default:
                 break;
         }
     }

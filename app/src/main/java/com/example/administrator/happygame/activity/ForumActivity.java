@@ -76,6 +76,8 @@ public class ForumActivity extends BaseActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -89,7 +91,7 @@ public class ForumActivity extends BaseActivity {
 
         TextView title = (TextView) findViewById(R.id.toolbar_text);
         title.setText("帖子");
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressForum + "php/getById.php", string, new Callback() {
+        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_FORUM + "php/getById.php", string, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -124,7 +126,7 @@ public class ForumActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
 
-            Glide.with(ForumActivity.this).load(GlobalData.httpAddressPicture + forum.getImage()).into(kenBurnsView);
+            Glide.with(ForumActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + forum.getImage()).into(kenBurnsView);
         }
 
         @Override

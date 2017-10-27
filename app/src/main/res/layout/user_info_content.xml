@@ -3,11 +3,11 @@
     xmlns:stv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:wave="http://schemas.android.com/tools"
 
     android:gravity="center"
     android:orientation="vertical"
     stv:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
 
     <com.allen.library.SuperTextView
@@ -15,67 +15,67 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:duplicateParentState="true"
+        stv:sCenterBottomTextColor="@color/colorAccent"
         stv:sCenterBottomTextSize="@dimen/super_textview_bottom_text"
         stv:sCenterBottomTextString="4"
         stv:sCenterTopTextString="我的点赞数"
+        stv:sLeftBottomTextColor="@color/colorAccent"
         stv:sLeftBottomTextSize="@dimen/super_textview_bottom_text"
         stv:sLeftBottomTextString="5"
         stv:sLeftTopTextString="我关注的人"
+        stv:sRightBottomTextColor="@color/colorAccent"
         stv:sRightBottomTextSize="@dimen/super_textview_bottom_text"
         stv:sRightBottomTextString="5"
         stv:sRightTopTextString="关注我的人"
-        stv:sCenterBottomTextColor="@color/colorAccent"
-        stv:sLeftBottomTextColor="@color/colorAccent"
-        stv:sRightBottomTextColor="@color/colorAccent"
 
         stv:sUseShape="true" />
+
     <com.allen.library.SuperTextView
         android:id="@+id/my_information"
         style="@style/Super_style"
-        stv:sLeftTextString="我的信息"
         stv:sLeftIconRes="@drawable/icon_my_information"
-        stv:sRightTextColor="@color/colorAccent"/>
+        stv:sLeftTextString="我的信息"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_activities"
         style="@style/Super_style"
-        stv:sLeftTextString="我的约战"
         stv:sLeftIconRes="@drawable/icon_my_activity"
-        stv:sRightTextColor="@color/colorAccent"/>
+        stv:sLeftTextString="我的约战"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_post"
         style="@style/Super_style"
-        stv:sLeftTextString="我的贴子"
         stv:sLeftIconRes="@drawable/icon_my_post"
-        stv:sRightTextColor="@color/colorAccent"/>
+        stv:sLeftTextString="我的贴子"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_collection"
         style="@style/Super_style"
-        stv:sLeftTextString="我的收藏"
         stv:sLeftIconRes="@drawable/icon_my_collect"
-        stv:sRightTextColor="@color/colorAccent"/>
+        stv:sLeftTextString="我的收藏"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_friends"
         style="@style/Super_style"
-        stv:sLeftTextString="我的好友"
         stv:sLeftIconRes="@drawable/icon_my_friends"
-        stv:sRightTextColor="@color/colorAccent"/>
+        stv:sLeftTextString="我的好友"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/settings"
         style="@style/Super_style"
+        stv:sLeftIconRes="@drawable/icon_about"
         stv:sLeftTextString="设置"
-stv:sLeftIconRes="@drawable/icon_about"
-        stv:sRightTextColor="@color/colorAccent"
-        />
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/imports"
         style="@style/Super_style"
-        stv:sLeftTextString="退出账号"
         stv:sLeftIconRes="@drawable/icon_left"
-        stv:sRightTextColor="@color/colorAccent"/>
+        stv:sLeftTextString="退出账号"
+        stv:sRightTextColor="@color/colorAccent" />
 </LinearLayout>

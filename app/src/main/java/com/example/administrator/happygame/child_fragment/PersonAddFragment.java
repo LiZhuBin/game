@@ -16,10 +16,10 @@ import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.AddItem;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.ClasstoItem;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.HttpUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -40,10 +40,14 @@ public class PersonAddFragment extends BaseFragment {
     private List<AddItem> addList = new ArrayList<>();
     private AddAdapter addAdapter;
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     initSwipeRecyclerView(view);
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -82,7 +86,7 @@ public class PersonAddFragment extends BaseFragment {
 
     private void getActivities(String[] friendsId) {
         for (int i = 0; i < friendsId.length; i++) {
-            HttpUtil.sendOkHttpResquest(GlobalData.httpAddressActivity + "php/getById.php", friendsId[i], new Callback() {
+            HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/getById.php", friendsId[i], new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 
@@ -107,7 +111,7 @@ public class PersonAddFragment extends BaseFragment {
     private void initSwipeRecyclerView(View view) {
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.person_activity_recycle);
         addAdapter = new AddAdapter(addList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ApplicationUtil.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(addAdapter);
 

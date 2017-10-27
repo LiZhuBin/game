@@ -14,7 +14,14 @@ import com.example.administrator.happygame.adapter.TextWatcherAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.example.administrator.happygame.thing_class.Msg;
+import com.example.administrator.happygame.util.EaseCommonUtils;
 import com.example.administrator.happygame.util.LogUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,19 +36,20 @@ import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
 import io.github.rockerhieu.emojicon.emoji.Emojicon;
 
-public class ChatActivity extends BaseActivity implements EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
+public class ChatActivity extends BaseActivity implements EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener,EMMessageListener {
 
     @Bind(R.id.layout_send_emojicon)
     CircleImageView layoutSendEmojicon;
     @Bind(R.id.emojicons)
     FrameLayout emojicons;
+    EmojiconEditText mEditEmojicon;
     private List<Msg> msgList = new ArrayList<>();
-
     private Button send;
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
-    EmojiconEditText mEditEmojicon;
-
+    private EMConversation conversation;
+    private int chatType = 1;
+    protected int pagesize = 20;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +84,29 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EMMessage message = EMMessage.createTxtSendMessage("fff", "1");
+//如果是群聊，设置chattype，默认是单聊
+//                    if (chatType == CHATTYPE_GROUP)
+                      message.setChatType(EMMessage.ChatType.Chat);
+//发送消息
+
+                EMClient.getInstance().chatManager().sendMessage(message);
+                message.setMessageStatusCallback(new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        LogUtil.d("success");
+                    }
+
+                    @Override
+                    public void onError(int code, String error) {
+LogUtil.d("error");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+                });
                 LogUtil.e(mEditEmojicon.getText().toString());
                 emojicons.setVisibility(View.GONE);
                 String content = mEditEmojicon.getText().toString();
@@ -85,6 +116,7 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
                     adapter.notifyItemInserted(msgList.size() - 1);   //当有新消息时，刷新RecyclerView中的显示
                     msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
                     mEditEmojicon.setText("");//清空输入框中的内容
+
                 }
             }
         });
@@ -119,6 +151,73 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
 
     @OnClick(R.id.layout_send_emojicon)
     public void onViewClicked() {
-emojicons.setVisibility(View.VISIBLE);
+        emojicons.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onMessageReceived(final List<EMMessage> messages) {
+        for (final EMMessage message:messages) {
+            runOnUiThread(new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    String str = (((EMTextMessageBody) message.getBody()).getMessage());
+                    LogUtil.e(str);
+
+                }
+            }));
+        }
+    }
+
+    @Override
+    public void onCmdMessageReceived(List<EMMessage> messages) {
+
+    }
+
+    @Override
+    public void onMessageRead(List<EMMessage> messages) {
+
+    }
+
+    @Override
+    public void onMessageDelivered(List<EMMessage> messages) {
+
+    }
+
+    @Override
+    public void onMessageChanged(EMMessage message, Object change) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EMClient.getInstance().chatManager().addMessageListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EMClient.getInstance().chatManager().removeMessageListener(this);
+    }
+    protected void getAllMessage() {
+        // 获取当前conversation对象
+
+        conversation = EMClient.getInstance().chatManager().getConversation("1",
+                EaseCommonUtils.getConversationType(chatType), true);
+        // 把此会话的未读数置为0
+        conversation.markAllMessagesAsRead();
+        // 初始化db时，每个conversation加载数目是getChatOptions().getNumberOfMessagesLoaded
+        // 这个数目如果比用户期望进入会话界面时显示的个数不一样，就多加载一些
+        final List<EMMessage> msgs = conversation.getAllMessages();
+        int msgCount = msgs != null ? msgs.size() : 0;
+        if (msgCount < conversation.getAllMsgCount() && msgCount < pagesize) {
+            String msgId = null;
+            if (msgs != null && msgs.size() > 0) {
+                msgId = msgs.get(0).getMsgId();
+            }
+            conversation.loadMoreMsgFromDB(msgId, pagesize - msgCount);
+        }
+
     }
 }

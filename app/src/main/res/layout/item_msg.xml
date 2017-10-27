@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -15,32 +15,31 @@
         android:gravity="right">
 
         <com.github.library.bubbleview.BubbleTextView
-            android:layout_toLeftOf="@+id/chat_image_me"
+            android:id="@+id/right_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/right_msg"
-            android:text="Hello BubbleTextVew"
+            android:layout_toLeftOf="@+id/chat_image_me"
             android:padding="10dp"
+            android:text="Hello BubbleTextVew"
             android:textColor="@android:color/white"
-            app:arrowWidth="8dp"
             app:angle="8dp"
-            app:arrowHeight="10dp"
-            app:arrowPosition="14dp"
-            app:arrowLocation="right"
             app:arrowCenter="true"
-            app:bubbleColor="#7EC0EE"
-            />
+            app:arrowHeight="10dp"
+            app:arrowLocation="right"
+            app:arrowPosition="14dp"
+            app:arrowWidth="8dp"
+            app:bubbleColor="#7EC0EE" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chat_image_me"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_horizontal|right"
-            android:src="@drawable/image_scrolling_head"
-            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal|right"
+            android:src="@drawable/image_scrolling_head" />
     </RelativeLayout>
 
     <LinearLayout
@@ -58,24 +57,21 @@
             android:src="@drawable/image_scrolling_head" />
 
 
-
-
         <com.github.library.bubbleview.BubbleTextView
 
+            android:id="@+id/left_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/left_msg"
-            android:text="Hello BubbleTextVew"
             android:padding="10dp"
+            android:text="Hello BubbleTextVew"
             android:textColor="@android:color/white"
-            app:arrowWidth="8dp"
             app:angle="8dp"
-            app:arrowHeight="10dp"
-            app:arrowPosition="14dp"
-            app:arrowLocation="left"
             app:arrowCenter="true"
-            app:bubbleColor="#7EC0EE"
-            />
+            app:arrowHeight="10dp"
+            app:arrowLocation="left"
+            app:arrowPosition="14dp"
+            app:arrowWidth="8dp"
+            app:bubbleColor="#7EC0EE" />
 
 
     </LinearLayout>

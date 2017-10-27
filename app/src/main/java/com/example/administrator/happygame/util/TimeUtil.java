@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,7 +25,7 @@ public class TimeUtil {
         if (date == null) {
             return null;
         }
-        long diff = new Date().getTime() - date.getTime();
+        long diff = System.currentTimeMillis() - date.getTime();
         long r = 0;
         if (diff > year) {
             r = (diff / year);
@@ -48,13 +49,20 @@ public class TimeUtil {
         }
         return "刚刚";
     }
-    public static String getImageName(){
-        String str=null;
-        Date date=null;
+
+    public static String getImageName() {
+        String str = null;
+        Date date = null;
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");//获取当前时间，进一步转化为字符串
-        date =new Date();
-        str=format.format(date);
-       String fileName = str+".jpg";
+        date = new Date();
+        str = format.format(date);
+        String fileName = str + ".jpg";
         return fileName;
+    }
+    public static String getNowTime(){
+        Date date=new Date();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+
     }
 }

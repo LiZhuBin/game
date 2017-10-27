@@ -47,7 +47,7 @@ public class SetActivity extends BaseActivity {
         oks.setText("我是分享文本");
 
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl(GlobalData.httpAddressPicture + "advertise/2457f0f5834ea526a9118b023ad6c00d.jpg");
+        oks.setImageUrl(GlobalData.HTTP_ADDRESS_PICTURE + "advertise/2457f0f5834ea526a9118b023ad6c00d.jpg");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
@@ -70,7 +70,9 @@ public class SetActivity extends BaseActivity {
                 showShare();
                 break;
             case R.id.about:
-                startActivity(new Intent(SetActivity.this,AboutActivity.class));
+                startActivity(new Intent(SetActivity.this, AboutActivity.class));
+                break;
+            default:
                 break;
         }
     }
@@ -78,6 +80,7 @@ public class SetActivity extends BaseActivity {
 
     public class ShareContentCustomizeDemo implements ShareContentCustomizeCallback {
 
+        @Override
         public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
             // 改写twitter分享内容中的text字段，否则会超长，
             // 因为twitter会将图片地址当作文本的一部分去计算长度

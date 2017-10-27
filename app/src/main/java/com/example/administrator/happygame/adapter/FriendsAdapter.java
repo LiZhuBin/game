@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.thing_class.Friends;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.IntentHelp;
+import com.example.administrator.happygame.util.MyApplication;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Friends friends = friendsList.get(position);
-        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + friends.getImageUrl()).into(holder.friendsImage);
+        Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + friends.getImageUrl()).into(holder.friendsImage);
         holder.friendsName.setText(friends.getName());
     }
 

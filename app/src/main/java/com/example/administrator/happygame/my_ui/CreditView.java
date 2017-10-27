@@ -69,6 +69,7 @@ public class CreditView extends View {
      */
     private boolean isAnimFinish = true;
     private float mAngleWhenAnim;
+    private SimpleDateFormat mDateFormat;
 
     public CreditView(Context context) {
         this(context, null);
@@ -100,12 +101,12 @@ public class CreditView extends View {
         mRectText = new Rect();
 
         mTexts = new String[]{"350", "较差", "550", "中等", "600", "良好", "650", "优秀", "700", "极好", "950"};
-        mBgColors = new int[]{ ContextCompat.getColor(getContext(), R.color.black1),
+        mBgColors = new int[]{ContextCompat.getColor(getContext(), R.color.black1),
                 ContextCompat.getColor(getContext(), R.color.red_btn_bg_pressed_color),
                 ContextCompat.getColor(getContext(), R.color.yellow0),
                 ContextCompat.getColor(getContext(), R.color.green0),
                 ContextCompat.getColor(getContext(), R.color.colorAccent),
-              };
+        };
         mBackgroundColor = mBgColors[0];
     }
 
@@ -418,8 +419,6 @@ public class CreditView extends View {
         }
         return "信用较差";
     }
-
-    private SimpleDateFormat mDateFormat;
 
     private String getFormatTimeStr() {
         if (mDateFormat == null) {

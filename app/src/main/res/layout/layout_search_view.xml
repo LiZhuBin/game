@@ -9,20 +9,20 @@
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|enterAlways">
 
-        <com.arlib.floatingsearchview.FloatingSearchView
-            android:id="@+id/floating_search_view"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            app:floatingSearch_close_search_on_keyboard_dismiss="false"
-            app:floatingSearch_dimBackground="false"
-            app:floatingSearch_dismissOnOutsideTouch="true"
-            app:floatingSearch_leftActionMode="showHamburger"
-            app:floatingSearch_menu="@menu/menu_search_view"
-            app:floatingSearch_searchHint="Search..."
-            app:floatingSearch_showSearchKey="true"
-            app:floatingSearch_suggestionsListAnimDuration="250"
-            app:layout_scrollFlags="scroll|enterAlways|snap" />
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        app:floatingSearch_close_search_on_keyboard_dismiss="false"
+        app:floatingSearch_dimBackground="false"
+        app:floatingSearch_dismissOnOutsideTouch="true"
+        app:floatingSearch_leftActionMode="showHamburger"
+        app:floatingSearch_menu="@menu/menu_search_view"
+        app:floatingSearch_searchHint="Search..."
+        app:floatingSearch_showSearchKey="true"
+        app:floatingSearch_suggestionsListAnimDuration="250"
+        app:layout_scrollFlags="scroll|enterAlways|snap" />
 
 
 </android.support.design.widget.AppBarLayout>

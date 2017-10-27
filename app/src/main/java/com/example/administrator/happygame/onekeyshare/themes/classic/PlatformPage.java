@@ -56,6 +56,7 @@ public abstract class PlatformPage extends OnekeySharePage {
         this.impl = ResHelper.forceCast(impl);
     }
 
+    @Override
     public void onCreate() {
         activity.getWindow().setBackgroundDrawable(new ColorDrawable(0x4c000000));
         initAnims();
@@ -69,6 +70,7 @@ public abstract class PlatformPage extends OnekeySharePage {
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lp.weight = 1;
         vTop.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View v) {
                 finish();
             }
@@ -127,6 +129,7 @@ public abstract class PlatformPage extends OnekeySharePage {
 
     public final void showEditPage(final Platform platform) {
         beforeFinish = new Runnable() {
+            @Override
             public void run() {
                 boolean isSilent = isSilent();
                 boolean isCustomPlatform = platform instanceof CustomPlatform;
@@ -151,6 +154,7 @@ public abstract class PlatformPage extends OnekeySharePage {
 
     public final void performCustomLogoClick(final View v, final CustomerLogo logo) {
         beforeFinish = new Runnable() {
+            @Override
             public void run() {
                 logo.listener.onClick(v);
             }
@@ -174,6 +178,7 @@ public abstract class PlatformPage extends OnekeySharePage {
         animHide.setDuration(300);
     }
 
+    @Override
     public boolean onFinish() {
         if (finished) {
             finished = false;
@@ -181,14 +186,17 @@ public abstract class PlatformPage extends OnekeySharePage {
         }
 
         animHide.setAnimationListener(new Animation.AnimationListener() {
+            @Override
             public void onAnimationStart(Animation animation) {
 
             }
 
+            @Override
             public void onAnimationRepeat(Animation animation) {
 
             }
 
+            @Override
             public void onAnimationEnd(Animation animation) {
                 if (beforeFinish == null) {
                     // 取消分享菜单的统计

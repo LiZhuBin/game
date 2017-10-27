@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_alignParentBottom="true">
-<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <io.github.rockerhieu.emojicon.EmojiconEditText
-        android:id="@+id/editEmojicon"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="写评论..."
-        emojicon:emojiconSize="28sp" />
-<de.hdodenhof.circleimageview.CircleImageView
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:layout_margin="5dp"
-    android:id="@+id/layout_send_emojicon"
-    android:background="@drawable/icon_about"/>
-    <com.allen.library.SuperButton
-        android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        emojicon:sSolidColor="@color/colorAccent"
-        emojicon:sStrokeColor="@color/black"
-        android:padding="5dp"
-        android:text="Send"
-        android:textColor="@color/white" />
-</LinearLayout>
+        android:orientation="horizontal">
+
+        <io.github.rockerhieu.emojicon.EmojiconEditText
+            android:id="@+id/editEmojicon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+           android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:hint="请输入内容"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"  />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/layout_send_emojicon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/icon_about" />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#000"
+            android:padding="5dp"
+            android:text="发送"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/emojicons"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:visibility="gone"
-      />
+        android:layout_marginBottom="10dp"/>
 </LinearLayout>

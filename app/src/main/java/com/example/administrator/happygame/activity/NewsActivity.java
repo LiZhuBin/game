@@ -1,6 +1,7 @@
 package com.example.administrator.happygame.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,7 +18,15 @@ import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.News;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.UiUtil;
+import com.fangxu.allangleexpandablebutton.AllAngleExpandableButton;
+import com.fangxu.allangleexpandablebutton.ButtonData;
+import com.fangxu.allangleexpandablebutton.ButtonEventListener;
 import com.flaviofaria.kenburnsview.KenBurnsView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.administrator.happygame.util.UiUtil.mGoodView;
 
 
 public class NewsActivity extends BaseActivity {
@@ -48,10 +57,11 @@ public class NewsActivity extends BaseActivity {
         getNews();
         initViewPager(mTitles_3, "new", 0);
         if (one.getNew_image() != null) {
-            Glide.with(NewsActivity.this).load(GlobalData.httpAddressPicture + one.getNew_image()).into(imageview);
+            Glide.with(NewsActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + one.getNew_image()).into(imageview);
         } else {
             Glide.with(NewsActivity.this).load(one.getNew_drawable()).into(imageview);
         }
+        installButton90to180();
     }
 
     @Override
@@ -75,6 +85,8 @@ public class NewsActivity extends BaseActivity {
             case android.R.id.home:
                 finish();
                 break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -85,5 +97,57 @@ public class NewsActivity extends BaseActivity {
         News obj = (News) intent.getParcelableExtra("Object_news");
         one = obj;
     }
+    private void installButton90to180() {
+        final AllAngleExpandableButton button = (AllAngleExpandableButton) findViewById(R.id.button_expandable_90_180);
+        final List<ButtonData> buttonDatas = new ArrayList<>();
+        int[] drawable = {R.drawable.icon_about,R.drawable.icon_good, R.drawable.icon_like, R.drawable.icon_unlike};
+        int[] color = {R.color.white,R.color.transparent,R.color.transparent, R.color.transparent, R.color.transparent};
+        for (int i = 0; i < 4; i++) {
+            ButtonData buttonData;
+            if (i == 0) {
+                buttonData = ButtonData.buildIconButton(this, drawable[i], 0);
+            } else {
+                buttonData = ButtonData.buildIconButton(this, drawable[i], 0);
+            }
 
+            buttonData.setBackgroundColorId(this, color[i]);
+            buttonDatas.add(buttonData);
+        }
+        button.setButtonDatas(buttonDatas);
+        setListener(button);
+
+    }
+    private void setListener(final AllAngleExpandableButton button) {
+        button.setButtonEventListener(new ButtonEventListener() {
+            @Override
+            public void onButtonClicked(int index) {
+                switch (index){
+                    case 1:
+                        mGoodView.setTextInfo("+1", Color.RED, 30);
+                        mGoodView.show(button);
+                        break;
+                    case 2: mGoodView.setTextInfo("收藏成功", Color.RED, 20);
+                        mGoodView.show(button);
+
+                        break;
+                    case 3:
+                        mGoodView.setTextInfo("-1", Color.BLACK, 30);
+                        mGoodView.show(button);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onExpand() {
+//                showToast("onExpand");
+            }
+
+            @Override
+            public void onCollapse() {
+//                showToast("onCollapse");
+            }
+        });
+    }
 }

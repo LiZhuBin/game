@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.activity.AddActivity;
 import com.example.administrator.happygame.thing_class.AddItem;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.MyApplication;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                Intent intent = new Intent(ApplicationUtil.getContext(), AddActivity.class);
+                Intent intent = new Intent(MyApplication.getContext(), AddActivity.class);
                 intent.putExtra("Object_userId", maddItem.get(position).getActivityId());
                 mContext.startActivity(intent);
             }
@@ -52,7 +52,7 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         AddItem addItem = maddItem.get(position);
-        Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + addItem.getImageId()).into(holder.forum_user_image);
+        Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + addItem.getImageId()).into(holder.forum_user_image);
         holder.forum_address.setText(addItem.getActivityAddress());
         holder.forum_content.setText(addItem.getActivityContent());
         holder.forum_title.setText(addItem.getActivityTitle());

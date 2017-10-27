@@ -14,7 +14,9 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,6 +31,28 @@ import java.io.InputStream;
  */
 
 public class BitmapUtil {
+    static public Bitmap ZoomBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width;
+        width = bm.getWidth();
+        int height = bm.getHeight();
+        // 设置想要的大小
+        //  int newWidth = 320;
+        //  int newHeight = 480;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
+    }
+
+    static public void hideKeyBoard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     /**
      * 屏幕分辨率和指定清晰度的图片压缩方法

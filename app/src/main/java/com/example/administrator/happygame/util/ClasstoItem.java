@@ -43,6 +43,6 @@ public class ClasstoItem {
     }
 
     public static void AdvertiseToAdvertiseItem(Advertise advertise, List<Advertisement> advertiseList) {
-        advertiseList.add(new Advertisement(GlobalData.httpAddressPicture + advertise.getAdvertise_image()));
+        advertiseList.add(new Advertisement(GlobalData.HTTP_ADDRESS_PICTURE + advertise.getAdvertise_image()));
     }
 }

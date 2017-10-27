@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.thing_class.Msg;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.MyApplication;
 import com.github.library.bubbleview.BubbleTextView;
 
 import java.util.List;
@@ -42,13 +42,13 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
             holder.leftMsg.setText(msg.getContent());
             holder.rightMsg.setVisibility(View.GONE);
             holder.meImage.setVisibility(View.GONE);
-            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + msg.getImageUrl()).into(holder.otherImage);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + msg.getImageUrl()).into(holder.otherImage);
         } else if (msg.getType() == Msg.TYPE_SEND) {
             //如果是发出的消息 ，则显示右边的消息布局，将左边的消息布局隐藏
             holder.rightMsg.setText(msg.getContent());
             holder.leftMsg.setVisibility(View.GONE);
             holder.otherImage.setVisibility(View.GONE);
-            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + msg.getImageUrl()).into(holder.meImage);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + msg.getImageUrl()).into(holder.meImage);
 
         }
     }

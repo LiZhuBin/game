@@ -24,11 +24,13 @@ public class PlatformPageLand extends PlatformPage {
         super(impl);
     }
 
+    @Override
     public void onCreate() {
         requestLandscapeOrientation();
         super.onCreate();
     }
 
+    @Override
     protected PlatformPageAdapter newAdapter(ArrayList<Object> cells) {
         return new com.example.administrator.happygame.onekeyshare.themes.classic.land.PlatformPageAdapterLand(this, cells);
     }

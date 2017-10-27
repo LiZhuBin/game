@@ -4,10 +4,14 @@ package com.example.administrator.happygame.been;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * Created by lenovo on 2017/9/6.
  */
-
+@Entity
 public class News implements Parcelable {
 
 
@@ -22,6 +26,7 @@ public class News implements Parcelable {
             return new News[size];
         }
     };
+    @Id
     private String new_id;
     private String new_title;
     private String new_content;
@@ -60,6 +65,21 @@ public class News implements Parcelable {
         this.new_comment_id = in.readString();
         this.new_comment = in.readString();
         this.new_drawable = in.readInt();
+    }
+
+    @Generated(hash = 1162781260)
+    public News(String new_id, String new_title, String new_content, String new_image, String new_comment_id, String new_comment, int new_drawable) {
+        this.new_id = new_id;
+        this.new_title = new_title;
+        this.new_content = new_content;
+        this.new_image = new_image;
+        this.new_comment_id = new_comment_id;
+        this.new_comment = new_comment;
+        this.new_drawable = new_drawable;
+    }
+
+    @Generated(hash = 1579685679)
+    public News() {
     }
 
     public int getNew_drawable() {

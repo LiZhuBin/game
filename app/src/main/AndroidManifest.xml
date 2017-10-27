@@ -16,16 +16,42 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".util.ApplicationUtil"
+        android:name=".util.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
+        android:launchMode="singleTask"
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="lIo2ZLzbx6rn3pE7xW026YqIaM3HRr3L" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
         <activity android:name="com.github.mmin18.layoutcast.ResetActivity" />
         <activity
             android:name=".MainActivity"
@@ -72,16 +98,47 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- 设置环信应用的AppKey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1120171025178795#happygame" />
+        <!-- 声明SDK所需的service SDK核心功能 -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".activity.PersonActivity"
             android:label="用户信息" />
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTask" >
+
+        </activity>
         <activity
             android:name=".activity.FriendsActivity"
             android:label="我的好友" />
         <activity
             android:name=".activity.ForumActivity"
-            android:label="帖子详情" />
+            android:label="帖子详情"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.RegisterActivity" />
         <activity
             android:name=".activity.AddActivity"
@@ -99,8 +156,7 @@
             android:label="消息"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.SetActivity" />
-        <activity android:name=".activity.Main2Activity"></activity>
-        <activity android:name=".activity.CameraFragmentMainActivity" />
+        <activity android:name=".activity.fifth.CameraFragmentMainActivity" />
         <activity
             android:name=".activity.AboutActivity"
             android:label="关于" />
@@ -108,6 +164,10 @@
             android:name=".activity.MyInformationActivity"
             android:label="信息" />
         <activity android:name=".activity.fifth.EditActivity" />
+        <activity android:name=".activity.fifth.MapActivity" />
+        <activity android:name=".activity.fifth.StartActivity" />
+        <activity android:name=".activity.fifth.CollectActivity" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

@@ -49,7 +49,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.ima_title.setText(Currentview.getNew_title());
         holder.bottom_title.setText(Currentview.getNew_content());
         LogUtil.d(Currentview.getNew_image() + "-----------------------");
-        Glide.with(myContext).load(GlobalData.httpAddressPicture + Currentview.getNew_image()).into(holder.ima_big);
+        Glide.with(myContext).load(GlobalData.HTTP_ADDRESS_PICTURE + Currentview.getNew_image()).into(holder.ima_big);
         holder.pos = position;
     }
 

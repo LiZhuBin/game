@@ -334,6 +334,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 
     private void toast(final String resOrName) {
         UIHandler.sendEmptyMessage(0, new Callback() {
+            @Override
             public boolean handleMessage(Message msg) {
                 int resId = ResHelper.getStringRes(context, resOrName);
                 if (resId > 0) {
@@ -350,6 +351,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 
     protected abstract void showEditPage(Context context, Platform platform, ShareParams sp);
 
+    @Override
     public final void onComplete(Platform platform, int action,
                                  HashMap<String, Object> res) {
         Message msg = new Message();
@@ -359,6 +361,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
         UIHandler.sendMessage(msg, this);
     }
 
+    @Override
     public final void onError(Platform platform, int action, Throwable t) {
         t.printStackTrace();
 
@@ -372,6 +375,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
         ShareSDK.logDemoEvent(4, platform);
     }
 
+    @Override
     public final void onCancel(Platform platform, int action) {
         Message msg = new Message();
         msg.arg1 = 3;
@@ -383,6 +387,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
         ShareSDK.logDemoEvent(5, platform);
     }
 
+    @Override
     public final boolean handleMessage(Message msg) {
         switch (msg.arg1) {
             case 1: {
@@ -425,6 +430,8 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
                 toast("ssdk_oks_share_canceled");
             }
             break;
+            default:
+                break;
         }
         return false;
     }

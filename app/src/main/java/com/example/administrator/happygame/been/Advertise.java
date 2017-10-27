@@ -3,16 +3,22 @@ package com.example.administrator.happygame.been;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * Created by Administrator on 2017/10/1 0001.
  */
-
-public class Advertise  implements Parcelable {
+@Entity
+public class Advertise implements Parcelable {
     public static final Parcelable.Creator<Advertise> CREATOR = new Parcelable.Creator<Advertise>() {
+        @Override
         public Advertise createFromParcel(Parcel source) {
             return new Advertise(source);
         }
 
+        @Override
         public Advertise[] newArray(int size) {
             return new Advertise[size];
         }
@@ -21,7 +27,7 @@ public class Advertise  implements Parcelable {
      * advertise_id : 1
      * advertise_image : advertise/4703fbe8dcfc601964ad8f92b61d98a6.png
      */
-
+    @Id
     private String advertise_id;
     private String advertise_image;
 
@@ -32,6 +38,16 @@ public class Advertise  implements Parcelable {
     protected Advertise(Parcel in) {
         this.advertise_id = in.readString();
         this.advertise_image = in.readString();
+    }
+
+    @Generated(hash = 1176378120)
+    public Advertise(String advertise_id, String advertise_image) {
+        this.advertise_id = advertise_id;
+        this.advertise_image = advertise_image;
+    }
+
+    @Generated(hash = 1516411721)
+    public Advertise() {
     }
 
     public String getAdvertise_id() {

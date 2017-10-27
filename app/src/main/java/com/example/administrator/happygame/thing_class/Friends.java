@@ -11,11 +11,13 @@ public class Friends implements Serializable {
     private String name;
     private int imageId;
     private String imageUrl;
+
     public Friends(String id, String name, int imageId) {
         this.id = id;
         this.name = name;
         this.imageId = imageId;
     }
+
     public Friends(String id, String name, String imageUrl) {
         this.id = id;
         this.name = name;

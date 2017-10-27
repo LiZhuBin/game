@@ -22,7 +22,7 @@ import net.frakbot.jumpingbeans.JumpingBeans;
  */
 
 public class UiUtil {
-    public static GoodView mGoodView = new GoodView(com.example.administrator.happygame.util.ApplicationUtil.getContext());
+    public static GoodView mGoodView = new GoodView(MyApplication.getContext());
 
     public static void photoView(final ImageView imageView, final ImageView outImageView, final FrameLayout frameLayout, final PhotoView photoView) {
         photoView.enable();
@@ -61,12 +61,25 @@ public class UiUtil {
             }
         });
     }
-    public static void jumpBean(TextView textView){
+
+    public static void jumpBean(TextView textView) {
         JumpingBeans jumpingBeans1 = JumpingBeans.with(textView)
                 .appendJumpingDots()
                 .build();
     }
-public static void revealatFab(final FrameLayout theAwesomeView, final FloatingActionButton opeanButton, final Button closeButton){
+
+    public static void revealatFab(final FrameLayout theAwesomeView, final FloatingActionButton opeanButton, final Button closeButton) {
+
+    reveal(theAwesomeView,opeanButton);
+        unreveal(theAwesomeView,opeanButton,closeButton);
+    }
+    public static void revealatFab(final FrameLayout theAwesomeView, final FloatingActionButton opeanButton, final Button closeButton1,final  Button closeButton2) {
+
+        reveal(theAwesomeView,opeanButton);
+        unreveal(theAwesomeView,opeanButton,closeButton1);
+        unreveal(theAwesomeView,opeanButton,closeButton2);
+    }
+public static void reveal(final FrameLayout theAwesomeView, final FloatingActionButton opeanButton){
     opeanButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -78,6 +91,8 @@ public static void revealatFab(final FrameLayout theAwesomeView, final FloatingA
 
         }
     });
+}
+public static void unreveal(final FrameLayout theAwesomeView,final FloatingActionButton opeanButton,final Button closeButton){
     closeButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -88,27 +103,8 @@ public static void revealatFab(final FrameLayout theAwesomeView, final FloatingA
         }
     });
 }
-    public static void revealatFab(final FrameLayout theAwesomeView, final View opeanButton, final View closeButton){
-        opeanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Revealator.reveal(theAwesomeView)
-                        .from(opeanButton)
-                        .withCurvedTranslation()
-                        .withChildsAnimation()
-                        .start();
-            }
-        });
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Revealator.unreveal(theAwesomeView)
-                        .to(opeanButton)
-                        .withCurvedTranslation()
-                        .start();
-            }
-        });
-    }
+
+
     public static void good(final ShineButton shineButton, final String str, final TextView textView) {
 
         shineButton.setOnClickListener(new View.OnClickListener() {

@@ -127,7 +127,7 @@ public class PersonActivity extends BaseActivity {
 
         userId = getIntent().getExtras().getString("id");
         pager = getIntent().getExtras().getInt("pager");
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", userId, new Callback() {
+        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", userId, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -139,6 +139,7 @@ public class PersonActivity extends BaseActivity {
                 user = HttpUtil.getSingleUser(response);
 
                 EventBus.getDefault().post(user);
+
                 //   EventBus.getDefault().post(user);
                 isFriend = GlobalData.isFriend(user.getId());
 
@@ -185,8 +186,8 @@ public class PersonActivity extends BaseActivity {
             } else if (isFriend == 0) {
                 addAsFriend.setVisibility(View.INVISIBLE);
             }
-            Glide.with(PersonActivity.this).load(GlobalData.httpAddressPicture + user.getImage()).into(userMySmallImage);
-            Glide.with(PersonActivity.this).load(GlobalData.httpAddressPicture + user.getImage()).into(userMyBigImage);
+            Glide.with(PersonActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).into(userMySmallImage);
+            Glide.with(PersonActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).into(userMyBigImage);
             userMyName.setText(user.getName());
             userMyLike.setText(user.getPraise_num());
 

@@ -15,13 +15,14 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
+import com.example.administrator.happygame.activity.fifth.CameraFragmentMainActivity;
 import com.example.administrator.happygame.activity.fifth.EditActivity;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.my_ui.CreditView;
 import com.example.administrator.happygame.thing_class.Images;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.MyApplication;
 import com.jaouan.revealator.Revealator;
 import com.lqr.optionitemview.OptionItemView;
 
@@ -59,6 +60,7 @@ public class MyInformationActivity extends BaseActivity {
     @Bind(R.id.credit_frame)
     FrameLayout creditFrame;
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
@@ -66,6 +68,8 @@ public class MyInformationActivity extends BaseActivity {
                     break;
                 case 1:
                     oivSix.setRightText("女");
+                    break;
+                default:
                     break;
             }
         }
@@ -92,7 +96,7 @@ public class MyInformationActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @OnClick({R.id.llHeader, R.id.oivName, R.id.oivCredit, R.id.oivSix, R.id.oivSignature, R.id.dashboard_view_2,R.id.credit_frame})
+    @OnClick({R.id.llHeader, R.id.oivName, R.id.oivCredit, R.id.oivSix, R.id.oivSignature, R.id.dashboard_view_2, R.id.credit_frame})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -106,26 +110,26 @@ public class MyInformationActivity extends BaseActivity {
                     @Override
                     public void onOp1() {
                         dialog.dismiss();
-                        Intent intent = new Intent(ApplicationUtil.getContext(), CameraFragmentMainActivity.class);
+                        Intent intent = new Intent(MyApplication.getContext(), CameraFragmentMainActivity.class);
                         startActivityForResult(intent, 2);
                     }
 
                     @Override
                     public void onOp2() {
                         dialog.dismiss();
-                        Intent intent = new Intent(ApplicationUtil.getContext(), GetPhotoActivity.class);
+                        Intent intent = new Intent(MyApplication.getContext(), GetPhotoActivity.class);
                         startActivityForResult(intent, 2);
                     }
                 });
                 break;
             case R.id.oivName:
-                Intent intent1 = new Intent(ApplicationUtil.getContext(), EditActivity.class);
+                Intent intent1 = new Intent(MyApplication.getContext(), EditActivity.class);
                 intent1.putExtra("type", "name");
                 startActivityForResult(intent1, 2);
                 break;
             case R.id.oivCredit:
-                Revealator.reveal( creditFrame )
-                        .from( oivCredit )
+                Revealator.reveal(creditFrame)
+                        .from(oivCredit)
                         .withCurvedTranslation()
                         .withChildsAnimation()
                         .start();
@@ -155,15 +159,17 @@ public class MyInformationActivity extends BaseActivity {
                 });
                 break;
             case R.id.oivSignature:
-                Intent intent2 = new Intent(ApplicationUtil.getContext(), EditActivity.class);
+                Intent intent2 = new Intent(MyApplication.getContext(), EditActivity.class);
                 intent2.putExtra("type", "signature");
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.dashboard_view_2:
-                Revealator.unreveal( creditFrame )
-                        .to( oivCredit )
+                Revealator.unreveal(creditFrame)
+                        .to(oivCredit)
                         .withCurvedTranslation()
                         .start();
+                break;
+            default:
                 break;
         }
     }
@@ -191,9 +197,13 @@ public class MyInformationActivity extends BaseActivity {
                         user.setSignature(credit);
                         initData();
                         break;
+                    default:
+                        break;
                 }
-                break;
 
+                break;
+            default:
+                break;
         }
     }
 

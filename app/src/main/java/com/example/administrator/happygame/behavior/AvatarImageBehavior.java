@@ -114,23 +114,29 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     }
 
     private void maybeInitProperties(CircleImageView child, View dependency) {
-        if (mStartYPosition == 0)
+        if (mStartYPosition == 0) {
             mStartYPosition = (int) (dependency.getY());
+        }
 
-        if (mFinalYPosition == 0)
+        if (mFinalYPosition == 0) {
             mFinalYPosition = (dependency.getHeight() / 2);
+        }
 
-        if (mStartHeight == 0)
+        if (mStartHeight == 0) {
             mStartHeight = child.getHeight();
+        }
 
-        if (mStartXPosition == 0)
+        if (mStartXPosition == 0) {
             mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
+        }
 
-        if (mFinalXPosition == 0)
+        if (mFinalXPosition == 0) {
             mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + ((int) mCustomFinalHeight / 2);
+        }
 
-        if (mStartToolbarPosition == 0)
+        if (mStartToolbarPosition == 0) {
             mStartToolbarPosition = dependency.getY();
+        }
 
         if (mChangeBehaviorPoint == 0) {
             mChangeBehaviorPoint = (child.getHeight() - mCustomFinalHeight) / (2f * (mStartYPosition - mFinalYPosition));

@@ -11,6 +11,7 @@ public class ActivityForumItem {
     public String mLou;
     public String mTime;
     public String mDetile;
+
     public ActivityForumItem(String mImageUrl, String mUsername, String mLou, String mTime, String mDetile) {
         this.mImageUrl = mImageUrl;
         this.mUsername = mUsername;
@@ -18,6 +19,7 @@ public class ActivityForumItem {
         this.mTime = mTime;
         this.mDetile = mDetile;
     }
+
     public ActivityForumItem(int mImageId, String mUsername, String mLou, String mTime, String mDetile) {
         this.mImageId = mImageId;
         this.mUsername = mUsername;

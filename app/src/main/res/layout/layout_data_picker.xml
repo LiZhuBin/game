@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-    android:gravity="center"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/datepicker_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-        android:id="@+id/datepicker_layout">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <DatePicker
+            android:id="@+id/DatePicker"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:calendarViewShown="false" />
+
+        <Button
+            android:id="@+id/get_date"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            >
-
-            <DatePicker
-                android:id="@+id/DatePicker"
-                android:layout_width="400dp"
-                android:layout_height="400dp"
-                android:calendarViewShown="false"
-                />
-
-            <Button
-                android:id="@+id/get_date"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/DatePicker"
-                android:text="确定"
-                />
-        </RelativeLayout>
-    </FrameLayout>
+            android:layout_below="@id/DatePicker"
+            android:text="确定" />
+    </RelativeLayout>
+</FrameLayout>

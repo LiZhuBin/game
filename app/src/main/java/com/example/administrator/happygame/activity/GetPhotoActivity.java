@@ -241,6 +241,8 @@ public class GetPhotoActivity extends BaseActivity {
                 GetPhotoActivity.this.setResult(3, intent);
                 GetPhotoActivity.this.finish();
                 break;
+            default:
+                break;
         }
 
 

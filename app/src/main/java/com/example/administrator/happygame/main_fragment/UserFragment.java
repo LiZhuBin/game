@@ -9,25 +9,22 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.allen.library.SuperTextView;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.User;
-import com.example.administrator.happygame.util.ApplicationUtil;
 import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.IntentHelp;
-import com.example.administrator.happygame.util.SPUtil;
+import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 import com.example.administrator.happygame.util.UiUtil;
-import com.sdsmdg.tastytoast.TastyToast;
+import com.hyphenate.chat.EMClient;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
@@ -36,15 +33,13 @@ import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
 public class UserFragment extends BaseFragment {
 
-    public static User me;
-    public static Object userId;
+
     protected WeakReference<View> mRootView;//缓存fragment数据
     View view;
     ImageView userMySmallImage;
@@ -67,7 +62,8 @@ public class UserFragment extends BaseFragment {
     SuperTextView imports;
     @Bind(R.id.my_information)
     SuperTextView myInformation;
-
+    FloatingSearchView floatingSearchView;
+public  static User me;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +77,7 @@ public class UserFragment extends BaseFragment {
             view = inflater.inflate(R.layout.user_info, container, false);
             mRootView = new WeakReference<View>(view);
 
-            initData();
+
             ButterKnife.bind(this, view);
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
@@ -102,47 +98,10 @@ public class UserFragment extends BaseFragment {
     }
 
     public void initData() {
+       me=mUserDao.load("1");
 
+        new MyAsyncTask(me).execute();
 
-        userId = SPUtil.get(ApplicationUtil.getContext(), "UserId", 1);
-//        GlobalData.login(userId.toString()).subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<User>() {
-//                    @Override
-//                    public void accept(User user) throws Exception {
-//                        LogUtil.e(user.getImage());
-//                    }
-//                });
-
-//        GlobalData.getRetrofit()
-//                .getSingleUser(userId.toString())
-//                //获取Observable对象
-//                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
-//                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
-//                .subscribe(new Consumer<User>() {
-//                    @Override
-//                    public void accept(User users) throws Exception {
-//                        me = users;
-//
-//                        new MyAsyncTask(me).execute();
-//                    }
-//                });
-
-
-        HttpUtil.sendOkHttpResquest(GlobalData.httpAddressUser + "php/getById.php", userId.toString(), new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-                me = HttpUtil.getSingleUser(response);
-
-                new MyAsyncTask(me).execute();
-            }
-        });
     }
 
 
@@ -192,11 +151,11 @@ public class UserFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.my_information,R.id.my_attention, R.id.my_activities, R.id.my_post, R.id.my_collection, R.id.my_friends, R.id.settings, R.id.imports})
+    @OnClick({R.id.my_information, R.id.my_attention, R.id.my_activities, R.id.my_post, R.id.my_collection, R.id.my_friends, R.id.settings, R.id.imports})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_information:
-                startActivity(IntentHelp.toMyInformationActivity(me,userMySmallImage));
+                startActivity(IntentHelp.toMyInformationActivity(me, userMySmallImage));
                 break;
             case R.id.my_attention:
                 break;
@@ -208,7 +167,7 @@ public class UserFragment extends BaseFragment {
                 startActivity(IntentHelp.toPersonActivity(me.getId(), 1));
                 break;
             case R.id.my_collection:
-                TastyToast.makeText(ApplicationUtil.getContext(), "敬请期待", Toast.LENGTH_LONG, TastyToast.SUCCESS);
+                startActivity(IntentHelp.toCollectActivity(me.getId()));
                 break;
             case R.id.my_friends:
                 startActivity(IntentHelp.toFriendsActivity(me.getFriends(), "我的好友"));
@@ -225,12 +184,20 @@ public class UserFragment extends BaseFragment {
                     @Override
                     public void onConfirm() {
                         dialog.dismiss();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                EMClient.getInstance().logout(true);
+                            }
+                        }).start();
 
                         //这里可以放一个bitmap
                         startActivity(IntentHelp.toLoginActivity(userMySmallImage));
                     }
                 });
 
+                break;
+            default:
                 break;
         }
     }
@@ -262,14 +229,14 @@ public class UserFragment extends BaseFragment {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            me=user;
+            me = user;
             userMyName.setText(user.getName());
-            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).asBitmap()
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).asBitmap()
                     .into(userMyBigImage);
 
-            // Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).into(userMySmallImage);
-            Glide.with(ApplicationUtil.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .bitmapTransform(new CropCircleTransformation(ApplicationUtil.getContext()))
+            // Glide.with(MyApplication.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).into(userMySmallImage);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .bitmapTransform(new CropCircleTransformation(MyApplication.getContext()))
                     .into(userMySmallImage);
 
 

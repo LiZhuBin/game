@@ -15,7 +15,27 @@
         android:layout_height="500dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <include layout="@layout/layout_floating_button" />
+    <com.fangxu.allangleexpandablebutton.AllAngleExpandableButton
+        android:id="@+id/button_expandable_90_180"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:aebAnimDurationMillis="175"
+        app:aebButtonElevation="0dp"
+        app:aebButtonGapDp="45dp"
+        app:aebEndAngleDegree="180"
+        app:aebIsSelectionMode="false"
+        app:aebMainButtonRotateAnimDurationMillis="300"
+        app:aebMainButtonRotateDegree="-135"
+        app:aebMainButtonSizeDp="60dp"
+        app:aebRippleEffect="true"
+        app:aebStartAngleDegree="90"
+        app:aebSubButtonSizeDp="45dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="@dimen/floating_margin_right"
+        android:layout_marginBottom="@dimen/floating_margin_bottom"/>
+
+
+
 
     <include layout="@layout/layout_photo_view" />
 </android.support.design.widget.CoordinatorLayout>
