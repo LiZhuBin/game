@@ -15,7 +15,9 @@ import com.example.administrator.happygame.activity.AddActivity;
 import com.example.administrator.happygame.thing_class.AddItem;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.MyApplication;
+import com.example.administrator.happygame.util.TimeUtil;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -56,7 +58,11 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         holder.forum_address.setText(addItem.getActivityAddress());
         holder.forum_content.setText(addItem.getActivityContent());
         holder.forum_title.setText(addItem.getActivityTitle());
-        holder.forum_time.setText(addItem.getActivityTime());
+        try {
+            holder.forum_time.setText(TimeUtil.getTimeFormatText((addItem.getActivityTime())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 

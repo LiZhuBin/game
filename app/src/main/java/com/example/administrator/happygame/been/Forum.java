@@ -13,7 +13,7 @@ import org.greenrobot.greendao.annotation.Id;
 @Entity
 public class Forum implements Parcelable {
 
-    public static final Parcelable.Creator<Forum> CREATOR = new Parcelable.Creator<Forum>() {
+    public static final Creator<Forum> CREATOR = new Creator<Forum>() {
         @Override
         public Forum createFromParcel(Parcel source) {
             return new Forum(source);
@@ -73,6 +73,18 @@ public class Forum implements Parcelable {
         this.image = image;
         this.like = like;
         this.data = data;
+    }
+
+    private Forum(Builder builder) {
+        setId(builder.id);
+        setType(builder.type);
+        setUserId(builder.userId);
+        setTitle(builder.title);
+        setContent(builder.content);
+        setComment(builder.comment);
+        setImage(builder.image);
+        setLike(builder.like);
+        setData(builder.data);
     }
 
     public String getId() {
@@ -163,5 +175,69 @@ public class Forum implements Parcelable {
         dest.writeString(this.image);
         dest.writeString(this.like);
         dest.writeString(this.data);
+    }
+
+    public static final class Builder {
+        private String id;
+        private String type;
+        private String userId;
+        private String title;
+        private String content;
+        private String comment;
+        private String image;
+        private String like;
+        private String data;
+
+        public Builder() {
+        }
+
+        public Builder id(String val) {
+            id = val;
+            return this;
+        }
+
+        public Builder type(String val) {
+            type = val;
+            return this;
+        }
+
+        public Builder userId(String val) {
+            userId = val;
+            return this;
+        }
+
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        public Builder content(String val) {
+            content = val;
+            return this;
+        }
+
+        public Builder comment(String val) {
+            comment = val;
+            return this;
+        }
+
+        public Builder image(String val) {
+            image = val;
+            return this;
+        }
+
+        public Builder like(String val) {
+            like = val;
+            return this;
+        }
+
+        public Builder data(String val) {
+            data = val;
+            return this;
+        }
+
+        public Forum build() {
+            return new Forum(this);
+        }
     }
 }

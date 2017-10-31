@@ -3,15 +3,15 @@ package com.example.administrator.happygame.activity.fifth;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.MyPagerAdapter;
-import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
-import com.example.administrator.happygame.child_fragment.AddListFragment;
-import com.example.administrator.happygame.child_fragment.ForumListFragment;
-import com.example.administrator.happygame.child_fragment.NewsListFragment;
+import com.example.administrator.happygame.child_fragment.CollectActivityFragment;
+import com.example.administrator.happygame.child_fragment.CollectForumFragment;
+import com.example.administrator.happygame.child_fragment.CollectNewsFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,7 +23,7 @@ import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
-public class CollectActivity extends BaseActivity {
+public class CollectActivity extends AppCompatActivity {
 
     private static User user;
     String userId;
@@ -34,7 +34,7 @@ public class CollectActivity extends BaseActivity {
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private int[] mImageArray, mColorArray;
     private ArrayList<Fragment> mFragments;
-    private final String[] mTitles = {"Android", "iOS", "Web"};
+    private final String[] mTitles = {"新闻", "约战", "帖子"};
 
 
     @Override
@@ -68,9 +68,9 @@ public class CollectActivity extends BaseActivity {
         user =mUserDao.load(userId);
         EventBus.getDefault().post(user);
         mFragments = new ArrayList<>();
-      mFragments.add(NewsListFragment.getInstance());
-      mFragments.add(AddListFragment.getInstance());
-      mFragments.add(ForumListFragment.getInstance());
+      mFragments.add(CollectNewsFragment.getInstance());
+      mFragments.add(CollectActivityFragment.getInstance());
+      mFragments.add(CollectForumFragment.getInstance());
 
 
     }

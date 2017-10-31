@@ -70,4 +70,5 @@ public class MyViewPager extends ViewPager {
     public interface OnSingleTouchListener {
         public void onSingleTouch(View v);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.administrator.happygame.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class TimeUtil {
     private final static long day = 24 * hour;// 1天
     private final static long month = 31 * day;// 月
     private final static long year = 12 * month;// 年
-
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * 返回文字描述的日期
      *
@@ -49,12 +50,15 @@ public class TimeUtil {
         }
         return "刚刚";
     }
-
+    public static String getTimeFormatText(String string) throws ParseException {
+    return  getTimeFormatText(sdf.parse(string));
+    }
     public static String getImageName() {
         String str = null;
         Date date = null;
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");//获取当前时间，进一步转化为字符串
         date = new Date();
+
         str = format.format(date);
         String fileName = str + ".jpg";
         return fileName;

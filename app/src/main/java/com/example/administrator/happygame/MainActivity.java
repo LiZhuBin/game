@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -42,7 +43,6 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 import static com.example.administrator.happygame.util.GlobalData.initActivityData;
 import static com.example.administrator.happygame.util.GlobalData.initForumData;
@@ -54,7 +54,7 @@ import static com.example.administrator.happygame.util.GlobalData.mNewsDao;
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
-public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,EMConnectionListener{
 
     private static final String TAG = "MainActivity";
     SearchView searchView;
@@ -149,7 +149,7 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
                                 for (final Activity activity : activityList) {
                                     mActivityDao.insertOrReplace(activity);
                                 }
-                                Message message = new Message();
+                                Message message = handler.obtainMessage();
                                 message.what = 1;
                                 handler.sendMessage(message);
                             }
@@ -291,7 +291,7 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
 
 
 
-    private class MyConnectionListener implements EMConnectionListener {
+
         @Override
         public void onConnected() {
         }
@@ -320,8 +320,3 @@ public class MainActivity extends SwipeBackActivity implements ViewPager.OnPageC
             });
         }
     }
-
-
-
-}
-

@@ -10,10 +10,28 @@ import android.widget.TextView;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.News;
+import com.example.administrator.happygame.util.StringUtil;
+import com.example.administrator.happygame.util.TimeUtil;
+
+import java.text.ParseException;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class NewContentFragment extends BaseFragment {
     View view;
+    @Bind(R.id.news_title)
+    TextView newsTitle;
+    @Bind(R.id.news_time)
+    TextView newsTime;
+    @Bind(R.id.news_content)
+    TextView newsContent;
+    @Bind(R.id.news_good_num)
+    TextView newsGoodNum;
+
+    @Bind(R.id.news_unlike_num)
+    TextView newsUnlikeNum;
     private News one;
 
     public static NewContentFragment getInstance() {
@@ -39,25 +57,32 @@ public class NewContentFragment extends BaseFragment {
         }
         View view = inflater.inflate(R.layout.fragment_new_list, container, false);
         // Inflate the layout for this fragment
+        ButterKnife.bind(this, view);
         getNews();
-        initLayoutview(view);
+        try {
+            initLayoutview(view);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         return view;
 
     }
 
-    private void initLayoutview(View view) {
+    private void initLayoutview(View view) throws ParseException {
 
 
         // TextView  textview_title = (TextView)findViewById(R.id.NewAcitivity_titletext);
-        TextView textview_main_content = (TextView) view.findViewById(R.id.NewAcitivity_Title_mainText);
+
 
         String Main_Context = one.getNew_content();
         String Title_Context = one.getNew_title();
-
-
-        textview_main_content.setText(Main_Context);
-
+        newsGoodNum.setText(StringUtil.httpArrayStringLength(one.getNew_comment()));
+        newsUnlikeNum.setText(one.getNew_praise_unlike());
+        newsTitle.setText(Title_Context);
+        newsContent.setText("  "+Main_Context);
+        newsTime.setText(TimeUtil.getTimeFormatText(one.getNew_build_time()));
 
     }
 
@@ -67,4 +92,9 @@ public class NewContentFragment extends BaseFragment {
         one = obj;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

@@ -14,15 +14,18 @@ public class Msg implements Serializable {
     private int type;
     private String imageUrl;
 
+    public Msg(String content, int type) {
+        this.content = content;
+        this.type = type;
+
+    }
+
     public Msg(String imageUrl, String content) {
         this.content = content;
         this.imageUrl = imageUrl;
     }
 
-    public Msg(String content, int type) {
-        this.content = content;
-        this.type = type;
-    }
+
 
     public static int getTypeReceived() {
         return TYPE_RECEIVED;

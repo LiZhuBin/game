@@ -13,7 +13,9 @@ import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.my_ui.ActivityForumItem;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.MyApplication;
+import com.example.administrator.happygame.util.TimeUtil;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -45,7 +47,11 @@ public class ForumInfoAdapter extends RecyclerView.Adapter<ForumInfoAdapter.View
         Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + forumItem.getmImageUrl()).into(holder.mIcon_image);
         holder.mUsername.setText(forumItem.getmUsername());
         holder.mLou.setText(forumItem.getmLou());
-        holder.mTime.setText(forumItem.getmTime());
+        try {
+            holder.mTime.setText(TimeUtil.getTimeFormatText(forumItem.getmTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.mDetile.setText(forumItem.getmDetile());
     }
 

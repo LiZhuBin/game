@@ -87,6 +87,7 @@ public class HttpUtil {
         return appList;
     }
 
+
     public static List<News> getListNews(Response response) {
         List<News> appList;
         appList = null;
@@ -153,6 +154,9 @@ public class HttpUtil {
 
     public static Activity getSingleActivity(Response response) {
         return HttpUtil.getListActivity(response).get(0);
+    }
+    public static News getSingleNews(Response response) {
+        return HttpUtil.getListNews(response).get(0);
     }
 
     public static Forum getSingleForum(Response response) {

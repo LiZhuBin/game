@@ -41,10 +41,10 @@ public class GlideImageLoader extends ImageLoader {
         } else if (path instanceof News)  //如果传入的是新闻，那么直接提取里面的新闻让后去展示图片
         {
             final News one = (News) path;
-            int Id = one.getNew_drawable();
+            //int Id = one.getNew_drawable();
             String title = one.getNew_title(); //这个title可能要通过其他地方去实现添加
 
-            Glide.with(context).load(Id).into(imageView);
+           // Glide.with(context).load(Id).into(imageView);
 
             //设点击事件！来跳转到News地方去
 

@@ -5,9 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
+import com.example.administrator.happygame.activity.PersonActivity;
+import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.example.administrator.happygame.thing_class.Msg;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.MyApplication;
@@ -40,16 +44,13 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
         if (msg.getType() == Msg.TYPE_RECEIVED) {
             //如果是收到的消息 ，则显示左边的消息布局，将右边的消息布局隐藏
             holder.leftMsg.setText(msg.getContent());
-            holder.rightMsg.setVisibility(View.GONE);
-            holder.meImage.setVisibility(View.GONE);
-            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + msg.getImageUrl()).into(holder.otherImage);
+           holder.rightLinearLayout.setVisibility(View.GONE);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + PersonActivity.user.getImage()).into(holder.otherImage);
         } else if (msg.getType() == Msg.TYPE_SEND) {
             //如果是发出的消息 ，则显示右边的消息布局，将左边的消息布局隐藏
             holder.rightMsg.setText(msg.getContent());
-            holder.leftMsg.setVisibility(View.GONE);
-            holder.otherImage.setVisibility(View.GONE);
-            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + msg.getImageUrl()).into(holder.meImage);
-
+            holder.leftLinearLayout.setVisibility(View.GONE);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + UserFragment.me.getImage()).into(holder.meImage);
         }
     }
 
@@ -64,12 +65,14 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
         ImageView meImage;
         BubbleTextView leftMsg;
         BubbleTextView rightMsg;
-
+LinearLayout leftLinearLayout;
+        RelativeLayout rightLinearLayout;
         public ViewHolder(View view) {
             super(view);
             otherImage = (ImageView) view.findViewById(R.id.chat_image_other);
             meImage = (ImageView) view.findViewById(R.id.chat_image_me);
-
+leftLinearLayout=(LinearLayout)view.findViewById(R.id.left_layout) ;
+            rightLinearLayout=(RelativeLayout)view.findViewById(R.id.right_layout);
             leftMsg = (BubbleTextView) view.findViewById(R.id.left_msg);
             rightMsg = (BubbleTextView) view.findViewById(R.id.right_msg);
         }

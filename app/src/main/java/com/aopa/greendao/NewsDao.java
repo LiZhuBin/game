@@ -25,12 +25,15 @@ public class NewsDao extends AbstractDao<News, String> {
      */
     public static class Properties {
         public final static Property New_id = new Property(0, String.class, "new_id", true, "NEW_ID");
-        public final static Property New_title = new Property(1, String.class, "new_title", false, "NEW_TITLE");
-        public final static Property New_content = new Property(2, String.class, "new_content", false, "NEW_CONTENT");
-        public final static Property New_image = new Property(3, String.class, "new_image", false, "NEW_IMAGE");
-        public final static Property New_comment_id = new Property(4, String.class, "new_comment_id", false, "NEW_COMMENT_ID");
-        public final static Property New_comment = new Property(5, String.class, "new_comment", false, "NEW_COMMENT");
-        public final static Property New_drawable = new Property(6, int.class, "new_drawable", false, "NEW_DRAWABLE");
+        public final static Property New_build_time = new Property(1, String.class, "new_build_time", false, "NEW_BUILD_TIME");
+        public final static Property New_like_num = new Property(2, String.class, "new_like_num", false, "NEW_LIKE_NUM");
+        public final static Property New_praise_like = new Property(3, String.class, "new_praise_like", false, "NEW_PRAISE_LIKE");
+        public final static Property New_praise_unlike = new Property(4, String.class, "new_praise_unlike", false, "NEW_PRAISE_UNLIKE");
+        public final static Property New_title = new Property(5, String.class, "new_title", false, "NEW_TITLE");
+        public final static Property New_content = new Property(6, String.class, "new_content", false, "NEW_CONTENT");
+        public final static Property New_image = new Property(7, String.class, "new_image", false, "NEW_IMAGE");
+        public final static Property New_comment_id = new Property(8, String.class, "new_comment_id", false, "NEW_COMMENT_ID");
+        public final static Property New_comment = new Property(9, String.class, "new_comment", false, "NEW_COMMENT");
     }
 
 
@@ -47,12 +50,15 @@ public class NewsDao extends AbstractDao<News, String> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"NEWS\" (" + //
                 "\"NEW_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: new_id
-                "\"NEW_TITLE\" TEXT," + // 1: new_title
-                "\"NEW_CONTENT\" TEXT," + // 2: new_content
-                "\"NEW_IMAGE\" TEXT," + // 3: new_image
-                "\"NEW_COMMENT_ID\" TEXT," + // 4: new_comment_id
-                "\"NEW_COMMENT\" TEXT," + // 5: new_comment
-                "\"NEW_DRAWABLE\" INTEGER NOT NULL );"); // 6: new_drawable
+                "\"NEW_BUILD_TIME\" TEXT," + // 1: new_build_time
+                "\"NEW_LIKE_NUM\" TEXT," + // 2: new_like_num
+                "\"NEW_PRAISE_LIKE\" TEXT," + // 3: new_praise_like
+                "\"NEW_PRAISE_UNLIKE\" TEXT," + // 4: new_praise_unlike
+                "\"NEW_TITLE\" TEXT," + // 5: new_title
+                "\"NEW_CONTENT\" TEXT," + // 6: new_content
+                "\"NEW_IMAGE\" TEXT," + // 7: new_image
+                "\"NEW_COMMENT_ID\" TEXT," + // 8: new_comment_id
+                "\"NEW_COMMENT\" TEXT);"); // 9: new_comment
     }
 
     /** Drops the underlying database table. */
@@ -70,31 +76,50 @@ public class NewsDao extends AbstractDao<News, String> {
             stmt.bindString(1, new_id);
         }
  
+        String new_build_time = entity.getNew_build_time();
+        if (new_build_time != null) {
+            stmt.bindString(2, new_build_time);
+        }
+ 
+        String new_like_num = entity.getNew_like_num();
+        if (new_like_num != null) {
+            stmt.bindString(3, new_like_num);
+        }
+ 
+        String new_praise_like = entity.getNew_praise_like();
+        if (new_praise_like != null) {
+            stmt.bindString(4, new_praise_like);
+        }
+ 
+        String new_praise_unlike = entity.getNew_praise_unlike();
+        if (new_praise_unlike != null) {
+            stmt.bindString(5, new_praise_unlike);
+        }
+ 
         String new_title = entity.getNew_title();
         if (new_title != null) {
-            stmt.bindString(2, new_title);
+            stmt.bindString(6, new_title);
         }
  
         String new_content = entity.getNew_content();
         if (new_content != null) {
-            stmt.bindString(3, new_content);
+            stmt.bindString(7, new_content);
         }
  
         String new_image = entity.getNew_image();
         if (new_image != null) {
-            stmt.bindString(4, new_image);
+            stmt.bindString(8, new_image);
         }
  
         String new_comment_id = entity.getNew_comment_id();
         if (new_comment_id != null) {
-            stmt.bindString(5, new_comment_id);
+            stmt.bindString(9, new_comment_id);
         }
  
         String new_comment = entity.getNew_comment();
         if (new_comment != null) {
-            stmt.bindString(6, new_comment);
+            stmt.bindString(10, new_comment);
         }
-        stmt.bindLong(7, entity.getNew_drawable());
     }
 
     @Override
@@ -106,31 +131,50 @@ public class NewsDao extends AbstractDao<News, String> {
             stmt.bindString(1, new_id);
         }
  
+        String new_build_time = entity.getNew_build_time();
+        if (new_build_time != null) {
+            stmt.bindString(2, new_build_time);
+        }
+ 
+        String new_like_num = entity.getNew_like_num();
+        if (new_like_num != null) {
+            stmt.bindString(3, new_like_num);
+        }
+ 
+        String new_praise_like = entity.getNew_praise_like();
+        if (new_praise_like != null) {
+            stmt.bindString(4, new_praise_like);
+        }
+ 
+        String new_praise_unlike = entity.getNew_praise_unlike();
+        if (new_praise_unlike != null) {
+            stmt.bindString(5, new_praise_unlike);
+        }
+ 
         String new_title = entity.getNew_title();
         if (new_title != null) {
-            stmt.bindString(2, new_title);
+            stmt.bindString(6, new_title);
         }
  
         String new_content = entity.getNew_content();
         if (new_content != null) {
-            stmt.bindString(3, new_content);
+            stmt.bindString(7, new_content);
         }
  
         String new_image = entity.getNew_image();
         if (new_image != null) {
-            stmt.bindString(4, new_image);
+            stmt.bindString(8, new_image);
         }
  
         String new_comment_id = entity.getNew_comment_id();
         if (new_comment_id != null) {
-            stmt.bindString(5, new_comment_id);
+            stmt.bindString(9, new_comment_id);
         }
  
         String new_comment = entity.getNew_comment();
         if (new_comment != null) {
-            stmt.bindString(6, new_comment);
+            stmt.bindString(10, new_comment);
         }
-        stmt.bindLong(7, entity.getNew_drawable());
     }
 
     @Override
@@ -142,12 +186,15 @@ public class NewsDao extends AbstractDao<News, String> {
     public News readEntity(Cursor cursor, int offset) {
         News entity = new News( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // new_id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // new_title
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // new_content
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // new_image
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // new_comment_id
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // new_comment
-            cursor.getInt(offset + 6) // new_drawable
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // new_build_time
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // new_like_num
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // new_praise_like
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // new_praise_unlike
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // new_title
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // new_content
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // new_image
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // new_comment_id
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // new_comment
         );
         return entity;
     }
@@ -155,12 +202,15 @@ public class NewsDao extends AbstractDao<News, String> {
     @Override
     public void readEntity(Cursor cursor, News entity, int offset) {
         entity.setNew_id(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setNew_title(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setNew_content(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setNew_image(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setNew_comment_id(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setNew_comment(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setNew_drawable(cursor.getInt(offset + 6));
+        entity.setNew_build_time(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setNew_like_num(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setNew_praise_like(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setNew_praise_unlike(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setNew_title(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setNew_content(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setNew_image(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setNew_comment_id(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setNew_comment(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override

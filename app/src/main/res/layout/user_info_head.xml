@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:diagonal="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_head"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -46,8 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_mySmallImage"
-        android:layout_marginLeft="40dp"
-        android:text="Hugh Jackman"
+        android:layout_marginLeft="50dp"
+        tools:text="Hugh Jackman"
         android:textColor="@color/black"
         android:textSize="20dp" />
 
@@ -67,9 +68,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="30dp"
+    android:id="@+id/user_credit_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_credit"
+            android:text="信用"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_myCredit"
+            android:text="500"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/text_credit"/>
+</LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/dp_10">
         <com.sackcentury.shinebuttonlib.ShineButton
+
             android:id="@+id/shineButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -95,7 +122,8 @@
             android:layout_height="wrap_content"
             android:text="5"
             android:textSize="25dp" />
+        </LinearLayout>
     </LinearLayout>
-
+    <include layout="@layout/item_credit"/>
 
 </RelativeLayout>

@@ -12,7 +12,7 @@ import org.greenrobot.greendao.annotation.Id;
  */
 @Entity
 public class Advertise implements Parcelable {
-    public static final Parcelable.Creator<Advertise> CREATOR = new Parcelable.Creator<Advertise>() {
+    public static final Creator<Advertise> CREATOR = new Creator<Advertise>() {
         @Override
         public Advertise createFromParcel(Parcel source) {
             return new Advertise(source);
@@ -50,6 +50,11 @@ public class Advertise implements Parcelable {
     public Advertise() {
     }
 
+    private Advertise(Builder builder) {
+        setAdvertise_id(builder.advertise_id);
+        setAdvertise_image(builder.advertise_image);
+    }
+
     public String getAdvertise_id() {
         return advertise_id;
     }
@@ -75,5 +80,27 @@ public class Advertise implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.advertise_id);
         dest.writeString(this.advertise_image);
+    }
+
+    public static final class Builder {
+        private String advertise_id;
+        private String advertise_image;
+
+        public Builder() {
+        }
+
+        public Builder advertise_id(String val) {
+            advertise_id = val;
+            return this;
+        }
+
+        public Builder advertise_image(String val) {
+            advertise_image = val;
+            return this;
+        }
+
+        public Advertise build() {
+            return new Advertise(this);
+        }
     }
 }

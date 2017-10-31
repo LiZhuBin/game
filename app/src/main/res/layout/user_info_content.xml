@@ -35,7 +35,8 @@
         style="@style/Super_style"
         stv:sLeftIconRes="@drawable/icon_my_information"
         stv:sLeftTextString="我的信息"
-        stv:sRightTextColor="@color/colorAccent" />
+        stv:sRightTextColor="@color/colorAccent"
+        stv:sRightIconRes="@drawable/icon_arrows"/>
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_activities"
@@ -70,12 +71,14 @@
         style="@style/Super_style"
         stv:sLeftIconRes="@drawable/icon_about"
         stv:sLeftTextString="设置"
-        stv:sRightTextColor="@color/colorAccent" />
+        stv:sRightTextColor="@color/colorAccent"
+        stv:sRightIconRes="@drawable/icon_arrows"/>
 
     <com.allen.library.SuperTextView
         android:id="@+id/imports"
         style="@style/Super_style"
         stv:sLeftIconRes="@drawable/icon_left"
         stv:sLeftTextString="退出账号"
-        stv:sRightTextColor="@color/colorAccent" />
+        stv:sRightTextColor="@color/colorAccent"
+        stv:sRightIconRes="@drawable/icon_arrows"/>
 </LinearLayout>

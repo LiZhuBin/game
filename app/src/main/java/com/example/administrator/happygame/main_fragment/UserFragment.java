@@ -18,12 +18,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.User;
+import com.example.administrator.happygame.my_ui.CircleTransformation;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.IntentHelp;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 import com.example.administrator.happygame.util.UiUtil;
-import com.hyphenate.chat.EMClient;
 
 import java.lang.ref.WeakReference;
 
@@ -32,9 +32,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
+import static com.example.administrator.happygame.util.GlobalData.qq;
 
 
 public class UserFragment extends BaseFragment {
@@ -187,11 +187,14 @@ public  static User me;
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                EMClient.getInstance().logout(true);
+                               // EMClient.getInstance().logout(true);
                             }
                         }).start();
 
                         //这里可以放一个bitmap
+                        if (qq.isAuthValid()) {
+                            qq.removeAccount(true);
+                        }
                         startActivity(IntentHelp.toLoginActivity(userMySmallImage));
                     }
                 });
@@ -234,12 +237,11 @@ public  static User me;
             Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).asBitmap()
                     .into(userMyBigImage);
 
-            // Glide.with(MyApplication.getContext()).load(GlobalData.httpAddressPicture + user.getImage()).into(userMySmallImage);
             Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .bitmapTransform(new CropCircleTransformation(MyApplication.getContext()))
+                    .bitmapTransform(new CircleTransformation(MyApplication.getContext(),2,MyApplication.getContext().getResources().getColor(R.color.blue0)))
                     .into(userMySmallImage);
 
-
+myCollection.setRightString(StringUtil.httpArrayStringLength(user.getCollectForum()+"|"+user.getCollectActivities()+"|"+user.getCollectNews()));
             myActivities.setRightString(StringUtil.httpArrayStringLength(user.getDoingActivities()));
             myCollection.setRightString(StringUtil.httpArrayStringLength(user.getCollectActivities()));
             myFriends.setRightString(StringUtil.httpArrayStringLength(user.getFriends()));

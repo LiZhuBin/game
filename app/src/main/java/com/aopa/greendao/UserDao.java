@@ -33,13 +33,15 @@ public class UserDao extends AbstractDao<User, String> {
         public final static Property Address = new Property(6, String.class, "address", false, "ADDRESS");
         public final static Property Name = new Property(7, String.class, "name", false, "NAME");
         public final static Property Friends = new Property(8, String.class, "friends", false, "FRIENDS");
-        public final static Property CollectActivities = new Property(9, String.class, "collectActivities", false, "COLLECT_ACTIVITIES");
-        public final static Property DoingActivities = new Property(10, String.class, "doingActivities", false, "DOING_ACTIVITIES");
-        public final static Property Image = new Property(11, String.class, "image", false, "IMAGE");
-        public final static Property Password = new Property(12, String.class, "password", false, "PASSWORD");
-        public final static Property Posts = new Property(13, String.class, "posts", false, "POSTS");
-        public final static Property AttentionId = new Property(14, String.class, "attentionId", false, "ATTENTION_ID");
-        public final static Property BeattentionId = new Property(15, String.class, "beattentionId", false, "BEATTENTION_ID");
+        public final static Property CollectForum = new Property(9, String.class, "collectForum", false, "COLLECT_FORUM");
+        public final static Property CollectNews = new Property(10, String.class, "collectNews", false, "COLLECT_NEWS");
+        public final static Property CollectActivities = new Property(11, String.class, "collectActivities", false, "COLLECT_ACTIVITIES");
+        public final static Property DoingActivities = new Property(12, String.class, "doingActivities", false, "DOING_ACTIVITIES");
+        public final static Property Image = new Property(13, String.class, "image", false, "IMAGE");
+        public final static Property Password = new Property(14, String.class, "password", false, "PASSWORD");
+        public final static Property Posts = new Property(15, String.class, "posts", false, "POSTS");
+        public final static Property AttentionId = new Property(16, String.class, "attentionId", false, "ATTENTION_ID");
+        public final static Property BeattentionId = new Property(17, String.class, "beattentionId", false, "BEATTENTION_ID");
     }
 
 
@@ -64,13 +66,15 @@ public class UserDao extends AbstractDao<User, String> {
                 "\"ADDRESS\" TEXT," + // 6: address
                 "\"NAME\" TEXT," + // 7: name
                 "\"FRIENDS\" TEXT," + // 8: friends
-                "\"COLLECT_ACTIVITIES\" TEXT," + // 9: collectActivities
-                "\"DOING_ACTIVITIES\" TEXT," + // 10: doingActivities
-                "\"IMAGE\" TEXT," + // 11: image
-                "\"PASSWORD\" TEXT," + // 12: password
-                "\"POSTS\" TEXT," + // 13: posts
-                "\"ATTENTION_ID\" TEXT," + // 14: attentionId
-                "\"BEATTENTION_ID\" TEXT);"); // 15: beattentionId
+                "\"COLLECT_FORUM\" TEXT," + // 9: collectForum
+                "\"COLLECT_NEWS\" TEXT," + // 10: collectNews
+                "\"COLLECT_ACTIVITIES\" TEXT," + // 11: collectActivities
+                "\"DOING_ACTIVITIES\" TEXT," + // 12: doingActivities
+                "\"IMAGE\" TEXT," + // 13: image
+                "\"PASSWORD\" TEXT," + // 14: password
+                "\"POSTS\" TEXT," + // 15: posts
+                "\"ATTENTION_ID\" TEXT," + // 16: attentionId
+                "\"BEATTENTION_ID\" TEXT);"); // 17: beattentionId
     }
 
     /** Drops the underlying database table. */
@@ -128,39 +132,49 @@ public class UserDao extends AbstractDao<User, String> {
             stmt.bindString(9, friends);
         }
  
+        String collectForum = entity.getCollectForum();
+        if (collectForum != null) {
+            stmt.bindString(10, collectForum);
+        }
+ 
+        String collectNews = entity.getCollectNews();
+        if (collectNews != null) {
+            stmt.bindString(11, collectNews);
+        }
+ 
         String collectActivities = entity.getCollectActivities();
         if (collectActivities != null) {
-            stmt.bindString(10, collectActivities);
+            stmt.bindString(12, collectActivities);
         }
  
         String doingActivities = entity.getDoingActivities();
         if (doingActivities != null) {
-            stmt.bindString(11, doingActivities);
+            stmt.bindString(13, doingActivities);
         }
  
         String image = entity.getImage();
         if (image != null) {
-            stmt.bindString(12, image);
+            stmt.bindString(14, image);
         }
  
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(13, password);
+            stmt.bindString(15, password);
         }
  
         String posts = entity.getPosts();
         if (posts != null) {
-            stmt.bindString(14, posts);
+            stmt.bindString(16, posts);
         }
  
         String attentionId = entity.getAttentionId();
         if (attentionId != null) {
-            stmt.bindString(15, attentionId);
+            stmt.bindString(17, attentionId);
         }
  
         String beattentionId = entity.getBeattentionId();
         if (beattentionId != null) {
-            stmt.bindString(16, beattentionId);
+            stmt.bindString(18, beattentionId);
         }
     }
 
@@ -213,39 +227,49 @@ public class UserDao extends AbstractDao<User, String> {
             stmt.bindString(9, friends);
         }
  
+        String collectForum = entity.getCollectForum();
+        if (collectForum != null) {
+            stmt.bindString(10, collectForum);
+        }
+ 
+        String collectNews = entity.getCollectNews();
+        if (collectNews != null) {
+            stmt.bindString(11, collectNews);
+        }
+ 
         String collectActivities = entity.getCollectActivities();
         if (collectActivities != null) {
-            stmt.bindString(10, collectActivities);
+            stmt.bindString(12, collectActivities);
         }
  
         String doingActivities = entity.getDoingActivities();
         if (doingActivities != null) {
-            stmt.bindString(11, doingActivities);
+            stmt.bindString(13, doingActivities);
         }
  
         String image = entity.getImage();
         if (image != null) {
-            stmt.bindString(12, image);
+            stmt.bindString(14, image);
         }
  
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(13, password);
+            stmt.bindString(15, password);
         }
  
         String posts = entity.getPosts();
         if (posts != null) {
-            stmt.bindString(14, posts);
+            stmt.bindString(16, posts);
         }
  
         String attentionId = entity.getAttentionId();
         if (attentionId != null) {
-            stmt.bindString(15, attentionId);
+            stmt.bindString(17, attentionId);
         }
  
         String beattentionId = entity.getBeattentionId();
         if (beattentionId != null) {
-            stmt.bindString(16, beattentionId);
+            stmt.bindString(18, beattentionId);
         }
     }
 
@@ -266,13 +290,15 @@ public class UserDao extends AbstractDao<User, String> {
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // address
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // name
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // friends
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // collectActivities
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // doingActivities
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // image
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // password
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // posts
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // attentionId
-            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15) // beattentionId
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // collectForum
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // collectNews
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // collectActivities
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // doingActivities
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // image
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // password
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // posts
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // attentionId
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17) // beattentionId
         );
         return entity;
     }
@@ -288,13 +314,15 @@ public class UserDao extends AbstractDao<User, String> {
         entity.setAddress(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setFriends(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setCollectActivities(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setDoingActivities(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setImage(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setPassword(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setPosts(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setAttentionId(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
-        entity.setBeattentionId(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setCollectForum(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setCollectNews(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setCollectActivities(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setDoingActivities(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setImage(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setPassword(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setPosts(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setAttentionId(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
+        entity.setBeattentionId(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
      }
     
     @Override

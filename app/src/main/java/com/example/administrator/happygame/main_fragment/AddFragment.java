@@ -137,7 +137,9 @@ public class AddFragment extends BaseFragment {
                     if (poi != null) {
                         intent.putExtra("isSetPosition", true);
                         intent.putExtra("SetPosition", poi);
+
                     }
+                    intent.putExtra("Address", " ");
                     startActivityForResult(intent, 1);
                 }
             });

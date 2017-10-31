@@ -15,10 +15,10 @@ public class ShareAdapter extends AuthorizeAdapter {
 
     @Override
     public void onCreate() {
+
+        super.onCreate();
         hideShareSDKLogo();
         TitleLayout llTitle = getTitleLayout();
         llTitle.getChildAt(1).setVisibility(View.GONE);
-        super.onCreate();
-
     }
 }

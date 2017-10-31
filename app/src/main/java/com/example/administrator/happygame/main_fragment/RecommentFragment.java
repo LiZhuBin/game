@@ -35,7 +35,6 @@ import com.example.administrator.happygame.util.LogUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.UiUtil;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -47,6 +46,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static com.example.administrator.happygame.util.GlobalData.mForumDao;
@@ -64,18 +64,20 @@ public class RecommentFragment extends BaseFragment {
     List<News> list;
     List<Headview> headviewslist;
     CardPagerAdapter cardAdapter;
-    RoundedImageView forumChooseImage;
-    TextView recommentTextPerson;
+
     TextView recommentTextNew;
     TextView recommentTextPost;
 
     View view;
     BottomNavigationViewEx bottomNavigationViewEx;
     FloatingSearchView searchView;
+    @Bind(R.id.recomment_text_person)
+    TextView recommentTextPerson;
+    @Bind(R.id.recomment_title_text)
+    TextView recommentTitleText;
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter forumAdapter;
     private List<Advertisement> advertisementList = new ArrayList<>();
-
 
 
     @Override
@@ -88,8 +90,9 @@ public class RecommentFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         if (mRootView == null || mRootView.get() == null) {
             view = inflater.inflate(R.layout.recomment_info, container, false);
-            ButterKnife.bind(this, view);
+
             mRootView = new WeakReference<View>(view);
+            ButterKnife.bind(this, view);
             initData();
 
         } else {
@@ -98,7 +101,6 @@ public class RecommentFragment extends BaseFragment {
                 parent.removeView(mRootView.get());
             }
         }
-
 
         ButterKnife.bind(this, mRootView.get());
         return mRootView.get();
@@ -117,7 +119,7 @@ public class RecommentFragment extends BaseFragment {
         UiUtil.jumpBean(recommentTextNew);
         UiUtil.jumpBean(recommentTextPerson);
         UiUtil.jumpBean(recommentTextPost);
-
+        UiUtil.jumpBean(recommentTitleText);
         RefreshLayout refreshLayout = (RefreshLayout) view.findViewById(R.id.recomment_refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -218,14 +220,14 @@ public class RecommentFragment extends BaseFragment {
 
         /*----------------需要被展示的新闻------------------------*/
         list = new ArrayList<News>();
-        list.add(new News(R.drawable.image_news1, "英雄联盟网吧联赛等你来战", "2017英特尔杯《英雄联盟》（简称：LOL）QQ网吧冠军联赛（以下称网吧联赛）" +
-                "自4月4日火爆开战起，随着比赛在全国范围的深入展开，迄今已有近4000家QQ网吧报名参赛，" +
-                "而参与此次线下赛事的玩家人数也已将近10万。在《英雄联盟》大电竞战略的不断实践当中，" +
-                "全民电竞计划以网吧联赛为依托，开辟出了一条火爆全国的网吧电竞之路。"));
-        list.add(new News(R.drawable.image_news3, "三国王者战", "王者之战 编辑\n" +
-                "三国杀王者之战伴随着三国杀的发展，也来到了第5个年头。无论从体系还是规则都正在趋于成熟，是目前国内专业性最强、级别最高、奖金最多、影响力最广的桌游竞技赛事。获得了广大三国杀玩家的认可，在玩家群体中深具影响力。\n" +
-                "“2017三国杀王者之战”即将开启新的篇章。2017年6月18日，本届王者之战启动仪式将在北京正通创意中心举行。届时酷6网将进行全程的现场直播。"));
-        list.add(new News(R.drawable.image_news4, "狼人杀高校挑战赛", "2016，北京狼人杀高校挑战赛，等你来战"));
+//        list.add(new News(R.drawable.image_news1, "英雄联盟网吧联赛等你来战", "2017英特尔杯《英雄联盟》（简称：LOL）QQ网吧冠军联赛（以下称网吧联赛）" +
+//                "自4月4日火爆开战起，随着比赛在全国范围的深入展开，迄今已有近4000家QQ网吧报名参赛，" +
+//                "而参与此次线下赛事的玩家人数也已将近10万。在《英雄联盟》大电竞战略的不断实践当中，" +
+//                "全民电竞计划以网吧联赛为依托，开辟出了一条火爆全国的网吧电竞之路。"));
+//        list.add(new News(R.drawable.image_news3, "三国王者战", "王者之战 编辑\n" +
+//                "三国杀王者之战伴随着三国杀的发展，也来到了第5个年头。无论从体系还是规则都正在趋于成熟，是目前国内专业性最强、级别最高、奖金最多、影响力最广的桌游竞技赛事。获得了广大三国杀玩家的认可，在玩家群体中深具影响力。\n" +
+//                "“2017三国杀王者之战”即将开启新的篇章。2017年6月18日，本届王者之战启动仪式将在北京正通创意中心举行。届时酷6网将进行全程的现场直播。"));
+//        list.add(new News(R.drawable.image_news4, "狼人杀高校挑战赛", "2016，北京狼人杀高校挑战赛，等你来战"));
         /*-------------------------------------------------------*/
 
 

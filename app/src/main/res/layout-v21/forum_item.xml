@@ -12,19 +12,7 @@
         android:weightSum="1">
 
 
-        <TextView
-            android:id="@+id/forum_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:text="aaaaaaaaaaaaaaaaaaasssssssssssssssssssssaaaa"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18dp" />
+
 
 
         <ImageView
@@ -36,19 +24,25 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="right">
 
-            <LinearLayout
+
+
+            <TextView
+                android:id="@+id/forum_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:alpha="0.2"
-                android:background="#000" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="aaaaaaaaaaaaaaaaaaasssssssssssssssssssssaaaa"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="15dp" />
 
-
-            <include
-                android:id="@+id/include"
-                layout="@layout/forum_item_bottom" />
         </FrameLayout>
     </LinearLayout>
 

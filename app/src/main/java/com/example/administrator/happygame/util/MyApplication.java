@@ -29,12 +29,10 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import java.util.HashMap;
 import java.util.List;
 
 import cat.ereza.customactivityoncrash.config.CaocConfig;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -43,8 +41,6 @@ import static com.example.administrator.happygame.util.GlobalData.initForumData;
 import static com.example.administrator.happygame.util.GlobalData.initNewsData;
 import static com.example.administrator.happygame.util.GlobalData.initUserData;
 import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
-import static com.example.administrator.happygame.util.GlobalData.mForumDao;
-import static com.example.administrator.happygame.util.GlobalData.mNewsDao;
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
@@ -81,36 +77,7 @@ public class MyApplication extends Application {
         return context;
     }
 
-    public static void mobAccredit(Platform platform) {
 
-//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
-        platform.setPlatformActionListener(new PlatformActionListener() {
-
-            @Override
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
-                arg2.printStackTrace();
-            }
-
-            @Override
-            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
-                // TODO Auto-generated method stub
-                //输出所有授权信息
-                arg0.getDb().exportData();
-            }
-
-            @Override
-            public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-//authorize与showUser单独调用一个即可
-        platform.authorize();//单独授权,OnComplete返回的hashmap是空的
-        platform.showUser(null);//授权并获取用户信息
-//移除授权
-//weibo.removeAccount(true);
-    }
 
     @Override
     public void onCreate() {
@@ -122,44 +89,43 @@ public class MyApplication extends Application {
         MobSDK.init(this, "21819c0c884c1 ", "0acef4983fd0549ea3a27b3ea5d0f8a3");
         initData();
         refWatcher = LeakCanary.install(this);
+        BGASwipeBackHelper.init(this, null);
+    }
+    private void initEMClient(){
+        EMOptions options = new EMOptions();
+// 默认添加好友时，是不需要验证的，改成需要验证
+        options.setAcceptInvitationAlways(false);
+//初始化
+        EMClient.getInstance().init(context, options);
+//在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+        EMClient.getInstance().setDebugMode(true);
+
+        userId = SPUtil.get(MyApplication.getContext(), "UserId", 1);
+
+        me=mUserDao.load((String)userId.toString());
+
+        EMClient.getInstance().login(me.getId(),me.getPassword(),new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                LogUtil.d("main", "登录聊天服务器成功！");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                LogUtil.d("main", "登录聊天服务器失败！");
+            }
+        });
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
 
     }
-private void initEMClient(){
-    EMOptions options = new EMOptions();
-// 默认添加好友时，是不需要验证的，改成需要验证
-    options.setAcceptInvitationAlways(false);
-//初始化
-    EMClient.getInstance().init(context, options);
-//在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-    EMClient.getInstance().setDebugMode(true);
-
-    userId = SPUtil.get(MyApplication.getContext(), "UserId", 1);
-
-    me=mUserDao.load((String)userId.toString());
-    EMClient.getInstance().chatManager().loadAllConversations();
-    EMClient.getInstance().groupManager().loadAllGroups();
-    EMClient.getInstance().login(me.getId(),me.getPassword(),new EMCallBack() {//回调
-        @Override
-        public void onSuccess() {
-            EMClient.getInstance().groupManager().loadAllGroups();
-            EMClient.getInstance().chatManager().loadAllConversations();
-            LogUtil.d("main", "登录聊天服务器成功！");
-        }
-
-        @Override
-        public void onProgress(int progress, String status) {
-
-        }
-
-        @Override
-        public void onError(int code, String message) {
-            LogUtil.d("main", "登录聊天服务器失败！");
-        }
-    });
-    EMClient.getInstance().chatManager().addMessageListener(msgListener);
-
-
-}
     private void setDatabase() {
         // 通过 DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的 SQLiteOpenHelper 对象。
         // 可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为 greenDAO 已经帮你做了。
@@ -171,48 +137,45 @@ private void initEMClient(){
         mDaoMaster = new DaoMaster(db);
         mDaoSession = mDaoMaster.newSession();
     }
-private void initData(){
-    CaocConfig.Builder.create()
-            .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
-            .enabled(false) //default: true
-            .showErrorDetails(false) //default: true
-            .showRestartButton(false) //default: true
-            .trackActivities(true) //default: false
-            .minTimeBetweenCrashesMs(2000) //default: 3000
-            .apply();
-    if (SPUtil.get(context, "UserId", 1) == null) {
-        SPUtil.put(context, "UserId", 1);
-    }
-    if (mUserDao.count() == 0) {
-        LogUtil.e("fgggggggggggg");
-        initUserData();
-    }
-    if (mForumDao.count() == 0) {
-        initForumData();
-    }
-    if (mNewsDao.count() == 0) {
-        initNewsData();
-    }
-    if (mActivityDao.count() == 0) {
-        ApiServiceManager.getActivityData("1")            //获取Observable对象
-                .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+    private void initData(){
+        CaocConfig.Builder.create()
+                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
+                .enabled(false) //default: true
+                .showErrorDetails(false) //default: true
+                .showRestartButton(false) //default: true
+                .trackActivities(true) //default: false
+                .minTimeBetweenCrashesMs(2000) //default: 3000
+                .apply();
+        if (SPUtil.get(context, "UserId", 1) == null) {
+            SPUtil.put(context, "UserId", 1);
+        }
 
-                .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
-                .subscribe(new Consumer<List<Activity>>() {
-                    @Override
-                    public void accept(List<Activity> activityList) throws Exception {
-                        for (final Activity activity : activityList) {
-                            mActivityDao.insertOrReplace(activity);
+            LogUtil.e("fgggggggggggg");
+            initUserData();
+
+            initForumData();
+
+            initNewsData();
+
+
+            ApiServiceManager.getActivityData("1")            //获取Observable对象
+                    .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
+
+                    .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
+                    .subscribe(new Consumer<List<Activity>>() {
+                        @Override
+                        public void accept(List<Activity> activityList) throws Exception {
+                            for (final Activity activity : activityList) {
+                                mActivityDao.insertOrReplace(activity);
+                            }
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
                         }
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
 
-                });
+                    });
 
     }
-}
     public DaoSession getDaoSession() {
         return mDaoSession;
     }
@@ -250,7 +213,7 @@ private void initData(){
         }
     };
     public static RefWatcher getRefWatcher(Context context) {
-       MyApplication application = (MyApplication) context.getApplicationContext();
+        MyApplication application = (MyApplication) context.getApplicationContext();
         return application.refWatcher;
     }
 
@@ -275,4 +238,5 @@ private void initData(){
             }
         });
     }
+
 }

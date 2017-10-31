@@ -51,6 +51,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         LogUtil.d(Currentview.getNew_image() + "-----------------------");
         Glide.with(myContext).load(GlobalData.HTTP_ADDRESS_PICTURE + Currentview.getNew_image()).into(holder.ima_big);
         holder.pos = position;
+        holder.good_num.setText(Currentview.getNew_praise_like());
+
+        holder.unlike_num.setText(Currentview.getNew_praise_unlike());
     }
 
     @Override
@@ -66,12 +69,16 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         TextView ima_title;
         TextView bottom_title;
 
+        TextView unlike_num;
+        TextView good_num;
         public ViewHolder(View itemView) {
             super(itemView);
             ima_big = (ImageView) itemView.findViewById(R.id.Big_Image);
             ima_title = (TextView) itemView.findViewById(R.id.Photo_title);
             bottom_title = (TextView) itemView.findViewById(R.id.BottomText);
 
+            unlike_num=(TextView)itemView.findViewById(R.id.news_unlike_num);
+            good_num=(TextView)itemView.findViewById(R.id.news_good_num);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

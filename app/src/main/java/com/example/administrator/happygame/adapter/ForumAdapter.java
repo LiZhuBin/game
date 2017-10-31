@@ -16,11 +16,8 @@ import com.example.administrator.happygame.activity.ForumActivity;
 import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.MyApplication;
-import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
-
-import static com.example.administrator.happygame.util.UiUtil.good;
 
 /**
  * Created by Administrator on 2017/9/8 0008.
@@ -55,10 +52,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
         });
 
 
-        final ShineButton shineButton1 = (ShineButton) view.findViewById(R.id.forum_shineButton_like);
-        final ShineButton shineButton2 = (ShineButton) view.findViewById(R.id.forum_shineButton_heart);
-        good(shineButton1, "+1", holder.forumLikeNum);
-        good(shineButton2, "收藏成功", null);
+
         return holder;
     }
 
@@ -67,10 +61,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
         ForumItem forumItem = mforumItem.get(position);
         holder.forumTitle.setText(forumItem.getForumTitle());
         Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + forumItem.getForumImage()).into(holder.forumImage);
-        holder.forumAddNum.setText(forumItem.getForumAddNum());
-        holder.forumLikeNum.setText(forumItem.getForumLikeNum());
-        int addNum = Integer.parseInt(forumItem.getForumAddNum()) / 2;
-        holder.forumAddNum.setText(addNum + "");
+
     }
 
     @Override
@@ -80,7 +71,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        TextView forumTitle, forumAddNum, forumLikeNum;
+        TextView forumTitle;
         ImageView forumImage;
 
         public ViewHolder(View view) {
@@ -88,8 +79,6 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
             cardView = (CardView) view;
             forumTitle = (TextView) view.findViewById(R.id.forum_title);
             forumImage = (ImageView) view.findViewById(R.id.forum_image);
-            forumAddNum = (TextView) view.findViewById(R.id.forum_add_num);
-            forumLikeNum = (TextView) view.findViewById(R.id.forum_like_num);
         }
     }
 

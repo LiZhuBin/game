@@ -9,6 +9,7 @@ import com.example.administrator.happygame.activity.MyInformationActivity;
 import com.example.administrator.happygame.activity.PersonActivity;
 import com.example.administrator.happygame.activity.SetActivity;
 import com.example.administrator.happygame.activity.fifth.CollectActivity;
+import com.example.administrator.happygame.activity.fifth.MapActivity;
 import com.example.administrator.happygame.been.User;
 
 /**
@@ -56,5 +57,9 @@ public class IntentHelp {
         return intent;
     }
 
-
+public static Intent toMapActivity(String poi){
+    Intent intent=new Intent(MyApplication.getContext(), MapActivity.class);
+    intent.putExtra("Address", poi);
+    return intent;
+}
 }

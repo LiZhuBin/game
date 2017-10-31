@@ -20,7 +20,7 @@
             style="@style/Title_textstyle"
             android:layout_gravity="right|center"
             android:layout_marginRight="30dp"
-            android:text="人物" />
+            android:text="知名玩家" />
 
     </FrameLayout>
 

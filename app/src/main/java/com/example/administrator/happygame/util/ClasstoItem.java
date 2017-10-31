@@ -39,7 +39,7 @@ public class ClasstoItem {
     }
 
     public static void NewToChooseNews(News news, List<News> chooseNews) {
-        chooseNews.add(new News(news.getNew_id(), news.getNew_title(), news.getNew_content(), news.getNew_image()));
+        chooseNews.add(news);
     }
 
     public static void AdvertiseToAdvertiseItem(Advertise advertise, List<Advertisement> advertiseList) {

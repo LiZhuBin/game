@@ -66,6 +66,7 @@ import com.example.administrator.happygame.RecyclerAdapter1;
 import com.example.administrator.happygame.SuggestionPoi;
 import com.example.administrator.happygame.util.BitmapUtil;
 import com.example.administrator.happygame.util.MyApplication;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class MapActivity extends AppCompatActivity implements BaiduMap.OnMarkerC
     private PoiOverlay overlay;
     private EditText edittext_fromcity;
     private RecyclerAdapter1 recyclerAdapter1;
-
+String text="";
     private TextWatcher AutoTextWatch = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -117,7 +118,11 @@ public class MapActivity extends AppCompatActivity implements BaiduMap.OnMarkerC
                 return; //文字为0没有反应！！
             }
             Log.d("PoiSearch", "onTextChanged");
-            suggestionSearch.requestSuggestion(new SuggestionSearchOption().city(MyLocation.getCity().toString()).keyword(charSequence.toString()).citylimit(true));  //city限定只能在该城市内找到兴趣点！！！
+            if(MyLocation==null){
+                  TastyToast.makeText(getApplicationContext(), "查找不到", TastyToast.INFO, TastyToast.ERROR);
+            }else {
+                suggestionSearch.requestSuggestion(new SuggestionSearchOption().city(MyLocation.getCity().toString()).keyword(charSequence.toString()).citylimit(true));  //city限定只能在该城市内找到兴趣点！！！
+            }
             //在回调函数的时候，要获得联想词的列表，并更新！！
         }
     };
@@ -135,6 +140,8 @@ public class MapActivity extends AppCompatActivity implements BaiduMap.OnMarkerC
         Textview_SearchType = (TextView) findViewById(R.id.Text_type);
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.editWhere);
 
+        text=getIntent().getExtras().getString("Address");
+        autoCompleteTextView.setText(text);
 
         mapView = (MapView) findViewById(R.id.MapView);
         baiduMap = mapView.getMap();

@@ -11,11 +11,13 @@ public class SearchActivity extends BaseActivity {
 
     FloatingSearchView searchView;
     private Boolean searchview_isFocus = false;
+    private String[] mTitles_3 = {"首页", "讨论"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        initViewPager(mTitles_3, "add", 0);
         searchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
         searchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
             @Override

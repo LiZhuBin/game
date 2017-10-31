@@ -59,7 +59,7 @@ public class NewsActivity extends BaseActivity {
         if (one.getNew_image() != null) {
             Glide.with(NewsActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + one.getNew_image()).into(imageview);
         } else {
-            Glide.with(NewsActivity.this).load(one.getNew_drawable()).into(imageview);
+         //   Glide.with(NewsActivity.this).load(one.getNew_drawable()).into(imageview);
         }
         installButton90to180();
     }
@@ -100,7 +100,7 @@ public class NewsActivity extends BaseActivity {
     private void installButton90to180() {
         final AllAngleExpandableButton button = (AllAngleExpandableButton) findViewById(R.id.button_expandable_90_180);
         final List<ButtonData> buttonDatas = new ArrayList<>();
-        int[] drawable = {R.drawable.icon_about,R.drawable.icon_good, R.drawable.icon_like, R.drawable.icon_unlike};
+        int[] drawable = {R.drawable.icon_select_like,R.drawable.icon_good, R.drawable.icon_like, R.drawable.icon_unlike};
         int[] color = {R.color.white,R.color.transparent,R.color.transparent, R.color.transparent, R.color.transparent};
         for (int i = 0; i < 4; i++) {
             ButtonData buttonData;

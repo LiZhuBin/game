@@ -10,12 +10,16 @@ import android.widget.TextView;
 
 import com.bm.library.Info;
 import com.bm.library.PhotoView;
+import com.example.administrator.happygame.been.User;
+import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.jaouan.revealator.Revealator;
 import com.melnykov.fab.FloatingActionButton;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.wx.goodview.GoodView;
 
 import net.frakbot.jumpingbeans.JumpingBeans;
+
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 /**
  * Created by Administrator on 2017/9/10 0010.
@@ -105,12 +109,12 @@ public static void unreveal(final FrameLayout theAwesomeView,final FloatingActio
 }
 
 
-    public static void good(final ShineButton shineButton, final String str, final TextView textView) {
+    public static void good(final ShineButton shineButton, final String str, final TextView textView, final User user) {
 
         shineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MyAsyncTask(shineButton, str, textView, view).execute();
+                new MyAsyncTask(shineButton, str, textView, view, user).execute();
 
             }
         });
@@ -121,13 +125,14 @@ public static void unreveal(final FrameLayout theAwesomeView,final FloatingActio
         ShineButton shineButton;
         String str;
         View view;
-
-        public MyAsyncTask(ShineButton shineButton, String str, TextView textView, View view) {
+User user;
+        public MyAsyncTask(ShineButton shineButton, String str, TextView textView, View view,User user) {
             super();
             this.textView = textView;
             this.shineButton = shineButton;
             this.str = str;
             this.view = view;
+            this.user=user;
         }
 
         @Override
@@ -147,6 +152,8 @@ public static void unreveal(final FrameLayout theAwesomeView,final FloatingActio
             if (shineButton.isChecked()) {
                 if (textView != null) {
                     textView.setText(textNum + 1 + "");
+                    user.setPraise_id(user.getPraise_id()+"|"+ UserFragment.me.getId());
+
                 }
                 mGoodView.setTextInfo(str, Color.RED, 20);
                 mGoodView.show(view);
@@ -155,9 +162,11 @@ public static void unreveal(final FrameLayout theAwesomeView,final FloatingActio
             } else {
                 if (textView != null) {
                     textView.setText(textNum - 1 + "");
+                    int lastIndex=user.getPraise_id().lastIndexOf("|");
+                    user.setPraise_id(user.getPraise_id().substring(0,lastIndex+1));
                 }
             }
-
+            mUserDao.update(user);
         }
 
         @Override

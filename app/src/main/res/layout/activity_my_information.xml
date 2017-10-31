@@ -19,25 +19,6 @@
 
     </LinearLayout>
 
-    <io.codetail.widget.RevealFrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/credit_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:visibility="invisible">
-
-            <com.example.administrator.happygame.my_ui.CreditView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/dashboard_view_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-        </FrameLayout>
-
-    </io.codetail.widget.RevealFrameLayout>
+<include layout="@layout/item_credit"/>
 
 </FrameLayout>

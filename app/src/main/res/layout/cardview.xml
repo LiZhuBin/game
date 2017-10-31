@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:orientation="vertical">
 
         <FrameLayout
@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_hezhao" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,27 +39,31 @@
                 android:maxLines="1"
                 android:text="hello"
                 android:textColor="#fff"
-                android:textSize="10dp" />
+                android:textSize="15dp" />
+
         </FrameLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:id="@+id/BottomText"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="Hello"
-                android:textSize="10dp" />
+                android:text="Hellffffo"
+                android:textSize="13dp" />
 
 
-        </FrameLayout>
+        </LinearLayout>
 
+        <include
+            layout="@layout/icon_praise_info"
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
 
     </LinearLayout>
 

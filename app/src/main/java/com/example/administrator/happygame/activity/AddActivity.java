@@ -54,7 +54,7 @@ public class AddActivity extends BaseActivity {
     Activity activity;
 
 
-    private String[] mTitles_3 = {"首页", "讨论"};
+    private String[] mTitles_3 = {"用户", "新闻","约战活动","帖子"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

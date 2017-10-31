@@ -1,6 +1,9 @@
 package com.example.administrator.happygame.activity;
 
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +15,6 @@ import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.MsgAdapter;
 import com.example.administrator.happygame.adapter.TextWatcherAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
-import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.example.administrator.happygame.thing_class.Msg;
 import com.example.administrator.happygame.util.EaseCommonUtils;
 import com.example.administrator.happygame.util.LogUtil;
@@ -35,6 +37,8 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
 import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
 import io.github.rockerhieu.emojicon.emoji.Emojicon;
+
+
 
 public class ChatActivity extends BaseActivity implements EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener,EMMessageListener {
 
@@ -84,10 +88,10 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EMMessage message = EMMessage.createTxtSendMessage("fff", "1");
+                EMMessage message = EMMessage.createTxtSendMessage(mEditEmojicon.getText().toString(), "1");
 //如果是群聊，设置chattype，默认是单聊
 //                    if (chatType == CHATTYPE_GROUP)
-                      message.setChatType(EMMessage.ChatType.Chat);
+                message.setChatType(EMMessage.ChatType.Chat);
 //发送消息
 
                 EMClient.getInstance().chatManager().sendMessage(message);
@@ -99,7 +103,7 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
 
                     @Override
                     public void onError(int code, String error) {
-LogUtil.d("error");
+                        LogUtil.d("error");
                     }
 
                     @Override
@@ -110,18 +114,19 @@ LogUtil.d("error");
                 LogUtil.e(mEditEmojicon.getText().toString());
                 emojicons.setVisibility(View.GONE);
                 String content = mEditEmojicon.getText().toString();
-                if (!"".equals(content)) {
-                    Msg msg = new Msg(content, UserFragment.me.getImage());
-                    msgList.add(msg);
-                    adapter.notifyItemInserted(msgList.size() - 1);   //当有新消息时，刷新RecyclerView中的显示
-                    msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
-                    mEditEmojicon.setText("");//清空输入框中的内容
-
-                }
+                Msg msg = new Msg(content,Msg.TYPE_SEND );
+              setMsg(msg);
             }
         });
     }
-
+public  void setMsg(Msg msg){
+    if (!"".equals(msg.getContent())) {
+        msgList.add(msg);
+        adapter.notifyItemInserted(msgList.size() - 1);   //当有新消息时，刷新RecyclerView中的显示
+        msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
+        mEditEmojicon.setText("");//清空输入框中的内容
+    }
+}
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -158,15 +163,17 @@ LogUtil.d("error");
     public void onMessageReceived(final List<EMMessage> messages) {
         for (final EMMessage message:messages) {
             runOnUiThread(new Thread(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void run() {
-
+                    final NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     String str = (((EMTextMessageBody) message.getBody()).getMessage());
                     LogUtil.e(str);
+                    Msg msg = new Msg(str, Msg.TYPE_RECEIVED);
+                    setMsg(msg);
 
                 }
-            }));
-        }
+            }));}
     }
 
     @Override
