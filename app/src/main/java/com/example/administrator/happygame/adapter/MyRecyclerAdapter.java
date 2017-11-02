@@ -45,15 +45,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        News Currentview = news_list.get(position);
-        holder.ima_title.setText(Currentview.getNew_title());
-        holder.bottom_title.setText(Currentview.getNew_content());
-        LogUtil.d(Currentview.getNew_image() + "-----------------------");
-        Glide.with(myContext).load(GlobalData.HTTP_ADDRESS_PICTURE + Currentview.getNew_image()).into(holder.ima_big);
+        News news = news_list.get(position);
+        holder.ima_title.setText(news.getNew_title());
+        holder.bottom_title.setText(news.getNew_content());
+        LogUtil.d(news.getNew_image() + "-----------------------");
+        Glide.with(myContext).load(GlobalData.HTTP_ADDRESS_PICTURE + news.getNew_image()).into(holder.ima_big);
         holder.pos = position;
-        holder.good_num.setText(Currentview.getNew_praise_like());
+        holder.good_num.setText(news.getNew_praise_like());
 
-        holder.unlike_num.setText(Currentview.getNew_praise_unlike());
+        holder.unlike_num.setText(news.getNew_praise_unlike());
     }
 
     @Override

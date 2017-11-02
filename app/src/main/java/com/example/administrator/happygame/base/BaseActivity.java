@@ -45,13 +45,13 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackHelpe
     View mDecorView;
     SegmentTabLayout mTabLayout_3;
     String[] mTitles_3;
-
+   private MyPagerAdapter myPagerAdapter;
     @Subscribe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        SwipeBackHelper.onCreate(this);
-
+myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager());
         initSwipeBackFinish();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -118,7 +118,7 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackHelpe
 
 
         final MyViewPager vp_3 = (MyViewPager) mDecorView.findViewById(R.id.vp_2);
-        vp_3.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        vp_3.setAdapter(myPagerAdapter);
         vp_3.setOffscreenPageLimit(1);
         vp_3.setPageTransformer(true, new ZoomOutPageTransformer());
         mTabLayout_3.setTabData(mTitles_3);

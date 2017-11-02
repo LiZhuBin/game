@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 
 import com.example.administrator.happygame.LoginActivity;
+import com.example.administrator.happygame.activity.ChatActivity;
 import com.example.administrator.happygame.activity.FriendsActivity;
 import com.example.administrator.happygame.activity.MyInformationActivity;
 import com.example.administrator.happygame.activity.PersonActivity;
@@ -58,8 +59,13 @@ public class IntentHelp {
     }
 
 public static Intent toMapActivity(String poi){
-    Intent intent=new Intent(MyApplication.getContext(), MapActivity.class);
-    intent.putExtra("Address", poi);
-    return intent;
-}
+        Intent intent=new Intent(MyApplication.getContext(), MapActivity.class);
+        intent.putExtra("Address", poi);
+        return intent;
+    }
+    public static Intent toChatActivity(String id){
+        Intent intent=new Intent(MyApplication.getContext(), ChatActivity.class);
+        intent.putExtra("id", id);
+        return intent;
+    }
 }

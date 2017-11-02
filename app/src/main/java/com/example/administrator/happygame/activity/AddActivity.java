@@ -22,6 +22,7 @@ import com.example.administrator.happygame.util.SPUtil;
 import com.example.administrator.happygame.util.UiUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.melnykov.fab.FloatingActionButton;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,11 +31,11 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.duduhuo.dialog.smartisan.SmartisanDialog;
+import cc.duduhuo.dialog.smartisan.WarningDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
@@ -54,7 +55,7 @@ public class AddActivity extends BaseActivity {
     Activity activity;
 
 
-    private String[] mTitles_3 = {"用户", "新闻","约战活动","帖子"};
+    private String[] mTitles_3 = {"信息","讨论"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class AddActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
 
-        getData();
+
 
         ImageView imageView = (ImageView) findViewById(R.id.Back_button);
 
@@ -74,6 +75,7 @@ public class AddActivity extends BaseActivity {
                 finish();
             }
         });
+        getData();
         ButterKnife.bind(this);
     }
 
@@ -86,42 +88,44 @@ public class AddActivity extends BaseActivity {
 
     @OnClick(R.id.fab_add_add)
     public void onViewClicked() {
-        new SweetAlertDialog(AddActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText("终于等到你")
-                .setContentText("还好我没放弃")
-                .setConfirmText("嗯，我来了")
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.cancel();
-                    }
-                })
-                .show();
-        RequestBody body = new FormBody.Builder()
-                .add("actiivityID", activity.getId())
-                .add("userid", UserFragment.me.getId())
-                .build();
-        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/addDoingActivity.php", body, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        if(GlobalData.hasAdd(activity.getId(),UserFragment.me.getDoingActivities())){
+            final WarningDialog dialog = SmartisanDialog.createWarningDialog(this);
+            dialog.setTitle("你已加入")
+                    .setConfirmText("退出")
+                    .show();
+            dialog.setOnConfirmListener(new WarningDialog.OnConfirmListener() {
+                @Override
+                public void onConfirm() {
+                    dialog.dismiss();
+                    fabAddAdd.setImageResource(R.drawable.icon_fab_add);
+                    TastyToast.makeText(getApplicationContext(), "退出成功", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                }
+            });
+        }else {
+            new SweetAlertDialog(AddActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("加入成功")
+                    .setContentText("欢迎您的到来")
+                    .setConfirmText("嗯，我来了")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                        }
+                    })
+                    .show();
 
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
-        fabAddAdd.setImageResource(R.drawable.icon_add_success);
-        SPUtil.put(AddActivity.this, "hasAdd", true);
-
+            HttpUtil.addDoingActivity(activity.getId(), UserFragment.me.getId());
+            fabAddAdd.setImageResource(R.drawable.icon_add_success);
+            SPUtil.put(AddActivity.this, "hasAdd", true);
+        }
 
         // fabAddAdd.setText("进入组聊");
     }
 
 
     public void getData() {
+
         Intent intent = getIntent();
         String obj = (String) intent.getSerializableExtra("Object_userId");
         HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/getById.php", obj, new Callback() {
@@ -134,12 +138,11 @@ public class AddActivity extends BaseActivity {
             public void onResponse(Call call, Response response) throws IOException {
 
                 activity = HttpUtil.getSingleActivity(response);
-
-                EventBus.getDefault().post(activity);
                 new MyAsyncTask(activity).execute();
-
+                EventBus.getDefault().post(activity);
             }
         });
+
         initViewPager(mTitles_3, "add", 0);
     }
 
@@ -164,6 +167,12 @@ public class AddActivity extends BaseActivity {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
+            if (GlobalData.hasAdd(activity.getId(),UserFragment.me.getDoingActivities())){
+                fabAddAdd.setImageResource(R.drawable.icon_add_success);
+
+            }else {
+                fabAddAdd.setImageResource(R.drawable.icon_fab_add);
+            }
             Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + activity.getImage()).into(ivBlur);
             PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
             photoView.enable();

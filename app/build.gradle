@@ -7,7 +7,6 @@ android {
     buildToolsVersion "26.0.1"
 
     defaultConfig {
-
         multiDexEnabled true
         applicationId "com.example.administrator.happygame"
         minSdkVersion 19
@@ -53,9 +52,11 @@ dependencies {
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/umeng-analytics-v5.2.4.jar')
     compile files('libs/umeng-update-v2.6.0.1.jar')
+    compile 'com.google.android.gms:play-services-gcm:11.0.2'
+
     compile 'com.netease.nimlib:lucene:3.3.0'
     compile 'com.google.android.gms:play-services-gcm:11.0.2'
-    compile 'com.google.android.gms:play-services-gcm:11.0.2'
+
 
     compile 'com.netease.nimlib:lucene:3.3.0'
     compile 'com.google.android.gms:play-services-gcm:11.0.2'

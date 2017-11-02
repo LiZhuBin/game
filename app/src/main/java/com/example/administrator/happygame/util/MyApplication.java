@@ -13,9 +13,7 @@ import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.mvp.api.ApiServiceManager;
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.mob.MobSDK;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -31,7 +29,6 @@ import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
-import cat.ereza.customactivityoncrash.config.CaocConfig;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -85,11 +82,13 @@ public class MyApplication extends Application {
 
         context = getApplicationContext();
         instances = this;
+
         setDatabase();
         MobSDK.init(this, "21819c0c884c1 ", "0acef4983fd0549ea3a27b3ea5d0f8a3");
-        initData();
+
         refWatcher = LeakCanary.install(this);
         BGASwipeBackHelper.init(this, null);
+        initData();
     }
     private void initEMClient(){
         EMOptions options = new EMOptions();
@@ -122,7 +121,7 @@ public class MyApplication extends Application {
                 LogUtil.d("main", "登录聊天服务器失败！");
             }
         });
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+     //   EMClient.getInstance().chatManager().addMessageListener(msgListener);
 
 
     }
@@ -136,16 +135,18 @@ public class MyApplication extends Application {
         // 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。
         mDaoMaster = new DaoMaster(db);
         mDaoSession = mDaoMaster.newSession();
+
     }
+
     private void initData(){
-        CaocConfig.Builder.create()
-                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
-                .enabled(false) //default: true
-                .showErrorDetails(false) //default: true
-                .showRestartButton(false) //default: true
-                .trackActivities(true) //default: false
-                .minTimeBetweenCrashesMs(2000) //default: 3000
-                .apply();
+//        CaocConfig.Builder.create()
+//                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
+//                .enabled(false) //default: true
+//                .showErrorDetails(false) //default: true
+//                .showRestartButton(false) //default: true
+//                .trackActivities(true) //default: false
+//                .minTimeBetweenCrashesMs(2000) //default: 3000
+//                .apply();
         if (SPUtil.get(context, "UserId", 1) == null) {
             SPUtil.put(context, "UserId", 1);
         }
@@ -157,7 +158,7 @@ public class MyApplication extends Application {
 
             initNewsData();
 
-
+           mActivityDao.deleteAll();
             ApiServiceManager.getActivityData("1")            //获取Observable对象
                     .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
 
@@ -168,7 +169,7 @@ public class MyApplication extends Application {
                             for (final Activity activity : activityList) {
                                 mActivityDao.insertOrReplace(activity);
                             }
-                            Message message = new Message();
+                            Message message = handler.obtainMessage();
                             message.what = 1;
                             handler.sendMessage(message);
                         }
@@ -183,35 +184,7 @@ public class MyApplication extends Application {
     public SQLiteDatabase getDb() {
         return db;
     }
-    EMMessageListener msgListener = new EMMessageListener() {
 
-        @Override
-        public void onMessageReceived(List<EMMessage> messages) {
-            LogUtil.d(messages.get(0).getMsgId());
-            //收到消息
-        }
-
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> messages) {
-            //收到透传消息
-        }
-
-        @Override
-        public void onMessageRead(List<EMMessage> messages) {
-            //收到已读回执
-        }
-
-        @Override
-        public void onMessageDelivered(List<EMMessage> message) {
-            //收到已送达回执
-        }
-
-
-        @Override
-        public void onMessageChanged(EMMessage message, Object change) {
-            //消息状态变动
-        }
-    };
     public static RefWatcher getRefWatcher(Context context) {
         MyApplication application = (MyApplication) context.getApplicationContext();
         return application.refWatcher;

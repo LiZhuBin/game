@@ -15,24 +15,18 @@ import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.my_ui.ActivityForumItem;
-import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
 import static com.example.administrator.happygame.child_fragment.AddChatFragment.id;
 import static com.example.administrator.happygame.child_fragment.AddChatFragment.string;
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
 public class ForumCommentFragment extends BaseFragment {
@@ -78,30 +72,20 @@ public class ForumCommentFragment extends BaseFragment {
                 id = string[i];
             } else {
                 stringList.add(string[i]);
-                HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", id, new Callback() {
+                User user=  mUserDao.load(id);
+                userList.add(user);
+                new Thread(new Runnable() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
-
+                    public void run() {
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("forum", forum);
+                        message.setData(bundle);
+                        handler.sendMessage(message);
                     }
+                }).start();
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        User user = HttpUtil.getSingleUser(response);
-                        userList.add(user);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Message message = new Message();
-                                message.what = 1;
-                                Bundle bundle = new Bundle();
-                                bundle.putParcelable("forum", forum);
-                                message.setData(bundle);
-                                handler.sendMessage(message);
-                            }
-                        }).start();
-
-                    }
-                });
             }
         }
 

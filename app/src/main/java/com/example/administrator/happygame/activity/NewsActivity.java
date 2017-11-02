@@ -59,7 +59,7 @@ public class NewsActivity extends BaseActivity {
         if (one.getNew_image() != null) {
             Glide.with(NewsActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + one.getNew_image()).into(imageview);
         } else {
-         //   Glide.with(NewsActivity.this).load(one.getNew_drawable()).into(imageview);
+
         }
         installButton90to180();
     }
@@ -125,10 +125,26 @@ public class NewsActivity extends BaseActivity {
                     case 1:
                         mGoodView.setTextInfo("+1", Color.RED, 30);
                         mGoodView.show(button);
+
+
                         break;
                     case 2: mGoodView.setTextInfo("收藏成功", Color.RED, 20);
                         mGoodView.show(button);
-
+//                        RequestBody body = new FormBody.Builder()
+//                                .add("userid", UserFragment.me.getId())//添加键值对
+//                                .add("actiivityID",one.getNew_id())
+//                                .build();
+//                        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_News + "php/addCollectNews.php", body, new Callback() {
+//                            @Override
+//                            public void onFailure(Call call, IOException e) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException {
+//
+//                            }
+//                        });
                         break;
                     case 3:
                         mGoodView.setTextInfo("-1", Color.BLACK, 30);
@@ -150,4 +166,5 @@ public class NewsActivity extends BaseActivity {
             }
         });
     }
+
 }

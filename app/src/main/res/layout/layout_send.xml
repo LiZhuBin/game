@@ -15,33 +15,25 @@
             android:id="@+id/editEmojicon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dp"
            android:layout_weight="1"
-            android:background="#f0f0f0"
-            android:hint="请输入内容"
-            android:paddingLeft="10dp"
-            android:textSize="14sp"  />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:theme="@style/MyEditText"/>
+
+
+        <ImageButton
             android:id="@+id/layout_send_emojicon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/icon_about" />
-
-        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_expression"/>
+        <ImageButton
             android:id="@+id/send"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="#000"
-            android:padding="5dp"
-            android:text="发送"
-            android:textColor="#fff"
-            android:textSize="16sp" />
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_sending"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
 
     <FrameLayout

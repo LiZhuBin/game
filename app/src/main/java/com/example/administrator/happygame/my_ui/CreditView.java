@@ -102,9 +102,9 @@ public class CreditView extends View {
 
         mTexts = new String[]{"350", "较差", "550", "中等", "600", "良好", "650", "优秀", "700", "极好", "950"};
         mBgColors = new int[]{ContextCompat.getColor(getContext(), R.color.black1),
-                ContextCompat.getColor(getContext(), R.color.red_btn_bg_pressed_color),
-                ContextCompat.getColor(getContext(), R.color.yellow0),
-                ContextCompat.getColor(getContext(), R.color.green0),
+                ContextCompat.getColor(getContext(),  R.color.colorAccent),
+                ContextCompat.getColor(getContext(),  R.color.colorAccent),
+                ContextCompat.getColor(getContext(),  R.color.colorAccent),
                 ContextCompat.getColor(getContext(), R.color.colorAccent),
         };
         mBackgroundColor = mBgColors[0];

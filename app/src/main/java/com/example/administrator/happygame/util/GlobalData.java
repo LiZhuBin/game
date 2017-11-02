@@ -40,6 +40,7 @@ public class GlobalData {
 
     public static OkHttpClient client = new OkHttpClient();
 public static void initUserData(){
+    mUserDao.deleteAll();
     ApiServiceManager.getUserData("1")            //获取Observable对象
             .subscribeOn(Schedulers.newThread())
             //请求在新的线程中执行
@@ -48,8 +49,6 @@ public static void initUserData(){
             .subscribe(new Consumer<List<User>>() {
                 @Override
                 public void accept(List<User> userList) throws Exception {
-
-
                     for (final User user : userList) {
                         // GlobalData.HTTP_ADDRESS_ACTIVITY+activity.getImage(),
                         mUserDao.insertOrReplace(user);
@@ -59,6 +58,7 @@ public static void initUserData(){
             });
 }
     public static void initActivityData(){
+        mActivityDao.deleteAll();
         ApiServiceManager.getActivityData("1")            //获取Observable对象
                 .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
 
@@ -74,6 +74,7 @@ public static void initUserData(){
                 });
     }
     public static void initForumData(){
+        mForumDao.deleteAll();
         ApiServiceManager.getForumData("1")            //获取Observable对象
                 .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
@@ -89,6 +90,7 @@ public static void initUserData(){
                 });
     }
     public static void initNewsData(){
+        mNewsDao.deleteAll();
         ApiServiceManager.getNewsData("1")            //获取Observable对象
                 .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
@@ -116,8 +118,8 @@ public static void initUserData(){
         return -1;
     }
 
-    public static boolean hasAdd(String activityId) {
-        for (String string : StringUtil.httpArray(UserFragment.me.getDoingActivities())) {
+    public static boolean hasAdd(String activityId,String where) {
+        for (String string : StringUtil.httpArray(where)) {
             if (string.equals(activityId)) {
                 return true;
             }

@@ -52,6 +52,7 @@
     <string name="edit_information">编辑...</string>
     <string name="ensure">确定</string>
     <string name="cancel">取消</string>
+    <string name="unable_to_connect">连接不到服务器</string>
 
 
 </resources>

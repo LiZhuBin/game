@@ -3,7 +3,6 @@ package com.example.administrator.happygame.activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,7 +25,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -70,17 +68,6 @@ public class ForumActivity extends BaseActivity {
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void initForumContent() {
         String string = getIntent().getExtras().getString("id");
@@ -91,6 +78,7 @@ public class ForumActivity extends BaseActivity {
 
         TextView title = (TextView) findViewById(R.id.toolbar_text);
         title.setText("帖子");
+
         HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_FORUM + "php/getById.php", string, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -106,9 +94,7 @@ public class ForumActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.fab_add_add)
-    public void onViewClicked() {
-    }
+
 
     class MyAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         Forum forum;

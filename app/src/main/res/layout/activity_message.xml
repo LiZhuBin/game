@@ -5,36 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.example.administrator.happygame.activity.MessageActivity">
 
-    <android.support.design.widget.AppBarLayout
+   <include layout="@layout/toolbar"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <com.flyco.tablayout.SegmentTabLayout
-            android:id="@+id/tl_3"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
-            tl:tl_bar_color="#ffffff"
-            tl:tl_indicator_anim_enable="true"
-            tl:tl_indicator_color="@color/colorAccent"
-            tl:tl_textBold="SELECT" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorColor="@android:color/holo_green_light"
+            app:tabIndicatorHeight="2dp"
+            app:tabGravity="fill" app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/message_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#00000000"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:tabMode="fixed"
+            >
 
-    </android.support.design.widget.AppBarLayout>
-
+        </android.support.design.widget.TabLayout>
+    </android.support.v4.view.ViewPager>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -23,7 +23,7 @@ public class ClasstoItem {
                 activity.getImage(),
                 activity.getUser_num(),
                 activity.getTitle(),
-                activity.getAddress(),
+                activity.getRemark(),
                 activity.getTime(),
                 activity.getAddress()));
     }

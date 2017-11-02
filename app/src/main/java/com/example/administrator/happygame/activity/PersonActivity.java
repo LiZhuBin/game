@@ -108,7 +108,7 @@ public class PersonActivity extends BaseActivity {
         PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
         final FrameLayout frameLayout = (FrameLayout) findViewById(R.id.photo_view_frame_layout);
         UiUtil.photoView(userMySmallImage, userMyBigImage, frameLayout, photoView);
-        ImageView imageView = (ImageView) findViewById(R.id.Back_button);
+        final ImageView imageView = (ImageView) findViewById(R.id.Back_button);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +121,7 @@ public class PersonActivity extends BaseActivity {
 
                 if (isFriend == 1) {
                     Intent intent = new Intent(PersonActivity.this, ChatActivity.class);
+                    intent.putExtra("id",user.getId());
                     startActivity(intent);
                 } else if (isFriend == -1) {
                     Revealator.reveal(editFrame)

@@ -45,13 +45,18 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
             //如果是收到的消息 ，则显示左边的消息布局，将右边的消息布局隐藏
             holder.leftMsg.setText(msg.getContent());
            holder.rightLinearLayout.setVisibility(View.GONE);
-            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + PersonActivity.user.getImage()).into(holder.otherImage);
+            if(PersonActivity.user!=null) {
+                Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + PersonActivity.user.getImage()).into(holder.otherImage);
+            }else {
+                Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + msg.getImageUrl()).into(holder.otherImage);
+            }
         } else if (msg.getType() == Msg.TYPE_SEND) {
             //如果是发出的消息 ，则显示右边的消息布局，将左边的消息布局隐藏
             holder.rightMsg.setText(msg.getContent());
             holder.leftLinearLayout.setVisibility(View.GONE);
             Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + UserFragment.me.getImage()).into(holder.meImage);
         }
+
     }
 
     @Override

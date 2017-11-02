@@ -206,5 +206,22 @@ public class HttpUtil {
         });
 
     }
+    public static  void addDoingActivity(String actiivityID,String userId){
+        RequestBody body = new FormBody.Builder()
+                .add("actiivityID", actiivityID)
+                .add("userid", userId)
+                .build();
+        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/addDoingActivity.php", body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
 
 }

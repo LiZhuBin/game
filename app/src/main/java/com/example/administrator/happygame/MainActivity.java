@@ -1,19 +1,26 @@
 package com.example.administrator.happygame;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.happygame.activity.MessageActivity;
@@ -26,11 +33,17 @@ import com.example.administrator.happygame.main_fragment.ForumFragment;
 import com.example.administrator.happygame.main_fragment.RecommentFragment;
 import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.example.administrator.happygame.mvp.api.ApiServiceManager;
+import com.example.administrator.happygame.thing_class.Msg;
+import com.example.administrator.happygame.util.BitmapUtil;
 import com.example.administrator.happygame.util.LogUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.NetworkUtil;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.util.NetUtils;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ldoublem.loadingviewlib.view.LVGhost;
@@ -49,12 +62,10 @@ import static com.example.administrator.happygame.util.GlobalData.initForumData;
 import static com.example.administrator.happygame.util.GlobalData.initNewsData;
 import static com.example.administrator.happygame.util.GlobalData.initUserData;
 import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
-import static com.example.administrator.happygame.util.GlobalData.mForumDao;
-import static com.example.administrator.happygame.util.GlobalData.mNewsDao;
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,EMConnectionListener{
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, EMConnectionListener,EMMessageListener {
 
     private static final String TAG = "MainActivity";
     SearchView searchView;
@@ -75,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         }
     };
+    @Bind(R.id.layout_net_error)
+    LinearLayout layoutNetError;
     private boolean mIsExit;
     private BottomNavigationViewEx navigation;
     private ViewPager viewPager;
@@ -123,23 +136,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         lvGhost.setVisibility(View.VISIBLE);
         lvGhost.startAnim(500);
-        if(NetworkUtil.isNetworkAvailable()) {
-            if (mUserDao.count() == 0) {
-                LogUtil.e("fgggggggggggg");
+        if (NetworkUtil.isNetworkAvailable()) {
                 initUserData();
-            }
-            if (mForumDao.count() == 0) {
                 initForumData();
-            }
-            if (mNewsDao.count() == 0) {
                 initNewsData();
-            }
-            if (mActivityDao.count() == 0) {
                 initActivityData();
-                Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
-            } else {
                 ApiServiceManager.getActivityData("1")            //获取Observable对象
                         .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
@@ -156,8 +157,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         });
 
             }
-
-        }else {
+        else {
             TastyToast.makeText(getApplicationContext(), "当前无网络", TastyToast.INFO, TastyToast.ERROR);
         }
         viewPager.addOnPageChangeListener(this);
@@ -266,7 +266,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
 
-
     @Override
     /** * 双击返回键退出 */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -290,33 +289,95 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
 
+    @Override
+    public void onConnected() {
+        layoutNetError.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDisconnected(final int error) {
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                if (error == EMError.USER_REMOVED) {
+                    // 显示帐号已经被移除
+                } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                    // 显示帐号在其他设备登录
+                } else {
+                    if (NetUtils.hasNetwork(MainActivity.this)) {
+
+                    } else {
+          layoutNetError.setVisibility(View.VISIBLE);
+                    }
+                    //连接不到聊天服务器
+
+                    //当前网络不可用，请检查网络设置
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onMessageReceived(List<EMMessage> messages) {
+        NotificationManager manager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
 
-        @Override
-        public void onConnected() {
-        }
-        @Override
-        public void onDisconnected(final int error) {
-            runOnUiThread(new Runnable() {
+        for (final EMMessage message:messages) {
 
+            runOnUiThread(new Thread(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void run() {
-                    if(error == EMError.USER_REMOVED){
-                        // 显示帐号已经被移除
-                    }else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                        // 显示帐号在其他设备登录
-                    } else {
-                        if (NetUtils.hasNetwork(MainActivity.this))
-                        {
-                            TastyToast.makeText(MyApplication.getContext(),"连接不到服务器",TastyToast.LENGTH_LONG,TastyToast.ERROR);
-                        }else {
+                    final NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    String str = (((EMTextMessageBody) message.getBody()).getMessage());
+                    LogUtil.e(str);
+                    Msg msg = new Msg(str, Msg.TYPE_RECEIVED);
 
-                        }
-                        //连接不到聊天服务器
+                    Notification notification=new NotificationCompat.Builder(MyApplication.getContext())
+                            .setContentTitle(message.getUserName().equals("admin")? "系统消息":mUserDao.load(message.getUserName()).getName())
+                            .setContentText(str)
+                            .setWhen(System.currentTimeMillis())
+                            .setSmallIcon(R.mipmap.ic_logo)
+                            .setLargeIcon(message.getUserName().equals("admin")?BitmapFactory.decodeResource(getResources(),R.mipmap.ic_logo): BitmapUtil.getBitmap( mUserDao.load(message.getUserName()).getImage()))
+                            .setPriority(NotificationCompat.PRIORITY_MAX)
+                            .build();
+                    manager.notify(1,notification);
+                 //   setMsg(msg);
 
-                        //当前网络不可用，请检查网络设置
-                    }
                 }
-            });
+            }));
         }
     }
+
+    @Override
+    public void onCmdMessageReceived(List<EMMessage> messages) {
+
+    }
+
+    @Override
+    public void onMessageRead(List<EMMessage> messages) {
+
+    }
+
+    @Override
+    public void onMessageDelivered(List<EMMessage> messages) {
+
+    }
+
+    @Override
+    public void onMessageChanged(EMMessage message, Object change) {
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EMClient.getInstance().chatManager().addMessageListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EMClient.getInstance().chatManager().removeMessageListener(this);
+    }
+}

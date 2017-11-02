@@ -73,6 +73,7 @@ public class ForumFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
+
     }
 
     @Override

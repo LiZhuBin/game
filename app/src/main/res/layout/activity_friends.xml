@@ -9,12 +9,13 @@
     android:orientation="vertical"
     tools:context="com.example.administrator.happygame.MainActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/layout_toolbar_edit" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -13,7 +13,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginRight="40dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/icon_fab_write"
+        android:src="@drawable/icon_fab_add"
         fab:fab_colorNormal="@color/bottom_color"
         fab:fab_shadow="false" />
 </FrameLayout>
