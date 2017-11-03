@@ -2,6 +2,7 @@ package com.example.administrator.happygame.util;
 
 
 import com.aopa.greendao.ActivityDao;
+import com.aopa.greendao.ChatDao;
 import com.aopa.greendao.ForumDao;
 import com.aopa.greendao.NewsDao;
 import com.aopa.greendao.UserDao;
@@ -37,6 +38,7 @@ public class GlobalData {
     public static ForumDao mForumDao = MyApplication.getInstances().getDaoSession().getForumDao();
     public static ActivityDao mActivityDao = MyApplication.getInstances().getDaoSession().getActivityDao();
     public static NewsDao mNewsDao = MyApplication.getInstances().getDaoSession().getNewsDao();
+    public static ChatDao mChatDao = MyApplication.getInstances().getDaoSession().getChatDao();
 
     public static OkHttpClient client = new OkHttpClient();
 public static void initUserData(){

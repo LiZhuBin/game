@@ -19,6 +19,5 @@
 
     </LinearLayout>
 
-<include layout="@layout/item_credit"/>
 
 </FrameLayout>

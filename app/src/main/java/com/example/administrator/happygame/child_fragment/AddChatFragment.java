@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.MsgAdapter;
@@ -43,7 +43,7 @@ public class AddChatFragment extends BaseFragment {
     View view;
     private List<Msg> msgList = new ArrayList<>();
     private EditText inputText;
-    private Button send;
+    private ImageButton send;
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
     private Handler handler = new Handler() {
@@ -98,7 +98,7 @@ public class AddChatFragment extends BaseFragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_chat, container, false);
 
-        send = (Button) view.findViewById(R.id.send);
+        send = (ImageButton) view.findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

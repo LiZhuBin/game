@@ -15,10 +15,11 @@ import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.MsgAdapter;
 import com.example.administrator.happygame.adapter.TextWatcherAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
+import com.example.administrator.happygame.been.Chat;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.Msg;
 import com.example.administrator.happygame.util.LogUtil;
-import com.hyphenate.EMCallBack;
+import com.example.administrator.happygame.util.TimeUtil;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -27,6 +28,7 @@ import com.hyphenate.chat.EMTextMessageBody;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,6 +39,7 @@ import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
 import io.github.rockerhieu.emojicon.emoji.Emojicon;
 
+import static com.example.administrator.happygame.util.GlobalData.mChatDao;
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
@@ -49,6 +52,7 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
     @Bind(R.id.layout_send_emojicon)
     ImageButton layoutSendEmojicon;
     private List<Msg> msgList = new ArrayList<>();
+    private List< EMMessage>emMessageList=new ArrayList<>();
     private ImageButton send;
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
@@ -94,30 +98,22 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
 //如果是群聊，设置chattype，默认是单聊
 //                    if (chatType == CHATTYPE_GROUP)
                 if (message != null) {
+
                     message.setChatType(EMMessage.ChatType.Chat);
 //发送消息
-
+                    emMessageList.add(message);
                     EMClient.getInstance().chatManager().sendMessage(message);
-                    message.setMessageStatusCallback(new EMCallBack() {
-                        @Override
-                        public void onSuccess() {
-                            LogUtil.d("success");
-                        }
-
-                        @Override
-                        public void onError(int code, String error) {
-                            LogUtil.d("error");
-                        }
-
-                        @Override
-                        public void onProgress(int progress, String status) {
-
-                        }
-                    });
                     LogUtil.e(mEditEmojicon.getText().toString());
                     emojicons.setVisibility(View.GONE);
                     String content = mEditEmojicon.getText().toString();
-                    Msg msg = new Msg(content, Msg.TYPE_SEND);
+                    Msg msg = new Msg(content, Msg.TYPE_SEND,mUserDao.load(message.getUserName()).getImage(),TimeUtil.getTimeFormatText(new Date(message.getMsgTime())));
+
+                    mChatDao.insertOrReplace(new Chat.Builder().userId(message.getUserName())
+                            .userName(mUserDao.load(message.getUserName()).getName())
+                            .userImageUrl(msg.getImageUrl())
+                            .getMsgTime(msg.getGetMsgTime())
+                            .lastMessage(content)
+                            .build());
                     setMsg(msg);
                 }
             }
@@ -125,12 +121,15 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
     }
 
     public void setMsg(Msg msg) {
+
+
         if (!"".equals(msg.getContent())) {
             msgList.add(msg);
             adapter.notifyItemInserted(msgList.size() - 1);   //当有新消息时，刷新RecyclerView中的显示
-            msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
+        //    msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
             mEditEmojicon.setText("");//清空输入框中的内容
         }
+
     }
 
     @Override
@@ -172,7 +171,7 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
                     final NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     String str = (((EMTextMessageBody) message.getBody()).getMessage());
                     LogUtil.e(str);
-                    Msg msg = new Msg(str, Msg.TYPE_RECEIVED);
+                    Msg   msg = new Msg(str, Msg.TYPE_RECEIVED,mUserDao.load(message.getUserName()).getImage(), TimeUtil.getTimeFormatText(new Date(message.getMsgTime())));
                     setMsg(msg);
 
                 }
@@ -210,6 +209,7 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
     @Override
     protected void onStop() {
         super.onStop();
+        EMClient.getInstance().chatManager().importMessages(emMessageList);
         EMClient.getInstance().chatManager().removeMessageListener(this);
     }
 
@@ -218,26 +218,36 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
 
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(user.getId());
 //获取此会话的所有消息
-        List<EMMessage> msgs = conversation.getAllMessages();
 
 
-        for (EMMessage message : msgs) {
-            String str = (((EMTextMessageBody) message.getBody()).getMessage());
-            LogUtil.e(str);
-            Msg msg;
-            if (message.isDelivered()) {
-                msg = new Msg(str, Msg.TYPE_RECEIVED);
-            } else {
-                msg = new Msg(str, Msg.TYPE_SEND);
-            }
-
-            msgList.add(msg);
-        }
-        String msgId = null;
-        if (msgs != null && msgs.size() > 0) {
-            msgId = msgs.get(0).getMsgId();
+if(conversation!=null) {
+    List<EMMessage> msgs = conversation.getAllMessages();
+    for (EMMessage message : msgs) {
+        String str = (((EMTextMessageBody) message.getBody()).getMessage());
+        LogUtil.e(str);
+        Msg msg;
+        if (message.isDelivered()) {
+            msg = new Msg(str, Msg.TYPE_RECEIVED,mUserDao.load(message.getUserName()).getImage(), TimeUtil.getTimeFormatText(new Date(message.getMsgTime())));
+        } else {
+            msg = new Msg(str, Msg.TYPE_SEND,mUserDao.load(message.getUserName()).getImage(),TimeUtil.getTimeFormatText(new Date(message.getMsgTime())));
         }
 
+        msgList.add(msg);
 
+        mChatDao.insertOrReplace(new Chat.Builder().userId(message.getUserName())
+                .userName(mUserDao.load(message.getUserName()).getName())
+                .userImageUrl(msg.getImageUrl())
+                .lastMessage(str)
+                .getMsgTime(msg.getGetMsgTime())
+                .build());
     }
+    String msgId = null;
+    if (msgs != null && msgs.size() > 0) {
+        msgId = msgs.get(0).getMsgId();
+    }
+
+}
+    }
+
+
 }

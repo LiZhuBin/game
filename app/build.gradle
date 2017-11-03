@@ -4,7 +4,7 @@ apply plugin: 'com.antfortune.freeline'
 apply plugin: 'com.jakewharton.hugo'
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         multiDexEnabled true
@@ -31,7 +31,7 @@ android {
 }
 
 greendao {
-    schemaVersion 9  //数据库版本
+    schemaVersion 13  //数据库版本
     daoPackage 'com.aopa.greendao'   //自动生成工具类的目录位置
     targetGenDir 'src/main/java'
 }
@@ -52,14 +52,19 @@ dependencies {
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/umeng-analytics-v5.2.4.jar')
     compile files('libs/umeng-update-v2.6.0.1.jar')
+
     compile 'com.google.android.gms:play-services-gcm:11.0.2'
+
 
     compile 'com.netease.nimlib:lucene:3.3.0'
     compile 'com.google.android.gms:play-services-gcm:11.0.2'
 
 
-    compile 'com.netease.nimlib:lucene:3.3.0'
+
+
+
     compile 'com.google.android.gms:play-services-gcm:11.0.2'
+    compile 'com.netease.nimlib:lucene:3.3.0'
     compile 'com.netease.nimlib:basesdk:3.3.0'
     compile 'com.netease.nimlib:avchat:3.3.0'
     compile 'com.netease.nimlib:chatroom:3.3.0'
@@ -68,9 +73,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
-    compile 'com.android.support:support-v4:26.+'
+    provided 'com.android.support:support-v4:26.+'
     compile 'com.android.support:cardview-v7:26.+'
-    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.1'
     compile 'com.github.lygttpod:SuperTextView:2.1.3'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
@@ -92,7 +96,8 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.bm.photoview:library:1.4.1'
-    compile 'com.hanks:htextview-line:0.1.1'
+    compile 'pub.devrel:easypermissions:1.0.1'
+
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     compile 'com.alimuzaffar.lib:animated-edit-text:1.1'
     compile 'org.greenrobot:eventbus:3.0.0'
@@ -102,7 +107,7 @@ dependencies {
     compile 'com.github.jaouan:revealator:1.2.1'
     compile 'net.frakbot:jumpingbeans:1.3.0'
     compile 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.4'
-    compile 'com.karumi:expandableselector:1.0.0'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
     compile 'cn.bingoogolapple:bga-swipebacklayout:1.1.5'
     compile 'com.ldoublem.loadingview:loadingviewlib:1.0'
     compile 'com.github.uin3566:AllAngleExpandableButton:v1.2.0'
@@ -111,6 +116,7 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'org.greenrobot:greendao-generator:3.0.0'
     compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v0.0.5'
+    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'

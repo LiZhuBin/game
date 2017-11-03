@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.administrator.happygame.activity.RegisterActivity;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
+import com.example.administrator.happygame.util.LogUtil;
 
 import java.util.HashMap;
 
@@ -120,6 +121,10 @@ public class LoginActivity extends BaseActivity {
     }
     public void mobAccredit(Platform platform) {
 LoginActivity.platform =platform;
+        if (platform.isAuthValid()){
+
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
 //回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
         platform.setPlatformActionListener(new PlatformActionListener() {
 
@@ -131,6 +136,7 @@ LoginActivity.platform =platform;
 
             @Override
             public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                LogUtil.d("fff");
                 // TODO Auto-generated method stub
                 //输出所有授权信息
                 arg0.getDb().exportData();

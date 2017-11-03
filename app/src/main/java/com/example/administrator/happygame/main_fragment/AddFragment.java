@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.alimuzaffar.lib.widgets.AnimatedEditText;
 import com.bumptech.glide.Glide;
@@ -52,6 +53,8 @@ import com.sdsmdg.tastytoast.TastyToast;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -107,11 +110,21 @@ public class AddFragment extends BaseFragment {
     RoundedImageView imageView;
     Images one;
     String time;
+    @Bind(R.id.sort_by_time)
+    ImageView sortByTime;
+    @Bind(R.id.Icon_SetPosition)
+    ImageView IconSetPosition;
+    @Bind(R.id.textView)
+    TextView textView;
+    @Bind(R.id.sort_by_priase)
+    ImageView sortByPriase;
     private List<AddItem> addList = new ArrayList<>();
     private AddAdapter addAdapter;
     @SerializedName("email_address")
     public String emailAddress;
     private PoiIntent poi;
+    View view;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +136,7 @@ public class AddFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mRootView == null || mRootView.get() == null) {
-            View view = inflater.inflate(R.layout.add_info, container, false);
+            view = inflater.inflate(R.layout.add_info, container, false);
             mRootView = new WeakReference<View>(view);
             ButterKnife.bind(this, view);
             imageView = (RoundedImageView) view.findViewById(R.id.add_chooseImage);
@@ -143,8 +156,9 @@ public class AddFragment extends BaseFragment {
                     startActivityForResult(intent, 1);
                 }
             });
+
+            initRecycle();
             initRefresh(view);
-            initRecycle(view);
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
@@ -169,6 +183,8 @@ public class AddFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 //onCreate(null);
+                initData();
+                initRecycle();
                 refreshlayout.finishRefresh(2000);
             }
         });
@@ -184,18 +200,26 @@ public class AddFragment extends BaseFragment {
     public void initData() {
 
         addList = new ArrayList<AddItem>();
-        if (mActivityDao.count()==0){
-            initActivityData();
+
+        initActivityData();
+
+        for (Activity activity : mActivityDao.loadAll()) {
+            ClasstoItem.ActivityToAddItem(activity, addList);
         }
-for (Activity activity: mActivityDao.loadAll()){
-    ClasstoItem.ActivityToAddItem(activity, addList);
-}
+        Collections.sort(addList, new Comparator<AddItem>() {
+            @Override
+            public int compare(AddItem arg0, AddItem arg1) {
+//            第一次比较专业
+                int i = arg0.getActivityTime().compareTo(arg1.getActivityTime());
+//            如果专业相同则进行第二次比较
 
-
+                return -i;
+            }
+        });
 
     }
 
-    private void initRecycle(View view) {
+    private void initRecycle() {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -217,7 +241,7 @@ for (Activity activity: mActivityDao.loadAll()){
 //        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 //        recyclerView.setLayoutManager(staggeredGridLayoutManager);
 //        // recyclerView.setOnItemMoveListener(mItemMoveListener);// 监听拖拽，更新UI。
-       FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
         fab.attachToRecyclerView(recyclerView);
         UiUtil.revealatFab(theAwesomeView, fab, addLeft);
 
@@ -225,7 +249,7 @@ for (Activity activity: mActivityDao.loadAll()){
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick({R.id.select_date, R.id.activity_add_forum_send_button, R.id.get_date,  R.id.add_chooseImage})
+    @OnClick({R.id.select_date, R.id.activity_add_forum_send_button, R.id.get_date, R.id.add_chooseImage, R.id.sort_by_time,R.id.sort_by_priase})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
@@ -235,10 +259,10 @@ for (Activity activity: mActivityDao.loadAll()){
                 break;
             case R.id.activity_add_forum_send_button:
 
-if(one!=null) {
-    HttpUtil.postImage(one);
-}
-                StringBuilder stringBuilder = new StringBuilder("activity/"+spinner.getSelectedItem().toString()+"/");
+                if (one != null) {
+                    HttpUtil.postImage(one);
+                }
+                StringBuilder stringBuilder = new StringBuilder("activity/" + spinner.getSelectedItem().toString() + "/");
                 if (one != null) {
                     stringBuilder.append(one.getName()).toString();
                 } else {
@@ -255,21 +279,21 @@ if(one!=null) {
                         .add_id(UserFragment.me.getId())
                         .participatorId(UserFragment.me.getId())
                         .build();
-                emailAddress=HttpUtil.getJson(activity);
+                emailAddress = HttpUtil.getJson(activity);
                 LogUtil.e(emailAddress);
 
 
-HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataForActivity.php", "["+HttpUtil.getJson(activity)+"]", new Callback() {
-    @Override
-    public void onFailure(Call call, IOException e) {
+                HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataForActivity.php", "[" + HttpUtil.getJson(activity) + "]", new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-    }
+                    }
 
-    @Override
-    public void onResponse(Call call, Response response) throws IOException {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
 
-    }
-});
+                    }
+                });
                 Revealator.unreveal(theAwesomeView)
                         .to(fab)
                         .withCurvedTranslation()
@@ -306,6 +330,22 @@ HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataFo
                     }
                 });
                 break;
+            case R.id.sort_by_time:
+                initData();
+                initRecycle();
+                break;
+            case R.id.sort_by_priase:
+//                Collections.sort(addList, new Comparator<AddItem>() {
+//                    @Override
+//                    public int compare(AddItem arg0, AddItem arg1) {
+////            第一次比较专业
+//                        int i = arg0.ge.compareTo(arg1.getActivityTime());
+////            如果专业相同则进行第二次比较
+//
+//                        return -i;
+//                    }
+//                });
+                break;
             default:
                 break;
 
@@ -328,7 +368,7 @@ HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataFo
                         String address = poi.getAddress();
                         String StroeName = poi.getName();
                         builder.append("地址:" + address).append("\n\n");
-                        builder.append( StroeName).append("\n");
+                        builder.append(StroeName).append("\n");
                         //  builder.append("Lat:"+poi.getLatt()+"Long"+poi.getLongt());
                     } else {
                         builder.append("面基位置:未选择").append("\n\n");
@@ -364,7 +404,10 @@ HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataFo
 
     }
 
-
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+        initRecycle();
+    }
 }

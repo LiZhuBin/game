@@ -44,11 +44,12 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+<include layout="@layout/item_sort"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/add_right_fragment_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
             <com.melnykov.fab.FloatingActionButton
@@ -81,10 +82,10 @@
                         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                         <android.support.v7.widget.CardView
+                            android:id="@+id/transitions_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:id="@+id/transitions_container"
                             card_view:cardCornerRadius="4dp"
                             card_view:cardElevation="8dp">
 
@@ -161,31 +162,29 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="60dp"
-                                    android:layout_margin="@dimen/Info_margin"
-                                    >
-
-
+                                    android:layout_margin="@dimen/Info_margin">
 
 
                                     <com.alimuzaffar.lib.widgets.AnimatedEditText
-                                        android:layout_weight="1"
                                         android:id="@+id/activity_add_forum_place_edittext"
                                         style="@style/animated_edit_text"
-                                        android:inputType="textMultiLine"
+                                        android:layout_weight="1"
                                         android:gravity="left|top"
                                         android:hint="地点..."
+                                        android:inputType="textMultiLine"
                                         app:animationType="fromRight" />
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:orientation="vertical">
+
                                         <ImageView
                                             android:id="@+id/Icon_SetPosition"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
                                             android:layout_gravity="center"
+                                            android:layout_weight="1"
                                             android:src="@drawable/seticon_baiduicon" />
 
 
@@ -213,10 +212,10 @@
                                         android:id="@+id/activity_add_forum_content_edittext"
                                         style="@style/animated_edit_text"
                                         android:layout_height="80dp"
-                                        android:inputType="textMultiLine"
                                         android:gravity="left|top"
-                                        android:singleLine="false"
                                         android:hint="内容"
+                                        android:inputType="textMultiLine"
+                                        android:singleLine="false"
                                         app:animationType="fromRight" />
 
                                 </LinearLayout>
@@ -233,17 +232,17 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:orientation="horizontal"
-                                    android:gravity="center_horizontal">
+                                    android:gravity="center_horizontal"
+                                    android:orientation="horizontal">
 
                                     <Button
                                         android:id="@+id/activity_add_forum_send_button"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
+                                        android:layout_marginRight="20dp"
                                         android:background="#F0F0F0"
                                         android:text="发送"
-                                        android:textSize="20dp"
-                                        android:layout_marginRight="20dp"/>
+                                        android:textSize="20dp" />
 
                                     <Button
                                         android:id="@+id/add_left"

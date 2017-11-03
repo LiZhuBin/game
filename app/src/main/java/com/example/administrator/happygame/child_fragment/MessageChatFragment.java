@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.child_fragment;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +12,20 @@ import android.view.ViewGroup;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.ChatAdapter;
-import com.example.administrator.happygame.thing_class.ChatItem;
+import com.example.administrator.happygame.been.Chat;
 import com.example.administrator.happygame.util.MyApplication;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.example.administrator.happygame.util.GlobalData.mChatDao;
 
 /**
  * 作者：Administrator on 2017/11/2 0002 18:33
@@ -27,9 +34,11 @@ import butterknife.ButterKnife;
 
 public class MessageChatFragment extends Fragment {
     ChatAdapter chatAdapter;
-    List<ChatItem> chatItemList = new ArrayList<>();
+    List<Chat> chatItemList = new ArrayList<>();
     @Bind(R.id.recycler)
     RecyclerView chatRecycler;
+    @Bind(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +51,7 @@ public class MessageChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.item_recycle, container, false);
 
         ButterKnife.bind(this, view);
+        initRefresh();
         initRecycle();
         return view;
     }
@@ -52,15 +62,54 @@ public class MessageChatFragment extends Fragment {
     }
 
     public void initRecycle() {
+        chatItemList.clear();
+        for (Chat chat : mChatDao.loadAll()) {
+            chatItemList.add(new Chat.Builder().userId(chat.getUserId())
+                    .userName(chat.getUserName())
+                    .userImageUrl(chat.getUserImageUrl())
+                    .lastMessage(chat.getLastMessage()).build());
+        }
         chatAdapter = new ChatAdapter(chatItemList);
         chatRecycler.setAdapter(chatAdapter);
+        chatRecycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                //设定底部边距为1px
+                outRect.set(0, 0, 0, 1);
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         chatRecycler.setLayoutManager(linearLayoutManager);
+    }
+
+    public void initRefresh() {
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                //onCreate(null);
+                initRecycle();
+                refreshlayout.finishRefresh(2000);
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore(2000);
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initRecycle();
     }
 }

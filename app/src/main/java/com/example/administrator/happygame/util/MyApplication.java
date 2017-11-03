@@ -26,7 +26,9 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
+import java.io.File;
 import java.util.List;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
@@ -82,11 +84,12 @@ public class MyApplication extends Application {
 
         context = getApplicationContext();
         instances = this;
-
         setDatabase();
+        setDaoDatabase();
         MobSDK.init(this, "21819c0c884c1 ", "0acef4983fd0549ea3a27b3ea5d0f8a3");
 
         refWatcher = LeakCanary.install(this);
+        ZXingLibrary.initDisplayOpinion(this);
         BGASwipeBackHelper.init(this, null);
         initData();
     }
@@ -125,7 +128,17 @@ public class MyApplication extends Application {
 
 
     }
-    private void setDatabase() {
+    private void setDatabase(){
+        String dirPath="/data/data/"+this.getPackageName()+"/databases/";
+        File dir=new File(dirPath);
+        if(!dir.exists()){
+            dir.mkdirs();}
+
+
+        SQLiteDatabase database=SQLiteDatabase.openOrCreateDatabase(dirPath+"data.db",null);
+
+    }
+    private void setDaoDatabase() {
         // 通过 DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的 SQLiteOpenHelper 对象。
         // 可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为 greenDAO 已经帮你做了。
         // 注意：默认的 DaoMaster.DevOpenHelper 会在数据库升级时，删除所有的表，意味着这将导致数据的丢失。
@@ -139,14 +152,7 @@ public class MyApplication extends Application {
     }
 
     private void initData(){
-//        CaocConfig.Builder.create()
-//                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
-//                .enabled(false) //default: true
-//                .showErrorDetails(false) //default: true
-//                .showRestartButton(false) //default: true
-//                .trackActivities(true) //default: false
-//                .minTimeBetweenCrashesMs(2000) //default: 3000
-//                .apply();
+
         if (SPUtil.get(context, "UserId", 1) == null) {
             SPUtil.put(context, "UserId", 1);
         }

@@ -11,6 +11,7 @@ import com.example.administrator.happygame.activity.PersonActivity;
 import com.example.administrator.happygame.activity.SetActivity;
 import com.example.administrator.happygame.activity.fifth.CollectActivity;
 import com.example.administrator.happygame.activity.fifth.MapActivity;
+import com.example.administrator.happygame.activity.fifth.ZxingActivity;
 import com.example.administrator.happygame.been.User;
 
 /**
@@ -66,6 +67,12 @@ public static Intent toMapActivity(String poi){
     public static Intent toChatActivity(String id){
         Intent intent=new Intent(MyApplication.getContext(), ChatActivity.class);
         intent.putExtra("id", id);
+        return intent;
+    }
+    public static Intent toZxingActivity(ImageView imageView) {
+        Intent intent = new Intent(MyApplication.getContext(), ZxingActivity.class);
+        imageView.setDrawingCacheEnabled(Boolean.TRUE);
+        intent.putExtra("BITMAP", imageView.getDrawingCache());
         return intent;
     }
 }

@@ -9,7 +9,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -65,7 +64,7 @@ public class ForumFragment extends BaseFragment {
     @Bind(R.id.activity_add_forum_send_button)
     Button activityAddForumSendButton;
 
-
+View view;
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter adapter;
 
@@ -80,12 +79,12 @@ public class ForumFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mRootView == null || mRootView.get() == null) {
-            View view = inflater.inflate(R.layout.forum_info, container, false);
+            view = inflater.inflate(R.layout.forum_info, container, false);
             mRootView = new WeakReference<View>(view);
             ButterKnife.bind(this, view);
             //initFlowLayout(view);
             initRefresh(view);
-            initSwipeRecyclerView(view);
+            initSwipeRecyclerView();
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
@@ -112,25 +111,15 @@ public class ForumFragment extends BaseFragment {
 
     public void initRefresh(final View view) {
         forumSpinner.setDrawingCacheBackgroundColor(Color.RED);
-        forumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String[] sorts = getResources().getStringArray(R.array.sorts);
-                // Toast.makeText(MainActivity.this,sorts[pos],Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Another interface callback
-            }
-        });
 
         RefreshLayout refreshLayout = (RefreshLayout) view.findViewById(R.id.forum_refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 // onCreate(null);
+                initData();
+                initRefresh(view);
                 refreshlayout.finishRefresh(2000);
             }
         });
@@ -142,7 +131,7 @@ public class ForumFragment extends BaseFragment {
         });
     }
 
-    private void initSwipeRecyclerView(View view) {
+    private void initSwipeRecyclerView() {
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.forum_recyclerView);
         adapter = new ForumAdapter(forumItemList);
 
@@ -223,5 +212,12 @@ public class ForumFragment extends BaseFragment {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+        initSwipeRecyclerView();
     }
 }

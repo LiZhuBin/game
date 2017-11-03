@@ -16,7 +16,12 @@
         android:icon="@drawable/icon_forum"
         android:title="@string/bottom3"/>
     <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/icon_chat"
+        android:title="@string/bottom4"/>
+    <item
         android:id="@+id/navigation_email2"
         android:icon="@drawable/icon_me"
-        android:title="@string/bottom4" />
+        android:title="@string/bottom5"
+       />
 </menu>

@@ -13,6 +13,29 @@ public class Msg implements Serializable {
     private String content;
     private int type;
     private String imageUrl;
+private String getMsgTime;
+
+    public Msg(String content, int type, String imageUrl, String getMsgTime) {
+        this.content = content;
+        this.type = type;
+        this.imageUrl = imageUrl;
+        this.getMsgTime = getMsgTime;
+    }
+
+    public String getGetMsgTime() {
+
+        return getMsgTime;
+    }
+
+    public void setGetMsgTime(String getMsgTime) {
+        this.getMsgTime = getMsgTime;
+    }
+
+    public Msg(String content, int type, String imageUrl) {
+        this.content = content;
+        this.type = type;
+        this.imageUrl = imageUrl;
+    }
 
     public Msg(String content, int type) {
         this.content = content;

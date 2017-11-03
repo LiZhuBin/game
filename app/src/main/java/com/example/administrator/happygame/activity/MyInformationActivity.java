@@ -22,9 +22,11 @@ import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.my_ui.CreditView;
 import com.example.administrator.happygame.thing_class.Images;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.IntentHelp;
 import com.example.administrator.happygame.util.MyApplication;
 import com.jaouan.revealator.Revealator;
 import com.lqr.optionitemview.OptionItemView;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,6 +61,10 @@ public class MyInformationActivity extends BaseActivity {
     User user;
     @Bind(R.id.credit_frame)
     FrameLayout creditFrame;
+    @Bind(R.id.ivHeaderZxing)
+    ImageView ivHeaderZxing;
+    @Bind(R.id.zxing_layout)
+    LinearLayout zxingLayout;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
@@ -85,7 +91,8 @@ public class MyInformationActivity extends BaseActivity {
             Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BITMAP");
             ivHeaderImage.setImageBitmap(bitmap);
             user = (User) getIntent().getParcelableExtra("USER");
-
+            Bitmap zxingBitmap = CodeUtils.createImage(user.getId(), 400, 400, bitmap);
+           ivHeaderZxing.setImageBitmap(zxingBitmap);
         }
         initData();
         dialog = SmartisanDialog.createTwoOptionsDialog(this);
@@ -96,7 +103,7 @@ public class MyInformationActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @OnClick({R.id.llHeader, R.id.oivName, R.id.oivCredit, R.id.oivSix, R.id.oivSignature, R.id.dashboard_view_2, R.id.credit_frame})
+    @OnClick({R.id.llHeader, R.id.oivName, R.id.oivCredit, R.id.oivSix, R.id.oivSignature, R.id.dashboard_view_2, R.id.credit_frame,R.id.zxing_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -134,6 +141,9 @@ public class MyInformationActivity extends BaseActivity {
                         .withChildsAnimation()
                         .start();
                 dashboardView2.setCreditValueWithAnim((Integer.parseInt(user.getCredit())));
+                break;
+            case R.id.zxing_layout:
+startActivity(IntentHelp.toZxingActivity(ivHeaderImage));
                 break;
             case R.id.oivSix:
                 dialog.setTitle("请选择性别")

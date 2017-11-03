@@ -73,7 +73,37 @@
         style="@style/Line"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px" />
+    <LinearLayout
+     android:id="@+id/zxing_layout"
+        android:layout_width="match_parent"
+        android:layout_height="160px"
+        android:background="@drawable/selector_option_item"
+        android:gravity="center_vertical"
+        android:paddingRight="6px">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6px"
+            android:layout_marginLeft="30px"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/zxing"
+            android:textColor="@color/black0"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/ivHeaderZxing"
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:scaleType="centerCrop" />
+    </LinearLayout>
+    <View
+        style="@style/Line"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px" />
     <com.lqr.optionitemview.OptionItemView
         android:id="@+id/oivSix"
         style="@style/OptionItem"

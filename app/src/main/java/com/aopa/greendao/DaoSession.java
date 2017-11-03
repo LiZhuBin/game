@@ -10,12 +10,14 @@ import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.Advertise;
+import com.example.administrator.happygame.been.Chat;
 import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.News;
 import com.example.administrator.happygame.been.User;
 
 import com.aopa.greendao.ActivityDao;
 import com.aopa.greendao.AdvertiseDao;
+import com.aopa.greendao.ChatDao;
 import com.aopa.greendao.ForumDao;
 import com.aopa.greendao.NewsDao;
 import com.aopa.greendao.UserDao;
@@ -31,12 +33,14 @@ public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig activityDaoConfig;
     private final DaoConfig advertiseDaoConfig;
+    private final DaoConfig chatDaoConfig;
     private final DaoConfig forumDaoConfig;
     private final DaoConfig newsDaoConfig;
     private final DaoConfig userDaoConfig;
 
     private final ActivityDao activityDao;
     private final AdvertiseDao advertiseDao;
+    private final ChatDao chatDao;
     private final ForumDao forumDao;
     private final NewsDao newsDao;
     private final UserDao userDao;
@@ -51,6 +55,9 @@ public class DaoSession extends AbstractDaoSession {
         advertiseDaoConfig = daoConfigMap.get(AdvertiseDao.class).clone();
         advertiseDaoConfig.initIdentityScope(type);
 
+        chatDaoConfig = daoConfigMap.get(ChatDao.class).clone();
+        chatDaoConfig.initIdentityScope(type);
+
         forumDaoConfig = daoConfigMap.get(ForumDao.class).clone();
         forumDaoConfig.initIdentityScope(type);
 
@@ -62,12 +69,14 @@ public class DaoSession extends AbstractDaoSession {
 
         activityDao = new ActivityDao(activityDaoConfig, this);
         advertiseDao = new AdvertiseDao(advertiseDaoConfig, this);
+        chatDao = new ChatDao(chatDaoConfig, this);
         forumDao = new ForumDao(forumDaoConfig, this);
         newsDao = new NewsDao(newsDaoConfig, this);
         userDao = new UserDao(userDaoConfig, this);
 
         registerDao(Activity.class, activityDao);
         registerDao(Advertise.class, advertiseDao);
+        registerDao(Chat.class, chatDao);
         registerDao(Forum.class, forumDao);
         registerDao(News.class, newsDao);
         registerDao(User.class, userDao);
@@ -76,6 +85,7 @@ public class DaoSession extends AbstractDaoSession {
     public void clear() {
         activityDaoConfig.clearIdentityScope();
         advertiseDaoConfig.clearIdentityScope();
+        chatDaoConfig.clearIdentityScope();
         forumDaoConfig.clearIdentityScope();
         newsDaoConfig.clearIdentityScope();
         userDaoConfig.clearIdentityScope();
@@ -87,6 +97,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public AdvertiseDao getAdvertiseDao() {
         return advertiseDao;
+    }
+
+    public ChatDao getChatDao() {
+        return chatDao;
     }
 
     public ForumDao getForumDao() {

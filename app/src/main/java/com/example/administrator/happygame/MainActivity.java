@@ -23,11 +23,13 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.activity.MessageActivity;
 import com.example.administrator.happygame.activity.SearchActivity;
 import com.example.administrator.happygame.adapter.ViewPagerAdapter;
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
+import com.example.administrator.happygame.child_fragment.MessageChatFragment;
 import com.example.administrator.happygame.main_fragment.AddFragment;
 import com.example.administrator.happygame.main_fragment.ForumFragment;
 import com.example.administrator.happygame.main_fragment.RecommentFragment;
@@ -109,9 +111,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 case R.id.navigation_notifications:
                     viewPager.setCurrentItem(2);
                     break;
-                case R.id.navigation_email2:
+                case R.id.navigation_chat:
                     viewPager.setCurrentItem(3);
                     break;
+                case R.id.navigation_email2:
+                    viewPager.setCurrentItem(4);
+                    break;
+
                 default:
                     return false;
             }
@@ -219,9 +225,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         adapter.addFragment(new RecommentFragment());
         adapter.addFragment(new AddFragment());
         adapter.addFragment(new ForumFragment());
+        adapter.addFragment(new MessageChatFragment());
         adapter.addFragment(new UserFragment());
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
     }
 
 
@@ -252,8 +259,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 navigation.setSelectedItemId(R.id.navigation_notifications);
                 break;
             case 3:
+                navigation.setSelectedItemId(R.id.navigation_chat);
+                break;
+            case 4:
                 navigation.setSelectedItemId(R.id.navigation_email2);
-
                 break;
             default:
                 break;
@@ -379,5 +388,20 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onStop() {
         super.onStop();
         EMClient.getInstance().chatManager().removeMessageListener(this);
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if(level==TRIM_MEMORY_UI_HIDDEN){
+            Glide.get(this).clearMemory();
+        }
+        Glide.get(this).trimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
     }
 }

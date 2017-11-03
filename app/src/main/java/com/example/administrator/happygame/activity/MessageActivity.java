@@ -36,7 +36,7 @@ public class MessageActivity extends BaseActivity {
     TabLayout tabLayout;
     @Bind(R.id.view_pager)
     ViewPager viewPager;
-    public static final String []sTitle = new String[]{"ITEM FIRST","ITEM SECOND"};
+    public static final String []sTitle = new String[]{"聊天","系统消息"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +58,7 @@ public class MessageActivity extends BaseActivity {
     }
     private void initView() {
 
-        tabLayout.addTab(tabLayout.newTab().setText(sTitle[0]).setIcon(R.drawable.icon_chat));
-        tabLayout.addTab(tabLayout.newTab().setText(sTitle[1]).setIcon(R.drawable.icon_system));
+
         //  mTabLayout.addTab(mTabLayout.newTab().setText(sTitle[3]));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

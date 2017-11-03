@@ -5,16 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
-import com.example.administrator.happygame.thing_class.ChatItem;
+import com.example.administrator.happygame.been.Chat;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.IntentHelp;
+import com.hyphenate.chat.EMClient;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 作者：Administrator on 2017/11/1 0001 12:02
@@ -23,11 +25,12 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.HeadViewHolder> {
 
-    private List<ChatItem> list;
+
+    private List<Chat> list;
     private Context context;
 
 
-    public ChatAdapter(List<ChatItem> list) {
+    public ChatAdapter(List<Chat> list) {
         this.list = list;
     }
 
@@ -46,7 +49,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.HeadViewHolder
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                context.startActivity(IntentHelp.toChatActivity(list.get(position).getBuildId()));
+                context.startActivity(IntentHelp.toChatActivity(list.get(position).getUserId()));
             }
         });
         return holder;
@@ -55,12 +58,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.HeadViewHolder
     @Override
     public void onBindViewHolder(HeadViewHolder holder, int position) {
 
-        Glide.with(context).load(GlobalData.HTTP_ADDRESS_PICTURE + list.get(position).getImageUrl()).into(holder.imageview);
+        Glide.with(context).load(GlobalData.HTTP_ADDRESS_PICTURE + list.get(position).getUserImageUrl()).into(holder.imageview);
 
 
-        holder.chatName.setText(list.get(position).getChatName());
-        holder.chatMessage.setText(list.get(position).getChatContent());
+        holder.chatName.setText(list.get(position).getUserName());
+        holder.chatMessage.setText(list.get(position).getLastMessage());
+        holder.chatTime.setText(list.get(position).getGetMsgTime());
         holder.pos = position;
+        int num = EMClient.getInstance().chatManager().getConversation(list.get(position).getUserId()).getUnreadMsgCount();
+        if (num == 0) {
+            holder.messageNoRead.setVisibility(View.GONE);
+        } else {
+            holder.messageNoRead.setText(num);
+        }
+
     }
 
     @Override
@@ -71,18 +82,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.HeadViewHolder
     public class HeadViewHolder extends RecyclerView.ViewHolder {
         int pos = 0;
         View view;
-        ImageView imageview;
+        CircleImageView imageview;
         TextView chatName;
         TextView chatMessage;
-
+        TextView messageNoRead;
+TextView chatTime;
         public HeadViewHolder(View itemView) {
 
             super(itemView);
             view = itemView;
-
-            imageview = (ImageView) itemView.findViewById(R.id.chat_image);
+            messageNoRead = (TextView) itemView.findViewById(R.id.unread_msg_number);
+            imageview = (CircleImageView) itemView.findViewById(R.id.chat_image);
             chatName = (TextView) itemView.findViewById(R.id.chat_name);
-chatMessage=(TextView)itemView.findViewById(R.id.chat_message);
+            chatMessage = (TextView) itemView.findViewById(R.id.chat_message);
+            chatTime=(TextView)itemView.findViewById(R.id.chat_time);
         }
     }
 }
