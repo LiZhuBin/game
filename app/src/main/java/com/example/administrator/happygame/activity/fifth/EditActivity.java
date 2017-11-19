@@ -18,7 +18,7 @@ public class EditActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
+String data;
     String type;
     @Bind(R.id.has_change_data)
     EditText hasChangeData;
@@ -31,6 +31,9 @@ public class EditActivity extends BaseActivity {
         setContentView(R.layout.activity_edit);
         ButterKnife.bind(this);
         type = getIntent().getExtras().getString("type");
+        data=getIntent().getExtras().getString("DATA");
+        hasChangeData.setText(data);
+        hasChangeData.setSelection(hasChangeData.getText().length());
         if ("name".equals(type)) {
             toolbar.setTitle("修改名字");
             origin = 2;

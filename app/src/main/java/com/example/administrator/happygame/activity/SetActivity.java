@@ -2,6 +2,7 @@ package com.example.administrator.happygame.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.allen.library.SuperTextView;
@@ -24,12 +25,18 @@ public class SetActivity extends BaseActivity {
     SuperTextView settings;
     @Bind(R.id.about)
     SuperTextView about;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set);
         ButterKnife.bind(this);
+        toolbar.setTitle("设置");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 

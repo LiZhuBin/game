@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseActivity;
+import com.example.administrator.happygame.main_fragment.UserFragment;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,11 +31,14 @@ public class ZxingActivity extends BaseActivity {
         ButterKnife.bind(this);
         toolbar.setTitle("二维码");
 setSupportActionBar(toolbar);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        Intent intent = getIntent();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+Intent intent=getIntent();
         if (intent != null && intent.getParcelableExtra("BITMAP") != null) {
             Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BITMAP");
-            itemImage.setImageBitmap(bitmap);
+            final Bitmap zxingBitmap = CodeUtils.createImage(UserFragment.me.getId(), 400, 400, bitmap);
+            itemImage.setImageBitmap(zxingBitmap);
         }
     }
+
+
 }

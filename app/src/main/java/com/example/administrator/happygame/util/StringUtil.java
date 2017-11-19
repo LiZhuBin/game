@@ -17,6 +17,10 @@ public class StringUtil {
     public static String httpArrayStringLength(String httpData) {
         return httpArray(httpData).length + "";
     }
+    public  static String getAddOne(int oldNum){
+        int newNum=oldNum+1;
+        return newNum+"";
+    }
 public static String getFixedString(String str,int length){
     if(str == null ){
         return "";

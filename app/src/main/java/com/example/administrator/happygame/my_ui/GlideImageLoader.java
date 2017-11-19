@@ -44,7 +44,7 @@ public class GlideImageLoader extends ImageLoader {
             //int Id = one.getNew_drawable();
             String title = one.getNew_title(); //这个title可能要通过其他地方去实现添加
 
-           // Glide.with(context).load(Id).into(imageView);
+           Glide.with(context).load(one.getNew_drawable()).into(imageView);
 
             //设点击事件！来跳转到News地方去
 

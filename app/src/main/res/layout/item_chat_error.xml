@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_net_error"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/button_selector"
     android:clickable="true"
-    android:id="@+id/layout_net_error"
     android:visibility="gone">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        tools:ignore="UseCompoundDrawables"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/iv_neterror"

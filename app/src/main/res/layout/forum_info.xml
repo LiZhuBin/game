@@ -48,13 +48,16 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <include layout="@layout/item_sort" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/forum_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

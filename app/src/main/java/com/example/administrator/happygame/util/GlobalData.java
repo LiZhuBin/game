@@ -41,7 +41,7 @@ public class GlobalData {
     public static ChatDao mChatDao = MyApplication.getInstances().getDaoSession().getChatDao();
 
     public static OkHttpClient client = new OkHttpClient();
-public static void initUserData(){
+public static synchronized void initUserData(){
     mUserDao.deleteAll();
     ApiServiceManager.getUserData("1")            //获取Observable对象
             .subscribeOn(Schedulers.newThread())

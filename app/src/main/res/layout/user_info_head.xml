@@ -48,9 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_mySmallImage"
         android:layout_marginLeft="50dp"
-        tools:text="Hugh Jackman"
         android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        tools:text="Hugh Jackman" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,62 +68,67 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginLeft="30dp"
-    android:id="@+id/user_credit_layout">
-        <TextView
+
+        <LinearLayout
+            android:id="@+id/user_credit_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_credit"
-            android:text="信用"
-            android:textSize="20dp"
-            android:textColor="@color/black"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_myCredit"
-            android:text="500"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_below="@+id/text_credit"/>
-</LinearLayout>
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="信用"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/user_myCredit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_credit"
+                android:text="500"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="@dimen/dp_10">
-        <com.sackcentury.shinebuttonlib.ShineButton
 
-            android:id="@+id/shineButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:clickable="true"
-            android:src="@android:color/darker_gray"
-            app:allow_random_color="true"
-            app:big_shine_color="#FF6666"
-            app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="#FF6666"
-            app:click_animation_duration="200"
-            app:enable_flashing="true"
-            app:shine_animation_duration="1500"
-            app:shine_count="15"
-            app:shine_turn_angle="20"
-            app:siShape="@raw/like"
-            app:small_shine_color="#CC9999"
-            app:small_shine_offset_angle="20" />
+            <com.sackcentury.shinebuttonlib.ShineButton
 
-        <TextView
-            android:id="@+id/user_myLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:textSize="25dp" />
+                android:id="@+id/shineButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:src="@android:color/darker_gray"
+                app:allow_random_color="true"
+                app:big_shine_color="#FF6666"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="#FF6666"
+                app:click_animation_duration="200"
+                app:enable_flashing="true"
+                app:shine_animation_duration="1500"
+                app:shine_count="15"
+                app:shine_turn_angle="20"
+                app:siShape="@raw/like"
+                app:small_shine_color="#CC9999"
+                app:small_shine_offset_angle="20" />
+
+            <TextView
+                android:id="@+id/user_myLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textSize="25dp" />
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/item_credit"/>
+
 
 </RelativeLayout>

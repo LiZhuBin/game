@@ -7,9 +7,5 @@
         android:icon="@drawable/icon_message"
 
         android:title="fffff" />
-    <item android:id="@+id/zxing"
-        android:orderInCategory="1"
-        app:showAsAction="always"
-        android:icon="@drawable/icon_about"
-        android:title="fffff" />
+
 </menu>

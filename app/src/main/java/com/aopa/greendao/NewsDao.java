@@ -34,6 +34,7 @@ public class NewsDao extends AbstractDao<News, String> {
         public final static Property New_image = new Property(7, String.class, "new_image", false, "NEW_IMAGE");
         public final static Property New_comment_id = new Property(8, String.class, "new_comment_id", false, "NEW_COMMENT_ID");
         public final static Property New_comment = new Property(9, String.class, "new_comment", false, "NEW_COMMENT");
+        public final static Property New_drawable = new Property(10, int.class, "new_drawable", false, "NEW_DRAWABLE");
     }
 
 
@@ -58,7 +59,8 @@ public class NewsDao extends AbstractDao<News, String> {
                 "\"NEW_CONTENT\" TEXT," + // 6: new_content
                 "\"NEW_IMAGE\" TEXT," + // 7: new_image
                 "\"NEW_COMMENT_ID\" TEXT," + // 8: new_comment_id
-                "\"NEW_COMMENT\" TEXT);"); // 9: new_comment
+                "\"NEW_COMMENT\" TEXT," + // 9: new_comment
+                "\"NEW_DRAWABLE\" INTEGER NOT NULL );"); // 10: new_drawable
     }
 
     /** Drops the underlying database table. */
@@ -120,6 +122,7 @@ public class NewsDao extends AbstractDao<News, String> {
         if (new_comment != null) {
             stmt.bindString(10, new_comment);
         }
+        stmt.bindLong(11, entity.getNew_drawable());
     }
 
     @Override
@@ -175,6 +178,7 @@ public class NewsDao extends AbstractDao<News, String> {
         if (new_comment != null) {
             stmt.bindString(10, new_comment);
         }
+        stmt.bindLong(11, entity.getNew_drawable());
     }
 
     @Override
@@ -194,7 +198,8 @@ public class NewsDao extends AbstractDao<News, String> {
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // new_content
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // new_image
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // new_comment_id
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // new_comment
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // new_comment
+            cursor.getInt(offset + 10) // new_drawable
         );
         return entity;
     }
@@ -211,6 +216,7 @@ public class NewsDao extends AbstractDao<News, String> {
         entity.setNew_image(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setNew_comment_id(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setNew_comment(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setNew_drawable(cursor.getInt(offset + 10));
      }
     
     @Override

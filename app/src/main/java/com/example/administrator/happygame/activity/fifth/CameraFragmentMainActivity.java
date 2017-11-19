@@ -124,7 +124,7 @@ public class CameraFragmentMainActivity extends AppCompatActivity {
                                                        @Override
                                                        public void onPhotoTaken(byte[] bytes, String filePath) {
                                                            Toast.makeText(getBaseContext(), "onPhotoTaken " + filePath, Toast.LENGTH_SHORT).show();
-                                                           Images choseImages = new Images(filePath, System.currentTimeMillis(), TimeUtil.getImageName());
+                                                           Images choseImages = new Images(filePath, System.currentTimeMillis(), TimeUtil.getImageName()+ ".jpg");
                                                            if (choseImages != null) {
                                                                //只要返回的image不为空就可以获得该images了
                                                                //从这里就可以返回 images给原本的活动了
@@ -136,7 +136,7 @@ public class CameraFragmentMainActivity extends AppCompatActivity {
                                                        }
                                                    },
                     "/storage/self/primary",
-                    TimeUtil.getImageName());
+                    TimeUtil.getImageName()+ ".jpg");
 
         }
     }

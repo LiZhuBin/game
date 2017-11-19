@@ -8,6 +8,7 @@ import com.example.administrator.happygame.activity.ChatActivity;
 import com.example.administrator.happygame.activity.FriendsActivity;
 import com.example.administrator.happygame.activity.MyInformationActivity;
 import com.example.administrator.happygame.activity.PersonActivity;
+import com.example.administrator.happygame.activity.SearchActivity;
 import com.example.administrator.happygame.activity.SetActivity;
 import com.example.administrator.happygame.activity.fifth.CollectActivity;
 import com.example.administrator.happygame.activity.fifth.MapActivity;
@@ -73,6 +74,11 @@ public static Intent toMapActivity(String poi){
         Intent intent = new Intent(MyApplication.getContext(), ZxingActivity.class);
         imageView.setDrawingCacheEnabled(Boolean.TRUE);
         intent.putExtra("BITMAP", imageView.getDrawingCache());
+        return intent;
+    }
+    public static Intent toSearchActivity(String data){
+        Intent intent=new Intent(MyApplication.getContext(), SearchActivity.class);
+        intent.putExtra("DATA", data);
         return intent;
     }
 }

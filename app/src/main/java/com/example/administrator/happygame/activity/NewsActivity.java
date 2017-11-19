@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,12 +17,15 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.News;
+import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.UiUtil;
 import com.fangxu.allangleexpandablebutton.AllAngleExpandableButton;
 import com.fangxu.allangleexpandablebutton.ButtonData;
 import com.fangxu.allangleexpandablebutton.ButtonEventListener;
 import com.flaviofaria.kenburnsview.KenBurnsView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +41,7 @@ public class NewsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
         PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
@@ -45,6 +50,7 @@ public class NewsActivity extends BaseActivity {
 
         TextView toolBarText = (TextView) findViewById(R.id.toolbar_text);
         toolBarText.setText("热点信息");
+
         KenBurnsView imageview = (KenBurnsView) findViewById(R.id.iv_blur);
         UiUtil.photoView(imageview, imageview, frameLayout, photoView);
         ImageView imageView = (ImageView) findViewById(R.id.Back_button);
@@ -55,6 +61,7 @@ public class NewsActivity extends BaseActivity {
             }
         });
         getNews();
+        EventBus.getDefault().postSticky(one);
         initViewPager(mTitles_3, "new", 0);
         if (one.getNew_image() != null) {
             Glide.with(NewsActivity.this).load(GlobalData.HTTP_ADDRESS_PICTURE + one.getNew_image()).into(imageview);
@@ -94,8 +101,8 @@ public class NewsActivity extends BaseActivity {
 
     public void getNews() {
         Intent intent = getIntent();
-        News obj = (News) intent.getParcelableExtra("Object_news");
-        one = obj;
+      one= (News) intent.getParcelableExtra("Object_news");
+
     }
     private void installButton90to180() {
         final AllAngleExpandableButton button = (AllAngleExpandableButton) findViewById(R.id.button_expandable_90_180);
@@ -124,30 +131,18 @@ public class NewsActivity extends BaseActivity {
                 switch (index){
                     case 1:
                         mGoodView.setTextInfo("+1", Color.RED, 30);
+                   one.setNew_like_num(Integer.parseInt(one.getNew_like_num())+1+"");
                         mGoodView.show(button);
 
 
                         break;
                     case 2: mGoodView.setTextInfo("收藏成功", Color.RED, 20);
+                        UserFragment.me.setCollectNews(UserFragment.me.getCollectNews()+"|"+one.getNew_id());
                         mGoodView.show(button);
-//                        RequestBody body = new FormBody.Builder()
-//                                .add("userid", UserFragment.me.getId())//添加键值对
-//                                .add("actiivityID",one.getNew_id())
-//                                .build();
-//                        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_News + "php/addCollectNews.php", body, new Callback() {
-//                            @Override
-//                            public void onFailure(Call call, IOException e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onResponse(Call call, Response response) throws IOException {
-//
-//                            }
-//                        });
                         break;
                     case 3:
                         mGoodView.setTextInfo("-1", Color.BLACK, 30);
+                        one.setNew_like_num(Integer.parseInt(one.getNew_like_num())-1+"");
                         mGoodView.show(button);
                         break;
                     default:

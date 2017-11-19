@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background4"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context="com.example.administrator.happygame.MainActivity">
 
@@ -13,12 +13,12 @@
     <com.example.administrator.happygame.my_ui.MyViewPager
         android:id="@+id/vp_2"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <include layout="@layout/layout_floating_button" />
 
-    <include layout="@layout/layout_bottom_button" />
+
 
     <include layout="@layout/layout_photo_view" />
 </android.support.design.widget.CoordinatorLayout>

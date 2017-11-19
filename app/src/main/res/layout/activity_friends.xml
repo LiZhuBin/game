@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background4"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context="com.example.administrator.happygame.MainActivity">
 
@@ -17,5 +17,6 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+<include layout="@layout/item_edit"/>
 
 </android.support.design.widget.CoordinatorLayout>

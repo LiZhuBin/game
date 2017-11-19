@@ -1,49 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.example.administrator.happygame.activity.MessageActivity"
-    android:orientation="vertical">
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.happygame.activity.MessageActivity">
 
-   <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:tabGravity="center"
         app:tabIndicatorColor="@android:color/holo_red_light"
         app:tabIndicatorHeight="2dp"
-        app:tabSelectedTextColor="@android:color/holo_red_light"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-     <android.support.design.widget.TabItem
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="好友"
-         android:icon="@drawable/icon_add"
-         />
-     <android.support.design.widget.TabItem
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="附近"
-         android:icon="@drawable/icon_add"
-         />
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@android:color/holo_red_light">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/icon_add"
+            android:text="好友" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/icon_add"
+            android:text="附近" />
 
 
     </android.support.design.widget.TabLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v4.view.ViewPager>
+    <include layout="@layout/layout_viewpager" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

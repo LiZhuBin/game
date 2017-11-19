@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.util;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +10,6 @@ import android.os.Message;
 import com.aopa.greendao.DaoMaster;
 import com.aopa.greendao.DaoSession;
 import com.example.administrator.happygame.R;
-import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.mvp.api.ApiServiceManager;
 import com.hyphenate.EMCallBack;
@@ -36,10 +36,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.example.administrator.happygame.util.GlobalData.initActivityData;
 import static com.example.administrator.happygame.util.GlobalData.initForumData;
 import static com.example.administrator.happygame.util.GlobalData.initNewsData;
-import static com.example.administrator.happygame.util.GlobalData.initUserData;
-import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
@@ -59,6 +58,7 @@ public class MyApplication extends Application {
     public static MyApplication getInstances() {
         return instances;
     }
+    @SuppressLint("HandlerLeak")
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -80,10 +80,9 @@ public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
-
-
         context = getApplicationContext();
         instances = this;
+
         setDatabase();
         setDaoDatabase();
         MobSDK.init(this, "21819c0c884c1 ", "0acef4983fd0549ea3a27b3ea5d0f8a3");
@@ -133,8 +132,6 @@ public class MyApplication extends Application {
         File dir=new File(dirPath);
         if(!dir.exists()){
             dir.mkdirs();}
-
-
         SQLiteDatabase database=SQLiteDatabase.openOrCreateDatabase(dirPath+"data.db",null);
 
     }
@@ -151,36 +148,39 @@ public class MyApplication extends Application {
 
     }
 
-    private void initData(){
+    private  void initData(){
 
         if (SPUtil.get(context, "UserId", 1) == null) {
             SPUtil.put(context, "UserId", 1);
         }
 
             LogUtil.e("fgggggggggggg");
-            initUserData();
+
+        mUserDao.deleteAll();
+        ApiServiceManager.getUserData("1")            //获取Observable对象
+                .subscribeOn(Schedulers.newThread())
+                //请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())
+                //最后在主线程中执行
+                .subscribe(new Consumer<List<User>>() {
+                    @Override
+                    public void accept(List<User> userList) throws Exception {
+                        for (final User user : userList) {
+                            // GlobalData.HTTP_ADDRESS_ACTIVITY+activity.getImage(),
+                            mUserDao.insertOrReplace(user);
+
+                        }
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                });
 
             initForumData();
 
             initNewsData();
+initActivityData();
 
-           mActivityDao.deleteAll();
-            ApiServiceManager.getActivityData("1")            //获取Observable对象
-                    .subscribeOn(Schedulers.newThread())//请求在新的线程中执行
-
-                    .observeOn(AndroidSchedulers.mainThread())//最后在主线程中执行
-                    .subscribe(new Consumer<List<Activity>>() {
-                        @Override
-                        public void accept(List<Activity> activityList) throws Exception {
-                            for (final Activity activity : activityList) {
-                                mActivityDao.insertOrReplace(activity);
-                            }
-                            Message message = handler.obtainMessage();
-                            message.what = 1;
-                            handler.sendMessage(message);
-                        }
-
-                    });
 
     }
     public DaoSession getDaoSession() {

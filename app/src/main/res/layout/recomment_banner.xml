@@ -15,10 +15,10 @@
 
 
         <TextView
+            android:id="@+id/recomment_title_text"
             style="@style/Title_textstyle"
             android:layout_gravity="right|center"
             android:layout_marginRight="30dp"
-            android:id="@+id/recomment_title_text"
             android:text="热门活动" />
 
     </FrameLayout>

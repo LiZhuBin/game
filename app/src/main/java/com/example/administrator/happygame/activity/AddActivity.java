@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -26,17 +27,14 @@ import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+
+import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
 
 
 public class AddActivity extends BaseActivity {
@@ -61,7 +59,7 @@ public class AddActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
         setSupportActionBar(toolbar);
 
@@ -128,20 +126,11 @@ public class AddActivity extends BaseActivity {
 
         Intent intent = getIntent();
         String obj = (String) intent.getSerializableExtra("Object_userId");
-        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/getById.php", obj, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        activity=mActivityDao.load(obj);
 
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-                activity = HttpUtil.getSingleActivity(response);
-                new MyAsyncTask(activity).execute();
-                EventBus.getDefault().post(activity);
-            }
-        });
+        EventBus.getDefault().postSticky(activity);
+        new MyAsyncTask(activity).execute()
+        ;
 
         initViewPager(mTitles_3, "add", 0);
     }

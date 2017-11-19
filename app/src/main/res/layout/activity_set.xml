@@ -7,29 +7,32 @@
     android:background="@color/gray4"
     android:orientation="vertical"
     tools:context="com.example.administrator.happygame.activity.SetActivity">
-    <include layout="@layout/toolbar"/>
-<lib.homhomlib.design.SlidingLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+
+    <include layout="@layout/toolbar" />
+
+    <lib.homhomlib.design.SlidingLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.allen.library.SuperTextView
-            android:id="@+id/settings"
-            style="@style/Super_style"
-            stv:sLeftIconRes="@drawable/icon_fab_forum"
-            stv:sLeftTextString="分享"
-            stv:sRightTextColor="@color/colorAccent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
-        <com.allen.library.SuperTextView
-            android:id="@+id/about"
-            style="@style/Super_style"
-            stv:sLeftIconRes="@drawable/icon_about"
-            stv:sLeftTextString="关于"
-            stv:sRightTextColor="@color/colorAccent" />
-    </LinearLayout>
-</lib.homhomlib.design.SlidingLayout>
+            <com.allen.library.SuperTextView
+                android:id="@+id/settings"
+                style="@style/Super_style"
+                stv:sLeftIconRes="@drawable/icon_fab_forum"
+                stv:sLeftTextString="分享"
+                stv:sRightTextColor="@color/colorAccent" />
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/about"
+                style="@style/Super_style"
+                stv:sLeftIconRes="@drawable/icon_about"
+                stv:sLeftTextString="关于"
+                stv:sRightTextColor="@color/colorAccent" />
+        </LinearLayout>
+    </lib.homhomlib.design.SlidingLayout>
 </LinearLayout>

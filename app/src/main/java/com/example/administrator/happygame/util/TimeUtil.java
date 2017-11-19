@@ -60,7 +60,7 @@ public class TimeUtil {
         date = new Date();
 
         str = format.format(date);
-        String fileName = str + ".jpg";
+        String fileName = str ;
         return fileName;
     }
     public static String getNowTime(){

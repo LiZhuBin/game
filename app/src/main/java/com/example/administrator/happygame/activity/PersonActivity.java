@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,7 +22,6 @@ import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.my_ui.CreditView;
 import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.SPUtil;
 import com.example.administrator.happygame.util.UiUtil;
 import com.flaviofaria.kenburnsview.KenBurnsView;
@@ -31,16 +31,11 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 import static com.example.administrator.happygame.util.UiUtil.good;
@@ -96,6 +91,7 @@ public class PersonActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initAdd();
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.newactivity_toolbar);
@@ -143,25 +139,15 @@ public class PersonActivity extends BaseActivity {
         userId = getIntent().getExtras().getString("id");
         pager = getIntent().getExtras().getInt("pager");
         user = mUserDao.load(userId);
-        HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", userId, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
 
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
+         EventBus.getDefault().postSticky(user);
 
-                user = HttpUtil.getSingleUser(response);
 
-                EventBus.getDefault().post(user);
-                isFriend = GlobalData.isFriend(user.getId());
+        isFriend = GlobalData.isFriend(user.getId());
 
-                new MyAsyncTask(user).execute();
+        new MyAsyncTask(user).execute();
 
-            }
-
-        });
         initViewPager(mTitles_3, "person", pager);
 
     }

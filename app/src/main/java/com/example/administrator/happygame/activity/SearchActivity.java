@@ -1,70 +1,96 @@
 package com.example.administrator.happygame.activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.administrator.happygame.R;
+import com.example.administrator.happygame.adapter.MyFragmentAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
+import com.example.administrator.happygame.childfragment.CollectActivityFragment;
+import com.example.administrator.happygame.childfragment.CollectForumFragment;
+import com.example.administrator.happygame.childfragment.CollectNewsFragment;
+import com.example.administrator.happygame.childfragment.CollectUserFragment;
+import com.example.administrator.happygame.my_ui.MyViewPager;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class SearchActivity extends BaseActivity {
 
-    FloatingSearchView searchView;
-    private Boolean searchview_isFocus = false;
-    private String[] mTitles_3 = {"首页", "讨论"};
+
+    @Bind(R.id.search_tabLayout)
+    TabLayout tabLayout;
+    @Bind(R.id.vp_2)
+    MyViewPager viewPager;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+
+    private String[] sTitle = new String[]{"用户", "新闻", "约战请求", "帖子"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        initViewPager(mTitles_3, "add", 0);
-        searchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
-        searchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
-            @Override
-
-            public void onActionMenuItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.search_menu_action:
-
-                        String a = searchView.getQuery();
-
-                        //getQuery方法获得文本
-                        searchView.clearQuery();//clear搜索栏
-                        String b = searchView.getCurrentMenuItems().toString();
-
-                        //get获得搜索栏点击的名字！！
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        searchView.setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
-            @Override
-            public void onHomeClicked() { //左边的home按钮点击
-                if (!searchview_isFocus) {
-
-                    finish();
-                }
-            }
-        });
-        searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
-            @Override
-            public void onFocus() {  //在搜索栏获取焦点退出时候让数据消失！！
-                searchview_isFocus = true;
-
-                searchView.clearQuery();
-            }
-
-            @Override
-            public void onFocusCleared() {
-                searchview_isFocus = false;
-
-                //你也可以将已经打上的搜索字符保存，以致在下一次点击的时候，搜索栏内还保存着之前输入的字符
-                //mSearchView.setSearchText(searchSuggestion.getBody());
-            }
-        });
+        ButterKnife.bind(this);
+toolbar.setTitle("查找结果");
+setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initView();
     }
 
 
+    private void initView() {
+
+
+        //  mTabLayout.addTab(mTabLayout.newTab().setText(sTitle[3]));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        tabLayout.setupWithViewPager(viewPager);
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(CollectUserFragment.getInstance());
+        fragments.add(CollectNewsFragment.getInstance());
+        fragments.add(CollectForumFragment.getInstance());
+        fragments.add(CollectActivityFragment.getInstance());
+
+        MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), fragments, Arrays.asList(sTitle));
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
 }

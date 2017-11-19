@@ -18,12 +18,12 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class BaseFragment extends Fragment {
     View view;
-
     @Subscribe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+
     }
 
 
@@ -32,6 +32,7 @@ public class BaseFragment extends Fragment {
         super.onDestroy();
         RefWatcher refWatcher = MyApplication.getRefWatcher(getActivity());
         refWatcher.watch(this);
+
         EventBus.getDefault().unregister(this);
     }
 

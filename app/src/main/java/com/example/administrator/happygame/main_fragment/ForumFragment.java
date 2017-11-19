@@ -30,12 +30,15 @@ import com.example.administrator.happygame.util.UiUtil;
 import com.jaouan.revealator.Revealator;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -64,10 +67,17 @@ public class ForumFragment extends BaseFragment {
     @Bind(R.id.activity_add_forum_send_button)
     Button activityAddForumSendButton;
 
-View view;
+    View view;
+    @Bind(R.id.sort_by_priase)
+    ImageView sortByPriase;
+    @Bind(R.id.sort_by_time)
+    ImageView sortByTime;
+    @Bind(R.id.forum_refreshLayout)
+    SmartRefreshLayout forumRefreshLayout;
+    RecyclerView recyclerView;
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter adapter;
-
+private  List<Forum>forumList=new ArrayList<>();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +93,15 @@ View view;
             mRootView = new WeakReference<View>(view);
             ButterKnife.bind(this, view);
             //initFlowLayout(view);
-            initRefresh(view);
+
             initSwipeRecyclerView();
+            initRefresh(view);
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
                 parent.removeView(mRootView.get());
             }
         }
-        ButterKnife.bind(this, mRootView.get());
         return mRootView.get();
     }
 
@@ -103,13 +113,26 @@ View view;
 
     private void initData() {
         forumItemList = new ArrayList<ForumItem>();
-        for (Forum forum : mForumDao.loadAll()) {
-            ClasstoItem.ForumToForumItem(forum, forumItemList);
-        }
+        forumList=mForumDao.loadAll();
+        Collections.sort(forumList, new Comparator<Forum>() {
+            @Override
+            public int compare(Forum arg0, Forum arg1) {
+//            第一次比较专业
+                int i = arg0.getData().compareTo(arg1.getData());
+//            如果专业相同则进行第二次比较
+
+                return -i;
+            }
+        });
+
 
     }
 
     public void initRefresh(final View view) {
+        forumItemList.clear();
+        for (Forum forum : forumList) {
+            ClasstoItem.ForumToForumItem(forum, forumItemList);
+        }
         forumSpinner.setDrawingCacheBackgroundColor(Color.RED);
 
 
@@ -119,7 +142,7 @@ View view;
             public void onRefresh(RefreshLayout refreshlayout) {
                 // onCreate(null);
                 initData();
-                initRefresh(view);
+                initSwipeRecyclerView();
                 refreshlayout.finishRefresh(2000);
             }
         });
@@ -132,7 +155,11 @@ View view;
     }
 
     private void initSwipeRecyclerView() {
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.forum_recyclerView);
+        forumItemList.clear();
+        for (Forum forum:forumList){
+            ClasstoItem.ForumToForumItem(forum,forumItemList);
+        }
+       recyclerView = (RecyclerView) view.findViewById(R.id.forum_recyclerView);
         adapter = new ForumAdapter(forumItemList);
 
         recyclerView.setAdapter(adapter);
@@ -161,6 +188,7 @@ View view;
                         break;
                 }
                 break;
+
             default:
                 break;
         }
@@ -178,7 +206,7 @@ View view;
 
     }
 
-    @OnClick({R.id.forum_chooseImage, R.id.activity_add_forum_send_button})
+    @OnClick({R.id.forum_chooseImage, R.id.activity_add_forum_send_button,R.id.sort_by_time,R.id.sort_by_priase})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.forum_chooseImage:
@@ -209,6 +237,23 @@ View view;
                         .withCurvedTranslation()
                         .start();
                 break;
+            case R.id.sort_by_time:
+                initData();
+                initSwipeRecyclerView();
+                break;
+            case R.id.sort_by_priase:
+                Collections.sort(forumList, new Comparator<Forum>() {
+                    @Override
+                    public int compare(Forum arg0, Forum arg1) {
+//            第一次比较专业
+                        int i = arg0.getLike().compareTo(arg1.getLike());
+//            如果专业相同则进行第二次比较
+
+                        return -i;
+                    }
+                });
+                initSwipeRecyclerView();
+                break;
             default:
                 break;
         }
@@ -217,7 +262,6 @@ View view;
     @Override
     public void onResume() {
         super.onResume();
-        initData();
-        initSwipeRecyclerView();
+
     }
 }

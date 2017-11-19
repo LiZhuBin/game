@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@mipmap/sea">
+    android:background="@mipmap/sea"
+    android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -12,17 +12,17 @@
         android:layout_alignParentTop="true"
         android:background="@mipmap/menu_1"
         android:gravity="right|center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <!--右上角的注册-->
         <!--android:textColor="#ff288dfe"-->
         <TextView
+            android:id="@+id/login_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="15dp"
             android:singleLine="true"
             android:text="注册"
-            android:id="@+id/login_register"
             android:textColor="@android:color/white"
             android:textSize="17sp" />
     </LinearLayout>
@@ -46,11 +46,11 @@
             android:id="@+id/login_scroller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title" >
+            android:layout_below="@+id/title">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <!--图像视图-->
 
@@ -59,11 +59,11 @@
                     android:id="@+id/login_edit_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/joy"
+
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="40dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <!--用户布局-->
                     <LinearLayout
@@ -73,7 +73,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -88,14 +88,14 @@
                             android:id="@+id/login_input_name"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:layout_marginRight="5dp"
                             android:layout_margin="10dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/edittext_selector"
+                            android:hint="手机号码/用户名"
                             android:minHeight="40dp"
                             android:paddingLeft="30dp"
-                            android:hint="手机号码/用户名"
-                            android:textColorHint="#95A1AA"
-                            android:background="@drawable/edittext_selector"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textColorHint="#95A1AA" />
                     </LinearLayout>
 
                     <!--中间的分割线-->
@@ -110,7 +110,7 @@
                         android:layout_height="60dp"
                         android:layout_marginRight="20dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -125,15 +125,15 @@
                             android:id="@+id/login_input_password"
                             android:layout_width="0dp"
                             android:layout_height="45dp"
-                            android:layout_weight="1"
                             android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittext_selector"
+                            android:hint="密码"
+                            android:inputType="textPassword"
                             android:minHeight="40dp"
                             android:paddingLeft="30dp"
-                            android:hint="密码"
-                            android:textColorHint="#95A1AA"
-                            android:background="@drawable/edittext_selector"
-                            android:inputType="textPassword"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textColorHint="#95A1AA" />
 
                     </LinearLayout>
 
@@ -144,12 +144,10 @@
                         android:layout_marginLeft="60dp"
                         android:layout_marginRight="30dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <!--android:background="@drawable/cBox_selector"
                             android:checked="true"-->
-
-
 
 
                         <!--忘记密码-->
@@ -177,12 +175,12 @@
                     android:layout_marginLeft="85dp"
                     android:layout_marginRight="70dp"
                     android:layout_marginTop="25dp"
+                    android:background="@drawable/button_selector"
+                    android:gravity="center"
                     android:text="登录"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="22sp"
-                    android:background="@drawable/button_selector"
-                    android:gravity="center" />
+                    android:textSize="22sp" />
 
             </RelativeLayout>
         </ScrollView>
@@ -199,14 +197,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:text="其他账号登录" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
+                android:layout_weight="1"
                 android:text="----------------------------------" />
         </LinearLayout>
 

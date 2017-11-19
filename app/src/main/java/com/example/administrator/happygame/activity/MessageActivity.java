@@ -11,8 +11,8 @@ import android.view.View;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.MyFragmentAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
-import com.example.administrator.happygame.child_fragment.MessageChatFragment;
-import com.example.administrator.happygame.child_fragment.MessageSystemFragment;
+import com.example.administrator.happygame.childfragment.MessageChatFragment;
+import com.example.administrator.happygame.childfragment.MessageSystemFragment;
 import com.example.administrator.happygame.main_fragment.UserFragment;
 import com.example.administrator.happygame.util.IntentHelp;
 
@@ -36,7 +36,7 @@ public class MessageActivity extends BaseActivity {
     TabLayout tabLayout;
     @Bind(R.id.view_pager)
     ViewPager viewPager;
-    public static final String []sTitle = new String[]{"聊天","系统消息"};
+    private String []sTitle = new String[]{"聊天","系统消息"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background4"
+    android:background="@color/background"
     android:orientation="vertical"
     ripple:rv_type="rectangle"
     tools:context="com.example.administrator.happygame.MainActivity"
@@ -14,8 +14,8 @@
     >
 
     <include layout="@layout/layout_search_view" />
-<include layout="@layout/item_chat_error"
-  />
+
+    <include layout="@layout/item_chat_error" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_navigation"
         android:layout_weight="1"
-        android:background="@drawable/background4"
+        android:background="@color/background"
 
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -38,13 +38,13 @@
         app:menu="@menu/navigation" />
 
 
-        <com.ldoublem.loadingviewlib.view.LVGhost
-            android:id="@+id/lv_ghost"
-            android:layout_width="200dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:onClick="startAnim"
+    <com.ldoublem.loadingviewlib.view.LVGhost
+        android:id="@+id/lv_ghost"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:onClick="startAnim"
 
-            />
+        ripple:ignore="OnClick" />
 
 </android.support.design.widget.CoordinatorLayout>

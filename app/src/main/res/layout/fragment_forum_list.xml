@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.happygame.child_fragment.ForumContentFragment">
+    android:orientation="vertical"
+    tools:context="com.example.administrator.happygame.childfragment.ForumContentFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.CardView
@@ -17,7 +18,8 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -28,7 +30,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentTop="true"
-                    android:src="@drawable/image_scrolling_head" />
+                    tools:src="@drawable/image_scrolling_head" />
 
                 <TextView
                     android:id="@+id/fragment_forum_list_name"
@@ -37,7 +39,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/fragment_forum_list_image"
                     android:layout_toRightOf="@+id/fragment_forum_list_image"
-                    android:text="Carmen冯"
+                    tools:text="Carmen冯"
                     android:textSize="16sp" />
 
                 <TextView
@@ -47,27 +49,36 @@
                     android:layout_below="@+id/fragment_forum_list_name"
                     android:layout_toEndOf="@+id/fragment_forum_list_image"
                     android:layout_toRightOf="@+id/fragment_forum_list_image"
-                    android:text="41分钟前" />
-
+                    tools:text="41分钟前" />
+                <Button
+                    android:id="@+id/forum_my_add"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dip"
+                    android:background="@drawable/icon_add_friend"
+                    android:gravity="center" />
                 <TextView
                     android:id="@+id/fragment_forum_list_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/fragment_forum_list_image"
                     android:gravity="center"
-                    android:text="对于笔记本电脑的求助"
+                    tools:text="对于笔记本电脑的求助"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_margin="10dp"/>
 
                 <TextView
                     android:id="@+id/fragment_forum_list_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/fragment_forum_list_title"
-                    android:text="师兄师姐或专业认识 本新生纺织工程，请问买什么牌的电脑好呀？具体到型号，要求不多，能上网刷剧"
-                    android:textSize="16sp" />
+                    tools:text="师兄师姐或专业认识 本新生纺织工程，请问买什么牌的电脑好呀？具体到型号，要求不多，能上网刷剧"
+                    android:textSize="20sp" />
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
+        <include layout="@layout/item_edit" />
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

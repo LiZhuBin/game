@@ -3,7 +3,6 @@
     xmlns:stv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:wave="http://schemas.android.com/tools"
 
     android:gravity="center"
     android:orientation="vertical"
@@ -35,8 +34,8 @@
         style="@style/Super_style"
         stv:sLeftIconRes="@drawable/icon_my_information"
         stv:sLeftTextString="我的信息"
-        stv:sRightTextColor="@color/colorAccent"
-        stv:sRightIconRes="@drawable/icon_arrows"/>
+        stv:sRightIconRes="@drawable/icon_arrows"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/my_activities"
@@ -71,14 +70,14 @@
         style="@style/Super_style"
         stv:sLeftIconRes="@drawable/icon_about"
         stv:sLeftTextString="设置"
-        stv:sRightTextColor="@color/colorAccent"
-        stv:sRightIconRes="@drawable/icon_arrows"/>
+        stv:sRightIconRes="@drawable/icon_arrows"
+        stv:sRightTextColor="@color/colorAccent" />
 
     <com.allen.library.SuperTextView
         android:id="@+id/imports"
         style="@style/Super_style"
         stv:sLeftIconRes="@drawable/icon_left"
         stv:sLeftTextString="退出账号"
-        stv:sRightTextColor="@color/colorAccent"
-        stv:sRightIconRes="@drawable/icon_arrows"/>
+        stv:sRightIconRes="@drawable/icon_arrows"
+        stv:sRightTextColor="@color/colorAccent" />
 </LinearLayout>

@@ -77,6 +77,6 @@ android:background="@color/white"
     <include layout="@layout/layout_bottom_button" />
 
     <include layout="@layout/layout_photo_view" />
-
+    <include layout="@layout/item_credit"/>
 <include layout="@layout/item_edit"/>
 </android.support.design.widget.CoordinatorLayout>

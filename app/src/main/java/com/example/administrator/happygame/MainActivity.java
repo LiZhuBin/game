@@ -1,5 +1,6 @@
 package com.example.administrator.happygame;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -19,17 +20,17 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.activity.MessageActivity;
 import com.example.administrator.happygame.activity.SearchActivity;
 import com.example.administrator.happygame.adapter.ViewPagerAdapter;
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
-import com.example.administrator.happygame.child_fragment.MessageChatFragment;
+import com.example.administrator.happygame.childfragment.MessageChatFragment;
 import com.example.administrator.happygame.main_fragment.AddFragment;
 import com.example.administrator.happygame.main_fragment.ForumFragment;
 import com.example.administrator.happygame.main_fragment.RecommentFragment;
@@ -50,6 +51,8 @@ import com.hyphenate.util.NetUtils;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ldoublem.loadingviewlib.view.LVGhost;
 import com.sdsmdg.tastytoast.TastyToast;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     SearchView searchView;
     @Bind(R.id.lv_ghost)
     LVGhost lvGhost;
+    @SuppressLint("HandlerLeak")
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //全屏没有状态栏。
 
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -171,13 +175,32 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
 
         final FloatingSearchView mSearchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
+
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
+
             }
         });
+mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+    @Override
+    public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
 
+    }
+
+    @Override
+    public void onSearchAction(String currentQuery) {
+        if(currentQuery.equals("")||currentQuery.equals(null)){
+            TastyToast.makeText(getApplicationContext(), "搜索条件未填", TastyToast.LENGTH_LONG, TastyToast.INFO);
+        }else {
+            mSearchView.clearFocus();
+            EventBus.getDefault().postSticky(currentQuery);
+            startActivity(new Intent(MainActivity.this, SearchActivity.class));
+
+        }
+    }
+});
         mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
@@ -197,9 +220,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mSearchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
 
-                mSearchView.clearFocus();
             }
 
             @Override
@@ -381,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     protected void onResume() {
         super.onResume();
+
         EMClient.getInstance().chatManager().addMessageListener(this);
     }
 

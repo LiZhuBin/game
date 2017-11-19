@@ -11,17 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.behavior.ZoomOutPageTransformer;
-import com.example.administrator.happygame.child_fragment.AddChatFragment;
-import com.example.administrator.happygame.child_fragment.AddContentFragment;
-import com.example.administrator.happygame.child_fragment.ForumCommentFragment;
-import com.example.administrator.happygame.child_fragment.ForumContentFragment;
-import com.example.administrator.happygame.child_fragment.NewContentFragment;
-import com.example.administrator.happygame.child_fragment.PersonAddFragment;
-import com.example.administrator.happygame.child_fragment.PersonForumFragment;
+import com.example.administrator.happygame.childfragment.AddChatFragment;
+import com.example.administrator.happygame.childfragment.AddContentFragment;
+import com.example.administrator.happygame.childfragment.ForumChatFragment;
+import com.example.administrator.happygame.childfragment.ForumContentFragment;
+import com.example.administrator.happygame.childfragment.NewChatFragment;
+import com.example.administrator.happygame.childfragment.NewContentFragment;
+import com.example.administrator.happygame.childfragment.PersonAddFragment;
+import com.example.administrator.happygame.childfragment.PersonForumFragment;
 import com.example.administrator.happygame.my_ui.MyViewPager;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -53,10 +53,10 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackHelpe
        SwipeBackHelper.onCreate(this);
 myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager());
         initSwipeBackFinish();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //SwipeBackHelper.getCurrentPage(this).setSwipeEdgePercent(0.2f);//get current instance
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        SwipeBackHelper.getCurrentPage(this).setSwipeEdgePercent(0.3f);//get current instance
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -102,10 +102,10 @@ myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager());
             mFragments.add(AddChatFragment.getInstance());
         } else if ("forum".equals(which)) {
             mFragments.add(ForumContentFragment.getInstance());
-            mFragments.add(ForumCommentFragment.getInstance());
+            mFragments.add(ForumChatFragment.getInstance());
         } else if ("new".equals(which)) {
             mFragments.add(NewContentFragment.getInstance());
-            mFragments.add(ForumCommentFragment.getInstance());
+            mFragments.add(NewChatFragment.getInstance());
         } else if ("person".equals(which)) {
             mFragments.add(PersonAddFragment.getInstance());
             mFragments.add(PersonForumFragment.getInstance());

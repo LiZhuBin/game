@@ -3,15 +3,15 @@ package com.example.administrator.happygame.activity.fifth;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.adapter.MyPagerAdapter;
+import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
-import com.example.administrator.happygame.child_fragment.CollectActivityFragment;
-import com.example.administrator.happygame.child_fragment.CollectForumFragment;
-import com.example.administrator.happygame.child_fragment.CollectNewsFragment;
+import com.example.administrator.happygame.childfragment.CollectActivityFragment;
+import com.example.administrator.happygame.childfragment.CollectForumFragment;
+import com.example.administrator.happygame.childfragment.CollectNewsFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,7 +23,7 @@ import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
-public class CollectActivity extends AppCompatActivity {
+public class CollectActivity extends BaseActivity {
 
     private static User user;
     String userId;
@@ -31,7 +31,7 @@ public class CollectActivity extends AppCompatActivity {
     ViewPager mViewPager;
     @Bind(R.id.coordinatortablayout)
     CoordinatorTabLayout coordinatortablayout;
-    private CoordinatorTabLayout mCoordinatorTabLayout;
+
     private int[] mImageArray, mColorArray;
     private ArrayList<Fragment> mFragments;
     private final String[] mTitles = {"新闻", "约战", "帖子"};
@@ -54,9 +54,8 @@ public class CollectActivity extends AppCompatActivity {
                 android.R.color.holo_red_light,
                 android.R.color.holo_green_light};
 
-        mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
-        mCoordinatorTabLayout.setTranslucentStatusBar(this)
-                .setTitle("Demo")
+        coordinatortablayout.setTranslucentStatusBar(this)
+                .setTitle("我的收藏+")
                 .setBackEnable(true)
                 .setImageArray(mImageArray, mColorArray)
                 .setupWithViewPager(mViewPager);

@@ -59,7 +59,7 @@
                     android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:text="约战信息"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="25dp" />
 
             </RelativeLayout>
@@ -72,8 +72,8 @@
             android:layout_height="40dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="8dp"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
+            android:paddingLeft="110dp"
+            android:paddingRight="110dp"
             tl:tl_bar_color="#ffffff"
             tl:tl_indicator_anim_enable="true"
             tl:tl_indicator_color="@color/colorAccent"

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -142,6 +143,8 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
     @Override
     public void onEmojiconClicked(Emojicon emojicon) {
         EmojiconsFragment.input(mEditEmojicon, emojicon);
+        emojicons.setVisibility(View.GONE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE); imm.toggleSoftInput(0, InputMethodManager.RESULT_SHOWN);
     }
 
     @Override
@@ -158,7 +161,9 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
 
     @OnClick(R.id.layout_send_emojicon)
     public void onViewClicked() {
-        emojicons.setVisibility(View.VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        emojicons.setVisibility(emojicons.getVisibility()==View.VISIBLE?View.GONE:View.VISIBLE);
     }
 
     @Override
@@ -171,7 +176,7 @@ public class ChatActivity extends BaseActivity implements EmojiconGridFragment.O
                     final NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     String str = (((EMTextMessageBody) message.getBody()).getMessage());
                     LogUtil.e(str);
-                    Msg   msg = new Msg(str, Msg.TYPE_RECEIVED,mUserDao.load(message.getUserName()).getImage(), TimeUtil.getTimeFormatText(new Date(message.getMsgTime())));
+                    Msg   msg = new Msg(str, Msg.TYPE_RECEIVED,user.getImage(), TimeUtil.getTimeFormatText(new Date(message.getMsgTime())));
                     setMsg(msg);
 
                 }

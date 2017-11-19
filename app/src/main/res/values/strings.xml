@@ -31,5 +31,8 @@
     <string name="unable_to_connect">连接不到服务器</string>
     <string name="zxing">二维码</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

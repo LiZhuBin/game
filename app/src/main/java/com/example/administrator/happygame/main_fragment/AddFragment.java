@@ -67,7 +67,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.administrator.happygame.util.GlobalData.initActivityData;
 import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
 
 
@@ -124,7 +123,7 @@ public class AddFragment extends BaseFragment {
     public String emailAddress;
     private PoiIntent poi;
     View view;
-
+    List<Activity>activityList=new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +138,8 @@ public class AddFragment extends BaseFragment {
             view = inflater.inflate(R.layout.add_info, container, false);
             mRootView = new WeakReference<View>(view);
             ButterKnife.bind(this, view);
+            initRecycle();
+            initRefresh(view);
             imageView = (RoundedImageView) view.findViewById(R.id.add_chooseImage);
 
 
@@ -156,16 +157,17 @@ public class AddFragment extends BaseFragment {
                     startActivityForResult(intent, 1);
                 }
             });
+            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
+            fab.attachToRecyclerView(recyclerView);
+            UiUtil.revealatFab(theAwesomeView, fab, addLeft);
 
-            initRecycle();
-            initRefresh(view);
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
                 parent.removeView(mRootView.get());
             }
         }
-        ButterKnife.bind(this, mRootView.get());
+
         return mRootView.get();
     }
 
@@ -201,16 +203,14 @@ public class AddFragment extends BaseFragment {
 
         addList = new ArrayList<AddItem>();
 
-        initActivityData();
 
-        for (Activity activity : mActivityDao.loadAll()) {
-            ClasstoItem.ActivityToAddItem(activity, addList);
-        }
-        Collections.sort(addList, new Comparator<AddItem>() {
+        activityList=mActivityDao.loadAll();
+
+        Collections.sort(activityList, new Comparator<Activity>() {
             @Override
-            public int compare(AddItem arg0, AddItem arg1) {
+            public int compare(Activity arg0, Activity arg1) {
 //            第一次比较专业
-                int i = arg0.getActivityTime().compareTo(arg1.getActivityTime());
+                int i = arg0.getTime().compareTo(arg1.getTime());
 //            如果专业相同则进行第二次比较
 
                 return -i;
@@ -220,6 +220,10 @@ public class AddFragment extends BaseFragment {
     }
 
     private void initRecycle() {
+        addList.clear();
+        for (Activity activity : activityList) {
+            ClasstoItem.ActivityToAddItem(activity, addList);
+        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -238,12 +242,6 @@ public class AddFragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-//        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-//        // recyclerView.setOnItemMoveListener(mItemMoveListener);// 监听拖拽，更新UI。
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
-        fab.attachToRecyclerView(recyclerView);
-        UiUtil.revealatFab(theAwesomeView, fab, addLeft);
 
     }
 
@@ -259,16 +257,16 @@ public class AddFragment extends BaseFragment {
                 break;
             case R.id.activity_add_forum_send_button:
 
+
+                StringBuilder stringBuilder = new StringBuilder("img/"+TimeUtil.getImageName()+"_" );
                 if (one != null) {
                     HttpUtil.postImage(one);
-                }
-                StringBuilder stringBuilder = new StringBuilder("activity/" + spinner.getSelectedItem().toString() + "/");
-                if (one != null) {
                     stringBuilder.append(one.getName()).toString();
                 } else {
                     stringBuilder.append("picture1.jpg");
                 }
                 Activity activity = new Activity.Builder().title(activityAddForumTitleEdittext.getText().toString())
+                        .id(TimeUtil.getImageName())
                         .time(time)
                         .address(activityAddForumPlaceEdittext.getText().toString())
                         .remark(activityAddForumContentEdittext.getText().toString())
@@ -281,7 +279,7 @@ public class AddFragment extends BaseFragment {
                         .build();
                 emailAddress = HttpUtil.getJson(activity);
                 LogUtil.e(emailAddress);
-
+         //mActivityDao.insert(activity);
 
                 HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataForActivity.php", "[" + HttpUtil.getJson(activity) + "]", new Callback() {
                     @Override
@@ -335,16 +333,17 @@ public class AddFragment extends BaseFragment {
                 initRecycle();
                 break;
             case R.id.sort_by_priase:
-//                Collections.sort(addList, new Comparator<AddItem>() {
-//                    @Override
-//                    public int compare(AddItem arg0, AddItem arg1) {
-////            第一次比较专业
-//                        int i = arg0.ge.compareTo(arg1.getActivityTime());
-////            如果专业相同则进行第二次比较
-//
-//                        return -i;
-//                    }
-//                });
+                Collections.sort(activityList, new Comparator<Activity>() {
+                    @Override
+                    public int compare(Activity arg0, Activity arg1) {
+//            第一次比较专业
+                        int i = arg0.getPraise_num().compareTo(arg1.getPraise_num());
+//            如果专业相同则进行第二次比较
+
+                        return -i;
+                    }
+                });
+                initRecycle();
                 break;
             default:
                 break;
@@ -407,7 +406,6 @@ public class AddFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        initData();
-        initRecycle();
+
     }
 }
