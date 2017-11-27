@@ -64,9 +64,9 @@ String newsString;
     public void onStickyEvent(String currentQuery) {
         isSeek=true;
         List<News> joes = GlobalData.mNewsDao.queryBuilder()
-                .where(NewsDao.Properties.New_title.eq(currentQuery),
-                        NewsDao.Properties.New_content.eq(currentQuery),
-                        NewsDao.Properties.New_id.eq(UserDao.Properties.Name.eq((currentQuery))))
+                .where(NewsDao.Properties.New_title.like(currentQuery),
+                        NewsDao.Properties.New_content.like(currentQuery),
+                        NewsDao.Properties.New_id.like("%"+UserDao.Properties.Name.eq((currentQuery))+"%"))
                 .orderAsc(NewsDao.Properties.New_like_num)
                 .list();
         for(News news:joes){

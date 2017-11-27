@@ -19,10 +19,11 @@
         <TextView
             style="@style/Title_textstyle"
             android:layout_gravity="right|center"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="25dp"
             android:text="约战列表" />
 
     </FrameLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/person_activity_recycle"

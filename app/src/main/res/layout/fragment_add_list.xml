@@ -63,6 +63,22 @@
 
                 </RelativeLayout>
 
+
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/add_content_title"
+                    style="@style/Super_style_unclick"
+                    app:sLeftTextString="@string/title"
+                    app:sCenterTextString="标题" />
+
+                <TextView
+                    android:id="@+id/output_autofit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    tools:text="fffffffffffffffffffffffffffffff"
+
+                    android:textSize="25dp" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -80,21 +96,6 @@
 
                         app:sLeftTextString="预计人数" />
                 </LinearLayout>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/add_content_title"
-                    style="@style/Super_style_unclick"
-                    app:sCenterTextString="标题" />
-
-                <TextView
-                    android:id="@+id/output_autofit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    tools:text="ffffffffffffffffffffffffffffffffffffffffff"
-
-                    android:textSize="30sp" />
-
                 <com.allen.library.SuperTextView
                     android:id="@+id/add_content_time"
                     style="@style/Super_style_unclick"

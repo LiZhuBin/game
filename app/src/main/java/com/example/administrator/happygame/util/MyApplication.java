@@ -82,7 +82,12 @@ public class MyApplication extends Application {
     public void onCreate() {
         context = getApplicationContext();
         instances = this;
-
+        EMOptions options = new EMOptions();
+// 默认添加好友时，是不需要验证的，改成需要验证
+        options.setAcceptInvitationAlways(false);
+//初始化
+        EMClient.getInstance().init(context, options);
+        EMClient.getInstance().setDebugMode(true);
         setDatabase();
         setDaoDatabase();
         MobSDK.init(this, "21819c0c884c1 ", "0acef4983fd0549ea3a27b3ea5d0f8a3");
@@ -93,13 +98,9 @@ public class MyApplication extends Application {
         initData();
     }
     private void initEMClient(){
-        EMOptions options = new EMOptions();
-// 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-//初始化
-        EMClient.getInstance().init(context, options);
+
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
+
 
         userId = SPUtil.get(MyApplication.getContext(), "UserId", 1);
 

@@ -4,7 +4,8 @@
     android:layout_height="20dp"
     android:gravity="right"
     android:orientation="horizontal"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    >
 
     <ImageView
         android:id="@+id/sort_by_priase"

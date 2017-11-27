@@ -55,7 +55,7 @@ public class CollectUserFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onStickyEvent(String currentQuery) {
         List<User> joes = GlobalData.mUserDao.queryBuilder()
-                .where(UserDao.Properties.Name.eq(currentQuery))
+                .where(UserDao.Properties.Name.like("%"+currentQuery+"%"))
                 .orderAsc(UserDao.Properties.Name)
                 .list();
         for(User user:joes){

@@ -43,8 +43,8 @@
     </style>
     <style name="Super_style_unclick">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textSize">28dp</item>
         <item name="sUseRipple">false</item>
         <item name="sRightViewGravity">right_center</item>
     </style>

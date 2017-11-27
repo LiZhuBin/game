@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,8 +19,6 @@ import com.example.administrator.happygame.adapter.FriendsAdapter;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.Friends;
-import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.IntentHelp;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
@@ -27,22 +26,21 @@ import com.jaouan.revealator.Revealator;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
 
 public class FriendsActivity extends BaseActivity {
     private static List<Friends> friends = new ArrayList<Friends>();
     Toolbar toolbar;
     String title;
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
@@ -115,23 +113,12 @@ public class FriendsActivity extends BaseActivity {
     private void getFriends(String[] friendsId) {
         friends.clear();
         for (int i = 0; i < friendsId.length; i++) {
+            User user = mUserDao.load(friendsId[i]);
+            Message message = handler.obtainMessage();
+            message.what = 1;
+            handler.sendMessage(message);
+            friends.add(new Friends(user.getId(), user.getName(), user.getImage()));
 
-            HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_USER + "php/getById.php", friendsId[i], new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    User user = HttpUtil.getSingleUser(response);
-                    Message message = handler.obtainMessage();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                    friends.add(new Friends(user.getId(), user.getName(), user.getImage()));
-
-                }
-            });
         }
     }
 
@@ -146,7 +133,6 @@ public class FriendsActivity extends BaseActivity {
                         .withCurvedTranslation()
                         .withChildsAnimation()
                         .start();
-
                 break;
             case R.id.edit_ensure:
                 Revealator.unreveal(editFrame)

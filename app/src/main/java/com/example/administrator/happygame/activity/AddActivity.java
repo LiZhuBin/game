@@ -31,6 +31,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
+import cc.duduhuo.dialog.smartisan.TwoOptionsDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -86,43 +87,63 @@ public class AddActivity extends BaseActivity {
 
     @OnClick(R.id.fab_add_add)
     public void onViewClicked() {
-        if(GlobalData.hasAdd(activity.getId(),UserFragment.me.getDoingActivities())){
-            final WarningDialog dialog = SmartisanDialog.createWarningDialog(this);
-            dialog.setTitle("你已加入")
-                    .setConfirmText("退出")
-                    .show();
-            dialog.setOnConfirmListener(new WarningDialog.OnConfirmListener() {
-                @Override
-                public void onConfirm() {
-                    dialog.dismiss();
-                    fabAddAdd.setImageResource(R.drawable.icon_fab_add);
-                    TastyToast.makeText(getApplicationContext(), "退出成功", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }
-            });
-        }else {
-            new SweetAlertDialog(AddActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                    .setTitleText("加入成功")
-                    .setContentText("欢迎您的到来")
-                    .setConfirmText("嗯，我来了")
-                    .showCancelButton(true)
-                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.cancel();
-                        }
-                    })
-                    .show();
+        final TwoOptionsDialog dialog = SmartisanDialog.createTwoOptionsDialog(this);
+        dialog.setTitle("请选择")
+                .setOp1Text("邀请好友")   // 设置第一个选项的文本
+                .setOp2Text("加入")   // 设置第二个选项的文本
+                .show();
+        dialog.setOnSelectListener(new TwoOptionsDialog.OnSelectListener() {
+            @Override
+            public void onOp1() {
+                dialog.dismiss();
 
-            HttpUtil.addDoingActivity(activity.getId(), UserFragment.me.getId());
-            fabAddAdd.setImageResource(R.drawable.icon_add_success);
-            SPUtil.put(AddActivity.this, "hasAdd", true);
-        }
+            }
 
-        // fabAddAdd.setText("进入组聊");
+            @Override
+            public void onOp2() {
+                dialog.dismiss();
+                add();
+            }
+        });
+
     }
+private void invite(){
 
+}
+private void add(){
+    if(GlobalData.hasAdd(activity.getId(),UserFragment.me.getDoingActivities())){
+        final WarningDialog dialog = SmartisanDialog.createWarningDialog(this);
+        dialog.setTitle("你已加入")
+                .setConfirmText("退出")
+                .show();
+        dialog.setOnConfirmListener(new WarningDialog.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                dialog.dismiss();
+                fabAddAdd.setImageResource(R.drawable.icon_fab_add);
+                TastyToast.makeText(getApplicationContext(), "退出成功", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+            }
+        });
+    }else {
+        new SweetAlertDialog(AddActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("加入成功")
+                .setContentText("欢迎您的到来")
+                .setConfirmText("嗯，我来了")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                })
+                .show();
 
-    public void getData() {
+        HttpUtil.addDoingActivity(activity.getId(), UserFragment.me.getId());
+        fabAddAdd.setImageResource(R.drawable.icon_add_success);
+        SPUtil.put(AddActivity.this, "hasAdd", true);
+    }
+}
+    private void getData() {
 
         Intent intent = getIntent();
         String obj = (String) intent.getSerializableExtra("Object_userId");

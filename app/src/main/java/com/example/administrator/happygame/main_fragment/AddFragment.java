@@ -203,7 +203,6 @@ public class AddFragment extends BaseFragment {
 
         addList = new ArrayList<AddItem>();
 
-
         activityList=mActivityDao.loadAll();
 
         Collections.sort(activityList, new Comparator<Activity>() {
@@ -256,8 +255,6 @@ public class AddFragment extends BaseFragment {
                 datepickerLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.activity_add_forum_send_button:
-
-
                 StringBuilder stringBuilder = new StringBuilder("img/"+TimeUtil.getImageName()+"_" );
                 if (one != null) {
                     HttpUtil.postImage(one);

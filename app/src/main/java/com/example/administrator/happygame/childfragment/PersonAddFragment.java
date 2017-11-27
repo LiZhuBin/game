@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.childfragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,21 +18,16 @@ import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.AddItem;
 import com.example.administrator.happygame.util.ClasstoItem;
-import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import static com.example.administrator.happygame.util.GlobalData.mActivityDao;
 
 
 public class PersonAddFragment extends BaseFragment {
@@ -39,6 +35,7 @@ public class PersonAddFragment extends BaseFragment {
     View view;
     private List<AddItem> addList = new ArrayList<>();
     private AddAdapter addAdapter;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -87,24 +84,13 @@ public class PersonAddFragment extends BaseFragment {
 
     private void getActivities(String[] friendsId) {
         for (int i = 0; i < friendsId.length; i++) {
-            HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/getById.php", friendsId[i], new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
+            Activity activity=mActivityDao.load(friendsId[i]);
+            ClasstoItem.ActivityToAddItem(activity, addList);
 
-                }
+            Message message = handler.obtainMessage();
+            message.what = 1;
+            handler.sendMessage(message);
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Activity activity = HttpUtil.getSingleActivity(response);
-                    ClasstoItem.ActivityToAddItem(activity, addList);
-
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-
-
-                }
-            });
         }
 
     }

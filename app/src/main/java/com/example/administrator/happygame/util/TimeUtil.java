@@ -69,4 +69,10 @@ public class TimeUtil {
         return format.format(date);
 
     }
+    public static String getNowTimeString(){
+        Date date=new Date();
+        DateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
+        return format.format(date);
+
+    }
 }

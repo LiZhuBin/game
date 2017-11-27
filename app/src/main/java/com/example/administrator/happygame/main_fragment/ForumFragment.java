@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.alimuzaffar.lib.widgets.AnimatedEditText;
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.activity.GetPhotoActivity;
@@ -26,6 +27,7 @@ import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.thing_class.Images;
 import com.example.administrator.happygame.util.ClasstoItem;
 import com.example.administrator.happygame.util.MyApplication;
+import com.example.administrator.happygame.util.TimeUtil;
 import com.example.administrator.happygame.util.UiUtil;
 import com.jaouan.revealator.Revealator;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -34,6 +36,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -75,9 +78,16 @@ public class ForumFragment extends BaseFragment {
     @Bind(R.id.forum_refreshLayout)
     SmartRefreshLayout forumRefreshLayout;
     RecyclerView recyclerView;
+    @Bind(R.id.forum_title_edittext)
+    AnimatedEditText forumTitleEdittext;
+    @Bind(R.id.forum_content_edittext)
+    AnimatedEditText forumContentEdittext;
+
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter adapter;
-private  List<Forum>forumList=new ArrayList<>();
+    private List<Forum> forumList = new ArrayList<>();
+    Forum newForum;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +112,7 @@ private  List<Forum>forumList=new ArrayList<>();
                 parent.removeView(mRootView.get());
             }
         }
+        ButterKnife.bind(this, mRootView.get());
         return mRootView.get();
     }
 
@@ -113,7 +124,7 @@ private  List<Forum>forumList=new ArrayList<>();
 
     private void initData() {
         forumItemList = new ArrayList<ForumItem>();
-        forumList=mForumDao.loadAll();
+        forumList = mForumDao.loadAll();
         Collections.sort(forumList, new Comparator<Forum>() {
             @Override
             public int compare(Forum arg0, Forum arg1) {
@@ -156,10 +167,10 @@ private  List<Forum>forumList=new ArrayList<>();
 
     private void initSwipeRecyclerView() {
         forumItemList.clear();
-        for (Forum forum:forumList){
-            ClasstoItem.ForumToForumItem(forum,forumItemList);
+        for (Forum forum : forumList) {
+            ClasstoItem.ForumToForumItem(forum, forumItemList);
         }
-       recyclerView = (RecyclerView) view.findViewById(R.id.forum_recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.forum_recyclerView);
         adapter = new ForumAdapter(forumItemList);
 
         recyclerView.setAdapter(adapter);
@@ -206,7 +217,7 @@ private  List<Forum>forumList=new ArrayList<>();
 
     }
 
-    @OnClick({R.id.forum_chooseImage, R.id.activity_add_forum_send_button,R.id.sort_by_time,R.id.sort_by_priase})
+    @OnClick({R.id.forum_chooseImage, R.id.activity_add_forum_send_button, R.id.sort_by_time, R.id.sort_by_priase})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.forum_chooseImage:
@@ -236,10 +247,20 @@ private  List<Forum>forumList=new ArrayList<>();
                         .to(fabForum)
                         .withCurvedTranslation()
                         .start();
+                TastyToast.makeText(MyApplication.getContext(), "发送成功", TastyToast.INFO, TastyToast.SUCCESS);
+                newForum.setTitle(forumTitleEdittext.getText().toString());
+                newForum.setContent(forumContentEdittext.getText().toString());
+                newForum.setType(forumSpinner.getSelectedItem().toString());
+                newForum.setData(TimeUtil.getNowTime());
+                newForum.setUserId(UserFragment.me.getId());
+
+                newForum.setId("122");
+                mForumDao.insert(newForum);
                 break;
             case R.id.sort_by_time:
                 initData();
                 initSwipeRecyclerView();
+
                 break;
             case R.id.sort_by_priase:
                 Collections.sort(forumList, new Comparator<Forum>() {

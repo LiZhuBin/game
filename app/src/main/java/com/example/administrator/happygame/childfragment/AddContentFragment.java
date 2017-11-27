@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.base.BaseFragment;
 import com.example.administrator.happygame.been.Activity;
@@ -96,14 +100,16 @@ public class AddContentFragment extends BaseFragment {
 
 
         ButterKnife.bind(this, view);
+        initClick(view, activity);
         new MyAsyncTask(activity).execute();
+
         return view;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onStickyEvent(Activity activity) {
         this.activity = activity;
-        initClick(view, activity);
+
 
 
     }
@@ -193,7 +199,12 @@ public class AddContentFragment extends BaseFragment {
         protected void onProgressUpdate(Integer... values) {
             User user = mUserDao.load(activity.getParticipatorId());
             addMyName.setText(user.getName());
-            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).into(addMyImage);
+            Glide.with(MyApplication.getContext()).load(GlobalData.HTTP_ADDRESS_PICTURE + user.getImage()).error(R.drawable.image_error) .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(new GlideDrawableImageViewTarget(addMyImage) {
+                @Override
+                public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
+                    super.onResourceReady(drawable, anim);
+                    addContentPerson.setRightIcon(addMyImage.getDrawable());
+                }});
             addContentNum.setRightString(activity.getUser_num());
             try {
                 addContentBuildTime.setRightString(TimeUtil.getTimeFormatText(activity.getBuild_data()));
@@ -204,7 +215,9 @@ public class AddContentFragment extends BaseFragment {
             outputAutofit.setText(activity.getRemark());
             addContentTime.setCenterString(activity.getTime());
             addContentAddress.setCenterString(activity.getAddress());
+
             addContentPerson.setRightString(StringUtil.httpArrayStringLength(activity.getAdd_id()));
+
         }
 
         @Override
@@ -213,4 +226,5 @@ public class AddContentFragment extends BaseFragment {
             return true;
         }
     }
+
 }

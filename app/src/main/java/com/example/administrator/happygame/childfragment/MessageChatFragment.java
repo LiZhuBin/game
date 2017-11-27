@@ -20,6 +20,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -63,7 +65,18 @@ public class MessageChatFragment extends Fragment {
 
     public void initRecycle() {
         chatItemList.clear();
-        for (Chat chat : mChatDao.loadAll()) {
+        List<Chat>chatList=mChatDao.loadAll();
+        Collections.sort(chatList, new Comparator<Chat>() {
+            @Override
+            public int compare(Chat arg0, Chat arg1) {
+//            第一次比较专业
+                int i = arg0.getGetMsgTime().compareTo(arg1.getGetMsgTime());
+//            如果专业相同则进行第二次比较
+
+                return i;
+            }
+        });
+        for (Chat chat : chatList) {
             chatItemList.add(new Chat.Builder().userId(chat.getUserId())
                     .userName(chat.getUserName())
                     .userImageUrl(chat.getUserImageUrl())

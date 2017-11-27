@@ -57,7 +57,7 @@
                 android:id="@+id/forum_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -113,7 +113,7 @@
                                         android:src="@drawable/icon_sort" />
 
                                     <com.alimuzaffar.lib.widgets.AnimatedEditText
-                                        android:id="@+id/activity_add_forum_title_edittext"
+                                        android:id="@+id/forum_title_edittext"
                                         style="@style/animated_edit_text"
                                         android:hint="标题"
                                         app:animationType="fromRight" />
@@ -149,7 +149,7 @@
                                         android:src="@drawable/icon_content" />
 
                                     <com.alimuzaffar.lib.widgets.AnimatedEditText
-                                        android:id="@+id/activity_add_forum_content_edittext"
+                                        android:id="@+id/forum_content_edittext"
                                         style="@style/animated_edit_text"
                                         android:layout_height="80dp"
                                         android:gravity="top|left"

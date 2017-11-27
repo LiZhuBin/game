@@ -258,4 +258,9 @@ myCollection.setRightString(StringUtil.httpArrayStringLength(user.getCollectForu
         }
     }
 
+    @Override
+    public void onResume() {
+        initData();
+        super.onResume();
+    }
 }

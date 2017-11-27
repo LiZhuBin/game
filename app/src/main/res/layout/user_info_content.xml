@@ -17,7 +17,7 @@
         stv:sCenterBottomTextColor="@color/colorAccent"
         stv:sCenterBottomTextSize="@dimen/super_textview_bottom_text"
         stv:sCenterBottomTextString="4"
-        stv:sCenterTopTextString="我的点赞数"
+        stv:sCenterTopTextString="谁赞过我"
         stv:sLeftBottomTextColor="@color/colorAccent"
         stv:sLeftBottomTextSize="@dimen/super_textview_bottom_text"
         stv:sLeftBottomTextString="5"

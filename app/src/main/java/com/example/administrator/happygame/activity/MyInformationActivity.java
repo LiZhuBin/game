@@ -44,6 +44,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
+
 public class MyInformationActivity extends BaseActivity {
 
 
@@ -221,6 +223,9 @@ public class MyInformationActivity extends BaseActivity {
                             LogUtil.e(response.toString());
                     }
                 });
+                mUserDao.update(user);
+                finish();
+
                 break;
             default:
                 break;

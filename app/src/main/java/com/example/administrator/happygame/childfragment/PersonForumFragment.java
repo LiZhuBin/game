@@ -1,5 +1,6 @@
 package com.example.administrator.happygame.childfragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,21 +18,16 @@ import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.util.ClasstoItem;
-import com.example.administrator.happygame.util.GlobalData;
-import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.LogUtil;
 import com.example.administrator.happygame.util.StringUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import static com.example.administrator.happygame.util.GlobalData.mForumDao;
 
 public class PersonForumFragment extends BaseFragment {
     List<ForumItem> forumItemList = new ArrayList<>();
@@ -40,6 +36,7 @@ public class PersonForumFragment extends BaseFragment {
     TextView title;
     View view;
     private ForumAdapter adapter;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -85,35 +82,22 @@ public class PersonForumFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(User user1) {
+
         for (String string : StringUtil.httpArray(user1.getPosts())) {
-            LogUtil.d(string+"ffffff");
-            HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_FORUM + "php/getById.php", string, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Forum forum = HttpUtil.getSingleForum(response);
-                    LogUtil.e(forum.getImage());
-                    ClasstoItem.ForumToForumItem(forum, forumItemList);
-                    //
-                    Message message =handler.obtainMessage();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                }
-            });
+            Forum forum = mForumDao.load(string);
+            LogUtil.e(forum.getImage());
+            ClasstoItem.ForumToForumItem(forum, forumItemList);
+            //
+            Message message =handler.obtainMessage();
+            message.what = 1;
+            handler.sendMessage(message);
         }
 
     }
 
     public void initRecycle() {
-
-
-        LogUtil.e("recycle");
         adapter = new ForumAdapter(forumItemList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter) ;
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
     }
