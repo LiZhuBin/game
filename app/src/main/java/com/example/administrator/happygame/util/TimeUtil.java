@@ -56,7 +56,7 @@ public class TimeUtil {
     public static String getImageName() {
         String str = null;
         Date date = null;
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");//获取当前时间，进一步转化为字符串
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");//获取当前时间，进一步转化为字符串
         date = new Date();
 
         str = format.format(date);

@@ -26,6 +26,7 @@ import com.example.administrator.happygame.my_ui.GlideRoundTransform;
 import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.thing_class.Images;
 import com.example.administrator.happygame.util.ClasstoItem;
+import com.example.administrator.happygame.util.HttpUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.TimeUtil;
 import com.example.administrator.happygame.util.UiUtil;
@@ -86,13 +87,12 @@ public class ForumFragment extends BaseFragment {
     private List<ForumItem> forumItemList = new ArrayList<>();
     private ForumAdapter adapter;
     private List<Forum> forumList = new ArrayList<>();
-    Forum newForum;
-
+    Forum newForum=new Forum();
+    Images one;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
-
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ForumFragment extends BaseFragment {
                 parent.removeView(mRootView.get());
             }
         }
-        ButterKnife.bind(this, mRootView.get());
+
         return mRootView.get();
     }
 
@@ -248,14 +248,21 @@ public class ForumFragment extends BaseFragment {
                         .withCurvedTranslation()
                         .start();
                 TastyToast.makeText(MyApplication.getContext(), "发送成功", TastyToast.INFO, TastyToast.SUCCESS);
+                StringBuilder stringBuilder = new StringBuilder("forum/"+TimeUtil.getImageName()+"_" );
+                if (one != null) {
+                    HttpUtil.postImage(one);
+                    stringBuilder.append(one.getName()).toString();
+                } else {
+                    stringBuilder.append("picture1.jpg");
+                }
                 newForum.setTitle(forumTitleEdittext.getText().toString());
                 newForum.setContent(forumContentEdittext.getText().toString());
                 newForum.setType(forumSpinner.getSelectedItem().toString());
                 newForum.setData(TimeUtil.getNowTime());
                 newForum.setUserId(UserFragment.me.getId());
-
-                newForum.setId("122");
-                mForumDao.insert(newForum);
+                newForum.setId("444");
+                 newForum.setImage(stringBuilder.toString());
+               mForumDao.insert(newForum);
                 break;
             case R.id.sort_by_time:
                 initData();
@@ -285,4 +292,6 @@ public class ForumFragment extends BaseFragment {
         super.onResume();
 
     }
+
+
 }

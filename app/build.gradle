@@ -36,7 +36,7 @@ android {
 }
 
 greendao {
-    schemaVersion 14  //数据库版本
+    schemaVersion 17  //数据库版本
     daoPackage 'com.aopa.greendao'   //自动生成工具类的目录位置
     targetGenDir 'src/main/java'
 }

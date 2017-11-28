@@ -12,7 +12,6 @@ import com.aopa.greendao.DaoSession;
 import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.mvp.api.ApiServiceManager;
-import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.mob.MobSDK;
@@ -65,7 +64,7 @@ public class MyApplication extends Application {
             switch (msg.what) {
                 case 1:
 
-                    initEMClient();
+
                     break;
                 default:
                     break;
@@ -97,37 +96,7 @@ public class MyApplication extends Application {
         BGASwipeBackHelper.init(this, null);
         initData();
     }
-    private void initEMClient(){
 
-//在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-
-
-        userId = SPUtil.get(MyApplication.getContext(), "UserId", 1);
-
-        me=mUserDao.load((String)userId.toString());
-
-        EMClient.getInstance().login(me.getId(),me.getPassword(),new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                LogUtil.d("main", "登录聊天服务器成功！");
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                LogUtil.d("main", "登录聊天服务器失败！");
-            }
-        });
-     //   EMClient.getInstance().chatManager().addMessageListener(msgListener);
-
-
-    }
     private void setDatabase(){
         String dirPath="/data/data/"+this.getPackageName()+"/databases/";
         File dir=new File(dirPath);
@@ -151,11 +120,6 @@ public class MyApplication extends Application {
 
     private  void initData(){
 
-        if (SPUtil.get(context, "UserId", 1) == null) {
-            SPUtil.put(context, "UserId", 1);
-        }
-
-            LogUtil.e("fgggggggggggg");
 
         mUserDao.deleteAll();
         ApiServiceManager.getUserData("1")            //获取Observable对象

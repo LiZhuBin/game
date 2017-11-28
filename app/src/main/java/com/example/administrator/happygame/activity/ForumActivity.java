@@ -93,8 +93,7 @@ forum=mForumDao.load(string);
             public void onResponse(Call call, Response response) throws IOException {
                 forum = HttpUtil.getSingleForum(response);
                 new MyAsyncTask(forum).execute();
-                EventBus.getDefault().post(forum);
-
+                EventBus.getDefault().postSticky(forum);
             }
         });
     }

@@ -46,7 +46,7 @@ public class AddChatFragment extends BaseFragment {
 
     private ImageButton send;
     private RecyclerView msgRecyclerView;
-    private MsgAdapter adapter;
+    private MsgAdapter adapter=new MsgAdapter();
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -109,7 +109,7 @@ public class AddChatFragment extends BaseFragment {
                     Msg msg = new Msg(content, Msg.TYPE_SEND);
                     msgList.add(msg);
                     adapter.notifyItemInserted(msgList.size() - 1);   //当有新消息时，刷新RecyclerView中的显示
-                    msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
+                 //   msgRecyclerView.scrollToPosition(msgList.size() - 1);//将RecyclerView定位到最后一行
                     inputText.setText("");//清空输入框中的内容
                 }
             }

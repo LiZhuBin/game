@@ -66,7 +66,7 @@ public class ForumChatFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onStickyEvent(final Forum forum) {
+    public void onStickyEvent( Forum forum) {
         this.forum = forum;
         string = StringUtil.httpArray(forum.getComment());
         for (int i = 0; i < string.length; i++) {

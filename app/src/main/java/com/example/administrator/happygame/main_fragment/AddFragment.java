@@ -36,12 +36,12 @@ import com.example.administrator.happygame.thing_class.Images;
 import com.example.administrator.happygame.util.ClasstoItem;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.HttpUtil;
-import com.example.administrator.happygame.util.LogUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.TimeUtil;
 import com.example.administrator.happygame.util.UiUtil;
 import com.google.gson.annotations.SerializedName;
 import com.jaouan.revealator.Revealator;
+import com.ldoublem.loadingviewlib.view.LVGhost;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -108,7 +108,7 @@ public class AddFragment extends BaseFragment {
     RoundedImageView addChooseImage;
     RoundedImageView imageView;
     Images one;
-    String time;
+    String time=TimeUtil.getNowTime();
     @Bind(R.id.sort_by_time)
     ImageView sortByTime;
     @Bind(R.id.Icon_SetPosition)
@@ -255,7 +255,7 @@ public class AddFragment extends BaseFragment {
                 datepickerLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.activity_add_forum_send_button:
-                StringBuilder stringBuilder = new StringBuilder("img/"+TimeUtil.getImageName()+"_" );
+                StringBuilder stringBuilder = new StringBuilder("activity/"+TimeUtil.getImageName()+"_");
                 if (one != null) {
                     HttpUtil.postImage(one);
                     stringBuilder.append(one.getName()).toString();
@@ -275,8 +275,8 @@ public class AddFragment extends BaseFragment {
                         .participatorId(UserFragment.me.getId())
                         .build();
                 emailAddress = HttpUtil.getJson(activity);
-                LogUtil.e(emailAddress);
-         //mActivityDao.insert(activity);
+
+
 
                 HttpUtil.sendOkHttpResquest(GlobalData.HTTP_ADDRESS_ACTIVITY + "php/insertDataForActivity.php", "[" + HttpUtil.getJson(activity) + "]", new Callback() {
                     @Override
@@ -289,11 +289,17 @@ public class AddFragment extends BaseFragment {
 
                     }
                 });
+
+                LVGhost lvGhost=getActivity().findViewById(R.id.lv_ghost);
+                mActivityDao.insert(activity);
+                initData();
+                initRecycle();
                 Revealator.unreveal(theAwesomeView)
                         .to(fab)
                         .withCurvedTranslation()
                         .start();
                 TastyToast.makeText(MyApplication.getContext(), "发送成功", TastyToast.INFO, TastyToast.SUCCESS);
+
                 break;
             case R.id.get_date:
                 int year = DatePicker.getYear();
@@ -363,7 +369,7 @@ public class AddFragment extends BaseFragment {
                         Log.d("poi11", poi.toString());
                         String address = poi.getAddress();
                         String StroeName = poi.getName();
-                        builder.append("地址:" + address).append("\n\n");
+                        builder.append(address).append("\n\n");
                         builder.append(StroeName).append("\n");
                         //  builder.append("Lat:"+poi.getLatt()+"Long"+poi.getLongt());
                     } else {

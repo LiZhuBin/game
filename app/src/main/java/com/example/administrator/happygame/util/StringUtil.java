@@ -15,6 +15,9 @@ public class StringUtil {
     }
 
     public static String httpArrayStringLength(String httpData) {
+        if(httpData==null){
+            return null;
+        }
         return httpArray(httpData).length + "";
     }
     public  static String getAddOne(int oldNum){

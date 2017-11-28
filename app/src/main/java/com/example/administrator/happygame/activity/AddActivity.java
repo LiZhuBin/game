@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.happygame.R;
+import com.example.administrator.happygame.activity.fifth.InviteActivity;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.Activity;
 import com.example.administrator.happygame.main_fragment.UserFragment;
@@ -96,7 +97,7 @@ public class AddActivity extends BaseActivity {
             @Override
             public void onOp1() {
                 dialog.dismiss();
-
+startActivity(new Intent(AddActivity.this, InviteActivity.class));
             }
 
             @Override

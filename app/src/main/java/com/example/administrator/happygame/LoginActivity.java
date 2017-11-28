@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import com.example.administrator.happygame.activity.RegisterActivity;
 import com.example.administrator.happygame.base.BaseActivity;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.util.LogUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.util.HashMap;
 
@@ -70,6 +73,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ButterKnife.bind(this);
         if (qq.isAuthValid()) {
             //开始qq授权登录
@@ -92,12 +96,16 @@ public class LoginActivity extends BaseActivity {
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
             case R.id.login_btn:
-
                 for(User user:mUserDao.loadAll()){
-                    if (loginInputName.getText().toString().equals(user.getName())){
-                        if (loginInputName.getText().toString().equals(user.getPassword())) {
-                            startActivity(new Intent(this, MainActivity.class));
-                        }
+
+                    if (loginInputName.getText().toString().equals(user.getName())&&
+                            loginInputPassword.getText().toString().equals(user.getPassword())){
+
+                        initEMClient(user);
+
+                        Intent intent=new Intent(this, MainActivity.class);
+                        intent.putExtra("USER",user);
+                            startActivity(intent);
                     }
                 }
                 break;
@@ -151,5 +159,33 @@ LoginActivity.platform =platform;
         });
         platform.authorize();//单独授权,OnComplete返回的hashmap是空的
         platform.showUser(null);//授权并获取用户信息
+    }
+    private void initEMClient(User user){
+
+//在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+
+        User me=user;
+
+        EMClient.getInstance().login(me.getId(),me.getPassword(),new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                LogUtil.d("main", "登录聊天服务器成功！");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                LogUtil.d("main", "登录聊天服务器失败！");
+            }
+        });
+        //   EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
+
     }
 }

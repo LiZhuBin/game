@@ -12,7 +12,6 @@ import com.example.administrator.happygame.R;
 import com.example.administrator.happygame.been.Chat;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.IntentHelp;
-import com.hyphenate.chat.EMClient;
 
 import java.util.List;
 
@@ -65,12 +64,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.HeadViewHolder
         holder.chatMessage.setText(list.get(position).getLastMessage());
         holder.chatTime.setText(list.get(position).getGetMsgTime());
         holder.pos = position;
-        int num = EMClient.getInstance().chatManager().getConversation(list.get(position).getUserId()).getUnreadMsgCount();
-        if (num == 0) {
+
             holder.messageNoRead.setVisibility(View.GONE);
-        } else {
-            holder.messageNoRead.setText(num);
-        }
+
 
     }
 

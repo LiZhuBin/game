@@ -33,7 +33,6 @@ import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
 
-import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 import static com.example.administrator.happygame.util.GlobalData.qq;
 
 
@@ -98,10 +97,8 @@ public  static User me;
     }
 
     public void initData() {
-       me=mUserDao.load("1");
-
+        me=getActivity().getIntent().getParcelableExtra("USER");
         new MyAsyncTask(me).execute();
-
     }
 
 

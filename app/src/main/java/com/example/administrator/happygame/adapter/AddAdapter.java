@@ -46,7 +46,6 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
                 Intent intent = new Intent(MyApplication.getContext(), AddActivity.class);
                 intent.putExtra("Object_userId", maddItem.get(position).getActivityId());
                 mContext.startActivity(intent);
-
             }
         });
         return holder;
