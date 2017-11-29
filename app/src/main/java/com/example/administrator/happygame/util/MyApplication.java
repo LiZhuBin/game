@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
-import android.os.Message;
 
 import com.aopa.greendao.DaoMaster;
 import com.aopa.greendao.DaoSession;
@@ -58,19 +56,7 @@ public class MyApplication extends Application {
         return instances;
     }
     @SuppressLint("HandlerLeak")
-    public Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
 
-
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
     public static Context getContext() {
         return context;
     }
@@ -135,9 +121,7 @@ public class MyApplication extends Application {
                             mUserDao.insertOrReplace(user);
 
                         }
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        handler.sendMessage(message);
+
                     }
                 });
 
@@ -183,4 +167,7 @@ initActivityData();
         });
     }
 
-}
+        //   EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
+
+    }

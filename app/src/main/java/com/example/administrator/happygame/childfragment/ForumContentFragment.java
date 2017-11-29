@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,7 @@ import com.example.administrator.happygame.been.Forum;
 import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.thing_class.ForumItem;
 import com.example.administrator.happygame.util.GlobalData;
+import com.example.administrator.happygame.util.IntentHelp;
 import com.example.administrator.happygame.util.MyApplication;
 import com.jaouan.revealator.Revealator;
 
@@ -28,7 +30,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 
@@ -39,7 +40,7 @@ public class ForumContentFragment extends BaseFragment {
     TextView content;
     TextView data;
     TextView name;
-    CircleImageView userImage;
+   ImageView userImage;
     View view;
     ForumItem obj;
     @Bind(R.id.forum_my_add)
@@ -53,7 +54,7 @@ public class ForumContentFragment extends BaseFragment {
     @Bind(R.id.edit_frame)
     FrameLayout editFrame;
     private GridLayoutManager manager;
-
+Forum forum;
     public static ForumContentFragment getInstance() {
         ForumContentFragment sf = new ForumContentFragment();
         return sf;
@@ -85,11 +86,12 @@ public class ForumContentFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onStickyEvent(final Forum forum) {
+        this.forum=forum;
         title = (TextView) view.findViewById(R.id.fragment_forum_list_title);
         name = (TextView) view.findViewById(R.id.fragment_forum_list_name);
         content = (TextView) view.findViewById(R.id.fragment_forum_list_content);
         data = (TextView) view.findViewById(R.id.fragment_forum_list_time);
-        userImage = (CircleImageView) view.findViewById(R.id.fragment_forum_list_image);
+        userImage = (ImageView) view.findViewById(R.id.fragment_forum_list_image);
         User user =mUserDao.load(forum.getUserId());
         new MyAsyncTask(user, forum).execute();
 
@@ -101,9 +103,12 @@ public class ForumContentFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.forum_my_add, R.id.item_edit_text, R.id.item_edit, R.id.edit_ensure, R.id.edit_frame})
+    @OnClick({R.id.fragment_forum_list_image,R.id.forum_my_add, R.id.item_edit_text, R.id.item_edit, R.id.edit_ensure, R.id.edit_frame})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.fragment_forum_list_image:
+                startActivity(IntentHelp.toPersonActivity(forum.getId(), 0));
+                break;
             case R.id.forum_my_add:
                 Revealator.reveal(editFrame)
                         .from(forumMyAdd)

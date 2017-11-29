@@ -21,9 +21,12 @@ import com.example.administrator.happygame.been.User;
 import com.example.administrator.happygame.my_ui.CircleTransformation;
 import com.example.administrator.happygame.util.GlobalData;
 import com.example.administrator.happygame.util.IntentHelp;
+import com.example.administrator.happygame.util.LogUtil;
 import com.example.administrator.happygame.util.MyApplication;
 import com.example.administrator.happygame.util.StringUtil;
 import com.example.administrator.happygame.util.UiUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.lang.ref.WeakReference;
 
@@ -33,6 +36,7 @@ import butterknife.OnClick;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
 
+import static com.example.administrator.happygame.util.GlobalData.mUserDao;
 import static com.example.administrator.happygame.util.GlobalData.qq;
 
 
@@ -63,6 +67,7 @@ public class UserFragment extends BaseFragment {
     SuperTextView myInformation;
     FloatingSearchView floatingSearchView;
 public  static User me;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +83,7 @@ public  static User me;
 
 
             ButterKnife.bind(this, view);
+
         } else {
             ViewGroup parent = (ViewGroup) mRootView.get().getParent();
             if (parent != null) {
@@ -98,6 +104,10 @@ public  static User me;
 
     public void initData() {
         me=getActivity().getIntent().getParcelableExtra("USER");
+        if(me==null){
+            me=mUserDao.load("1");
+        }
+        initEMClient(me);
         new MyAsyncTask(me).execute();
     }
 
@@ -259,5 +269,30 @@ myCollection.setRightString(StringUtil.httpArrayStringLength(user.getCollectForu
     public void onResume() {
         initData();
         super.onResume();
+    }
+    private void initEMClient(User user){
+
+        User me=user;
+        EMClient.getInstance().login(me.getId(),me.getPassword(),new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                LogUtil.e("main", "登录聊天服务器成功！");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                LogUtil.d("main", "登录聊天服务器失败！");
+            }
+        });
+        //   EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
+
     }
 }

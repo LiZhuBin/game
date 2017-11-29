@@ -17,6 +17,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
             android:src="@drawable/image_scrolling_head" />
 
         <TextView
@@ -45,7 +46,7 @@
             android:layout_below="@+id/username"
             android:layout_toEndOf="@+id/lou"
             android:layout_toRightOf="@+id/lou"
-            android:text=" 41分钟前" />
+            android:text="刚刚" />
     </RelativeLayout>
 
     <TextView

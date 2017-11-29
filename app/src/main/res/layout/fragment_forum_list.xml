@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
             >
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/fragment_forum_list_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
